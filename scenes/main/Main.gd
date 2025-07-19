@@ -15,12 +15,12 @@ func _ready():
 		for y in tiles_y:
 			background.set_cell(Vector2i(x, y), 0, TILE_ID)
 	
+	# TODO these are just for testing
 	place_shelf_at_tile(1, 8)
 	place_shelf_at_tile(2, 8)
 	place_shelf_at_tile(3, 8)
 	place_shelf_at_tile(4, 8)
 	place_shelf_at_tile(5, 8)
-	
 	place_shelf_at_tile(1, 10)
 	place_shelf_at_tile(2, 10)
 	place_shelf_at_tile(3, 10)
