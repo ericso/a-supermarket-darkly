@@ -3,11 +3,10 @@ extends PopupPanel
 var shelf: Node = null
 
 func _ready():
-	var items = ["Cereal", "Apple"]
-	for name in items:
+	for item in ItemDatabase.get_item_ids():
 		var btn = Button.new()
-		btn.text = name
-		btn.pressed.connect(_on_item_selected.bind(name))
+		btn.text = item
+		btn.pressed.connect(_on_item_selected.bind(item))
 		$VBoxContainer.add_child(btn)
 		
 	for button in $VBoxContainer.get_children():
@@ -15,5 +14,5 @@ func _ready():
 
 func _on_item_selected(id: String):
 	if shelf:
-		shelf.populate_with_item(id)
+		shelf.populate_with_item(id, 10)
 	queue_free()
