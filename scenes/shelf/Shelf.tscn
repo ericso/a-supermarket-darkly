@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://385a013kmort"]
 
-[ext_resource type="Script" uid="uid://d2qk8nlkp1d2k" path="res://Shelf.gd" id="1_dc3cn"]
-[ext_resource type="Texture2D" uid="uid://dhmqcavgl1snh" path="res://square_container.png" id="2_owmnp"]
+[ext_resource type="Script" uid="uid://d2qk8nlkp1d2k" path="res://scenes/shelf/Shelf.gd" id="1_dc3cn"]
+[ext_resource type="Texture2D" uid="uid://dhmqcavgl1snh" path="res://assets/square_container.png" id="2_owmnp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aw007"]
 size = Vector2(32, 32)
@@ -9,8 +9,10 @@ size = Vector2(32, 32)
 [node name="Shelf" type="Area2D"]
 script = ExtResource("1_dc3cn")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="ShelfSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_owmnp")
+
+[node name="ItemSprite" type="Sprite2D" parent="."]
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_aw007")

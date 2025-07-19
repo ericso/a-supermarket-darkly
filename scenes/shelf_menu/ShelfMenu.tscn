@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cooc0vt33gh5a"]
 
-[ext_resource type="Script" uid="uid://dvp0xdyinnojx" path="res://ShelfMenu.gd" id="1_7lohl"]
+[ext_resource type="Script" uid="uid://dvp0xdyinnojx" path="res://scenes/shelf_menu/ShelfMenu.gd" id="1_7lohl"]
 
 [node name="ShelfMenu" type="PopupPanel"]
 visible = true

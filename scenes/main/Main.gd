@@ -4,7 +4,7 @@ extends Node2D
 const TILE_ID = Vector2i(0, 0)
 const TILE_SIZE = 32
 
-var ShelfScene := preload("res://Shelf.tscn")
+var ShelfScene := preload("res://scenes/shelf/Shelf.tscn")
 
 func _ready():
 	var screen_size = get_viewport_rect().size
