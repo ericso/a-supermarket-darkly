@@ -1,12 +1,16 @@
 extends Node2D
 
-@export var item_id: int = -1
+# Item handling
+@export var item: Dictionary # the item this shelf holds
 @export var quantity: int = 0
 
+@onready var item_sprite := $ItemSprite
+
+var ItemScene := preload("res://scenes/item/Item.tscn")
+
+# Interaction handling
 @onready var tap_hold_timer: Timer = $TapHoldTimer
 var is_mouse_over = false
-
-@onready var item_sprite := $ItemSprite
 
 func _ready():
 	tap_hold_timer.wait_time = 0.5
@@ -42,15 +46,8 @@ func open_shelf_menu():
 	menu.position = get_viewport().get_mouse_position()
 	menu.shelf = self
 
-func populate_with_item(id: String):
-	print("DEBUG::populate_with_item ID ", id)
-	item_sprite.texture = load_item_texture(id)
-
-func load_item_texture(id: String) -> Texture2D:
-	match id:
-		"Apple":
-			return preload("res://assets/apple.png")
-		"Cereal":
-			return preload("res://assets/cereal.png")
-		_:
-			return null
+# populate_with_item sets this shelf to the item id and qty passed in.
+func populate_with_item(id: String, qty: int):
+	item = ItemDatabase.get_item_data(id)
+	item_sprite.texture = item.get("texture")
+	quantity = qty
