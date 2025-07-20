@@ -13,25 +13,28 @@ var basket: Array[String] = []  # item IDs
 func _ready():
 	sprite.texture = sprite_texture
 	nav_agent.target_reached.connect(_on_reached_shelf)
-	pick_random_shelf_and_go()
+	try_pick_shelf()
 
-func _physics_process(delta):
-	if nav_agent.is_navigation_finished():
-		return
-
-	var next_path_position = nav_agent.get_next_path_position()
-	var direction = (next_path_position - global_position).normalized()
-	velocity = direction * speed
-	move_and_slide()
-
-func pick_random_shelf_and_go():
-	var shelf: Node2D = GroceryStore.get_random_stocked_shelf()
+func try_pick_shelf():
+	var shelf := GroceryStore.get_random_stocked_shelf()
 	if shelf:
 		nav_agent.set_target_position(shelf.global_position)
 	else:
-		print("DEBUG::pick_random_shelf_and_go no stocked shelves")
-		# TODO implement some sort of idle state
-		
+		print("No stocked shelves yet. Retrying in 1s.")
+		await get_tree().create_timer(1.0).timeout
+		try_pick_shelf()
+
+func _physics_process(delta):
+	if nav_agent.is_navigation_finished():
+		velocity = Vector2.ZERO
+		return
+
+	var next_pos = nav_agent.get_next_path_position()
+	var direction = (next_pos - global_position).normalized()
+	velocity = direction * speed
+	print("DEBUG::_physics_process velocity ", velocity)
+	move_and_slide()
+
 func _on_reached_shelf():
 	print("Customer reached shelf!")
 
