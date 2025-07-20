@@ -7,11 +7,8 @@ extends CharacterBody2D
 @export var sprite_texture: Texture2D
 @onready var nav_agent := $NavigationAgent
 
-@export var shelves: Array[NodePath] = []  # Set in editor or at runtime
-
+# TODO implement usage of basket
 var basket: Array[String] = []  # item IDs
-var shelf_targets: Array[Node2D] = []
-var current_target_index := 0
 
 func _ready():
 	sprite.texture = sprite_texture
@@ -28,13 +25,12 @@ func _physics_process(delta):
 	move_and_slide()
 
 func pick_random_shelf_and_go():
-	if shelves.is_empty():
-		return
-	
-	var random_path = shelves[randi() % shelves.size()]
-	var shelf = get_node_or_null(random_path)
+	var shelf: Node2D = GroceryStore.get_random_stocked_shelf()
 	if shelf:
 		nav_agent.set_target_position(shelf.global_position)
+	else:
+		print("DEBUG::pick_random_shelf_and_go no stocked shelves")
+		# TODO implement some sort of idle state
 		
 func _on_reached_shelf():
 	print("Customer reached shelf!")
