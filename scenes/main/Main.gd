@@ -4,7 +4,8 @@ extends Node2D
 const TILE_ID = Vector2i(0, 0)
 const TILE_SIZE = 32
 
-var ShelfScene := preload("res://scenes/shelf/Shelf.tscn")
+var shelf_scene := preload("res://scenes/shelf/Shelf.tscn")
+var customer_scene := preload("res://scenes/customer/Customer.tscn")
 
 func _ready():
 	var screen_size = get_viewport_rect().size
@@ -15,20 +16,23 @@ func _ready():
 		for y in tiles_y:
 			background.set_cell(Vector2i(x, y), 0, TILE_ID)
 	
-	# TODO these are just for testing
+	# spawn shelves and customers
+	# TODO for testing
 	place_shelf_at_tile(1, 8)
 	place_shelf_at_tile(2, 8)
-	place_shelf_at_tile(3, 8)
-	place_shelf_at_tile(4, 8)
-	place_shelf_at_tile(5, 8)
-	place_shelf_at_tile(1, 10)
-	place_shelf_at_tile(2, 10)
-	place_shelf_at_tile(3, 10)
-	place_shelf_at_tile(4, 10)
-	place_shelf_at_tile(5, 10)
+	spawn_customer_at_tile(10, 10)
 
 func place_shelf_at_tile(x_tile: int, y_tile: int):
-	var shelf = ShelfScene.instantiate()
+	var shelf = shelf_scene.instantiate()
 	var world_pos = Vector2(x_tile, y_tile) * TILE_SIZE
 	shelf.position = world_pos
 	add_child(shelf)
+
+func spawn_customer_at_tile(x_tile: int, y_tile: int):
+	var customer = customer_scene.instantiate()
+	customer.sprite_texture = preload("res://assets/sprites/characters/man.png")
+	
+	var world_pos = Vector2(x_tile, y_tile) * TILE_SIZE
+	customer.position = world_pos
+	
+	add_child(customer)

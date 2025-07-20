@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgt4uk4jao0hk"
-path="res://.godot/imported/apple.png-d0c5a0e024efc439723035186c67a74a.ctex"
+uid="uid://47jevao0qbkc"
+path="res://.godot/imported/angel.png-646899ac5e039818faeb80ef50153810.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/apple.png"
-dest_files=["res://.godot/imported/apple.png-d0c5a0e024efc439723035186c67a74a.ctex"]
+source_file="res://assets/sprites/characters/angel.png"
+dest_files=["res://.godot/imported/angel.png-646899ac5e039818faeb80ef50153810.ctex"]
 
 [params]
 
