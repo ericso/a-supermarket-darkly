@@ -16,5 +16,5 @@ var items = {
 func get_item_data(id: String) -> Dictionary:
 	return items.get(id, {})
 
-func get_item_ids() -> Array:
+func get_item_ids() -> Array[String]:
 	return items.keys()
