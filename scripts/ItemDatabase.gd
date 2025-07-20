@@ -4,12 +4,12 @@ var items = {
 	"apple": {
 		"name": "Apple",
 		"price": 1,
-		"texture": preload("res://assets/apple.png")
+		"texture": preload("res://assets/sprites/items/apple.png")
 	},
 	"cereal": {
 		"name": "Cereal",
 		"price": 10,
-		"texture": preload("res://assets/cereal.png")
+		"texture": preload("res://assets/sprites/items/cereal.png")
 	},
 }
 

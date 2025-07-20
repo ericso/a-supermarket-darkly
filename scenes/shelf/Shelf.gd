@@ -48,6 +48,26 @@ func open_shelf_menu():
 	menu.position = get_viewport().get_mouse_position()
 	menu.shelf = self
 
+# get_item_id returns the id of the item that populates this shelf
+# returns an empty string "" if Shelf.item is not set.
+func get_item_id() -> String:
+	if item != {}:
+		return item.get("id")
+	return ""
+
+# pick_item reduces the shelf by quantity, leaving the quantity equal to zero
+# if qty > Shelf.quantity. The function returns the amount.
+func pick_item(qty: int) -> int:
+	if item == {}:
+		return 0
+	
+	if quantity <= qty:
+		quantity = 0
+		return qty
+	
+	quantity -= qty
+	return qty
+
 # stock_with_item sets this shelf to the item id
 func stock_with_item(id: String):
 	item = ItemDatabase.get_item_data(id)

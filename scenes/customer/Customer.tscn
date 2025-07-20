@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://govjt0sg8wd3"]
+
+[ext_resource type="Script" uid="uid://bgxbhfj6geqjx" path="res://scenes/customer/Customer.gd" id="1_7m56o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7m56o"]
+size = Vector2(32, 32)
+
+[node name="Customer" type="CharacterBody2D"]
+script = ExtResource("1_7m56o")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7m56o")
+
+[node name="Basket" type="Node" parent="."]
+
+[node name="NavigationAgent" type="NavigationAgent2D" parent="."]

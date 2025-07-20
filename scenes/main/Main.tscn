@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://nbfo3cn2hpmh"]
+[gd_scene load_steps=6 format=3 uid="uid://nbfo3cn2hpmh"]
 
 [ext_resource type="Script" uid="uid://dqgftvulsu404" path="res://scenes/main/Main.gd" id="1_uu6xs"]
 [ext_resource type="Texture2D" uid="uid://bafv57xgby72" path="res://assets/white-background.png" id="2_r0du0"]
@@ -15,8 +15,16 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_0xm2m")
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nha0i"]
+vertices = PackedVector2Array(527.039, 709.008, 9, 709.977, 9, 11, 529.961, 11)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1, 1, -1, 720, 537, 719, 540, 1)])
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_uu6xs")
 
 [node name="Background" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_h2yge")
+
+[node name="NavigationRegion" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_nha0i")
