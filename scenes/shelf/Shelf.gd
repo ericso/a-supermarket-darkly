@@ -13,6 +13,8 @@ var ItemScene := preload("res://scenes/item/Item.tscn")
 var is_mouse_over = false
 
 func _ready():
+	GroceryStore.register_shelf(self)
+	
 	tap_hold_timer.wait_time = 0.5
 	tap_hold_timer.one_shot = true
 	tap_hold_timer.timeout.connect(_on_hold)
@@ -53,12 +55,6 @@ func get_item_id() -> String:
 		return item.get("id")
 	return ""
 
-# populate_with_item sets this shelf to the item id and qty passed in.
-func populate_with_item(id: String, qty: int):
-	item = ItemDatabase.get_item_data(id)
-	item_sprite.texture = item.get("texture")
-	quantity = qty
-
 # pick_item reduces the shelf by quantity, leaving the quantity equal to zero
 # if qty > Shelf.quantity. The function returns the amount.
 func pick_item(qty: int) -> int:
@@ -71,3 +67,15 @@ func pick_item(qty: int) -> int:
 	
 	quantity -= qty
 	return qty
+
+# stock_with_item sets this shelf to the item id
+func stock_with_item(id: String):
+	item = ItemDatabase.get_item_data(id)
+	item_sprite.texture = item.get("texture")
+
+# restock adds qty to the shelf quantity
+func restock(qty: int):
+	quantity += qty
+
+func has_stock() -> bool:
+	return !item.is_empty() and quantity != 0
