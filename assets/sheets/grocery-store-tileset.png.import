@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bafv57xgby72"
-path="res://.godot/imported/white-background.png-cf4bbe422538059e21250d79792b3ee7.ctex"
+uid="uid://ca2swdbmqbx50"
+path="res://.godot/imported/grocery-store-tileset.png-bda914cd59cab2f5c237b4f7798d5e75.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/white-background.png"
-dest_files=["res://.godot/imported/white-background.png-cf4bbe422538059e21250d79792b3ee7.ctex"]
+source_file="res://assets/sheets/grocery-store-tileset.png"
+dest_files=["res://.godot/imported/grocery-store-tileset.png-bda914cd59cab2f5c237b4f7798d5e75.ctex"]
 
 [params]
 
