@@ -24,7 +24,7 @@ func try_pick_shelf():
 		await get_tree().create_timer(1.0).timeout
 		try_pick_shelf()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if nav_agent.is_navigation_finished():
 		velocity = Vector2.ZERO
 		return

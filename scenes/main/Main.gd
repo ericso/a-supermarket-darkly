@@ -1,32 +1,15 @@
 extends Node2D
 
-@onready var background := $Background
-const TILE_ID = Vector2i(0, 0)
 const TILE_SIZE = 32
 
-var shelf_scene := preload("res://scenes/shelf/Shelf.tscn")
 var customer_scene := preload("res://scenes/customer/Customer.tscn")
 
-func _ready():
-	var screen_size = get_viewport_rect().size
-	var tiles_x = int(ceil(screen_size.x / TILE_SIZE))
-	var tiles_y = int(ceil(screen_size.y / TILE_SIZE))
-	
-	for x in tiles_x:
-		for y in tiles_y:
-			background.set_cell(Vector2i(x, y), 0, TILE_ID)
-	
-	# spawn shelves and customers
-	# TODO for testing
-	place_shelf_at_tile(1, 8)
-	place_shelf_at_tile(2, 8)
-	spawn_customer_at_tile(10, 10)
+@onready var store: TileMapLayer = $Store
 
-func place_shelf_at_tile(x_tile: int, y_tile: int):
-	var shelf = shelf_scene.instantiate()
-	var world_pos = Vector2(x_tile, y_tile) * TILE_SIZE
-	shelf.position = world_pos
-	add_child(shelf)
+func _ready():
+	# spawn shelves and customers
+	spawn_customer_at_tile(10, 10)
+	spawn_interactables()
 
 func spawn_customer_at_tile(x_tile: int, y_tile: int):
 	var customer = customer_scene.instantiate()
@@ -36,3 +19,20 @@ func spawn_customer_at_tile(x_tile: int, y_tile: int):
 	customer.position = world_pos
 	
 	add_child(customer)
+
+
+func spawn_interactables():
+	if store == null:
+		push_error("Store node not found")
+	
+	for cell in store.get_used_cells():
+		var tile_data = store.get_cell_tile_data(cell)
+		if tile_data and tile_data.get_custom_data("interactable"):
+			var scene_path := tile_data.get_custom_data("scene_path") as String
+			if scene_path != "":
+				var packed_scene := load(scene_path)
+				if packed_scene:
+					var node = packed_scene.instantiate()
+					node.position = store.map_to_local(cell)
+					add_child(node)  # Or organize into a group node
+					node.name = tile_data.get_custom_data("name")
