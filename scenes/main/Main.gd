@@ -20,7 +20,6 @@ func spawn_customer_at_tile(x_tile: int, y_tile: int):
 	
 	add_child(customer)
 
-
 func spawn_interactables():
 	if store == null:
 		push_error("Store node not found")
