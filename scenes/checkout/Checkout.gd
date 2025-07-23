@@ -12,3 +12,4 @@ func checkout_item(item: Item, qty: int):
 		"cost": cost,
 	}))
 	GroceryStore.bank += cost
+	GroceryStore.record_item_sold(item, qty)

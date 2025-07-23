@@ -70,3 +70,6 @@ func on_reached_checkout(checkout: Checkout):
 	
 	# TODO the customer should walk to the door, leave and then call queue_free()
 	queue_free()
+	
+	# TODO remove after testing
+	print(GroceryStore.items_sold)
