@@ -6,8 +6,6 @@ class_name Shelf extends Node2D
 
 @onready var item_sprite := $ItemSprite
 
-#var ItemScene := preload("res://scenes/item/Item.tscn")
-
 # Interaction handling
 @onready var tap_hold_timer: Timer = $TapHoldTimer
 var is_mouse_over = false
