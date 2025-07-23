@@ -42,7 +42,6 @@ func move_to_position(pos: Vector2) -> void:
 func visit_random_stocked_shelf() -> bool:
 	var shelf: Shelf = GroceryStore.get_random_stocked_shelf()
 	if shelf and !visited_shelves.has(shelf.get_item().id):
-		print("visited again ", visited_shelves)
 		move_to_position(shelf.global_position)
 		
 		# disconnect any previous connection made before connecting to new shelf
@@ -61,6 +60,13 @@ func fill_basket_from_shelf(item: Item, qty: int):
 	basket[item] = qty
 
 func go_to_checkout():
-	# Placeholder
-	print("Customer going to checkout with basket: ", basket)
+	var checkout: Checkout = GroceryStore.get_open_checkout()
+	move_to_position(checkout.global_position)
+	nav_agent.target_reached.connect(func(): on_reached_checkout(checkout), CONNECT_ONE_SHOT)
+
+func on_reached_checkout(checkout: Checkout):
+	for _item in basket:
+		checkout.checkout_item(_item, basket[_item])
+	
+	# TODO the customer should walk to the door, leave and then call queue_free()
 	queue_free()
