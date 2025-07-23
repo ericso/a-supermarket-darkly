@@ -1,14 +1,13 @@
 extends CharacterBody2D
 
-@export var speed := 100.0
+@export var speed := 300.0
 
 @onready var sprite := $Sprite
 
 @export var sprite_texture: Texture2D
 @onready var nav_agent := $NavigationAgent
 
-# TODO implement usage of basket
-var basket: Array[String] = []  # item IDs
+var basket: Array[Item] = []
 
 func _ready():
 	sprite.texture = sprite_texture

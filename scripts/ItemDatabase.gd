@@ -1,14 +1,21 @@
 extends Node
 
-var apple = Item.new("apple", "Apple", 0.5, preload("res://assets/sprites/items/apple.png"))
-var cereal = Item.new("cereal", "Cereal", 3.95, preload("res://assets/sprites/items/cereal.png"))
-
 var items = {
-	"apple": apple,
-	"cereal": cereal,
+	"apple": {
+		"id": "apple",
+		"name": "Apple",
+		"price": 0.5,
+		"texture": preload("res://assets/sprites/items/apple.png")
+	},
+	"cereal": {
+		"id": "cereal",
+		"name": "Cereal",
+		"price": 3.95,
+		"texture": preload("res://assets/sprites/items/cereal.png")
+	},
 }
 
-func get_item_data(id: String) -> Item:
+func get_item_data(id: String) -> Dictionary:
 	return items.get(id, {})
 
 func get_item_ids() -> Array:
