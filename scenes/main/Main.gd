@@ -20,6 +20,7 @@ func spawn_customer_at_tile(x_tile: int, y_tile: int):
 	
 	add_child(customer)
 
+# spawn_interactables instantiates all "interactable" tiles
 func spawn_interactables():
 	if store == null:
 		push_error("Store node not found")
@@ -33,5 +34,5 @@ func spawn_interactables():
 				if packed_scene:
 					var node = packed_scene.instantiate()
 					node.position = store.map_to_local(cell)
-					add_child(node)  # Or organize into a group node
+					add_child(node)
 					node.name = tile_data.get_custom_data("name")
