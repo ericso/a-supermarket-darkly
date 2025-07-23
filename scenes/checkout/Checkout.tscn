@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://elvucu36lbvg"]
+
+[ext_resource type="Script" uid="uid://bone80bh42ay3" path="res://scenes/checkout/Checkout.gd" id="1_pkndj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pkndj"]
+size = Vector2(32, 32)
+
+[node name="Checkout" type="Node2D"]
+script = ExtResource("1_pkndj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_pkndj")
