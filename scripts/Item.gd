@@ -5,8 +5,8 @@ var label: String = ""
 var price: float = 0.0
 var icon: CompressedTexture2D = null
 
-func _init(_id: String, _label: String, _price: float, icon: CompressedTexture2D) -> void:
+func _init(_id: String, _label: String, _price: float, _icon: CompressedTexture2D) -> void:
 	self.id = _id
 	self.label = _label
 	self.price = _price
-	self.icon = icon
+	self.icon = _icon
