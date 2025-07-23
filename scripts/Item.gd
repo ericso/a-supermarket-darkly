@@ -1,12 +1,18 @@
-class_name Item extends Node2D
+class_name Item extends Node
 
-@export var item_name: String
+@export var id: String
+@export var label: String
 @export var price: int
-@export var icon: Texture2D
 
 @onready var sprite := $Sprite
 
-func _init(name, price, icon) -> void:
-	item_name = name
+var icon_path: String = ""
+
+func _init(id: String, label: String, price: int, icon_path: String) -> void:
+	id = id
+	label = label
 	price = price
-	sprite.texture = icon
+	icon_path = icon_path
+
+func _ready():
+	sprite.texture = icon_path

@@ -1,7 +1,7 @@
 class_name Shelf extends Node2D
 
 # Item handling
-@export var item: Dictionary = {} # the item this shelf holds
+@export var item: Item = null # the item this shelf holds
 @export var quantity: int = 0
 
 @onready var item_sprite := $ItemSprite
@@ -51,21 +51,21 @@ func open_shelf_menu():
 # get_item_id returns the id of the item that populates this shelf
 # returns an empty string "" if Shelf.item is not set.
 func get_item_id() -> String:
-	if item != {}:
+	if item != null:
 		return item.get("id")
 	return ""
 	
 # get_item_name returns the name of the item that populates this shelf
 # returns an empty string "" if Shelf.item is not set.
 func get_item_name() -> String:
-	if item != {}:
+	if item != null:
 		return item.get("name")
 	return ""
 
 # pick_random_qty reduces the shelf by a random amount between 0 and the current
 # quantity. The amount picked is returned.
 func pick_random_qty() -> int:
-	if item == {}:
+	if item == null:
 		return 0
 	
 	var amt: int = RandomNumberGenerator.new().randi_range(0, quantity)
@@ -82,4 +82,4 @@ func restock(qty: int):
 	quantity += qty
 
 func has_stock() -> bool:
-	return !item.is_empty() and quantity != 0
+	return !item == null and quantity != 0
