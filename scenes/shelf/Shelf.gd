@@ -66,7 +66,10 @@ func pick_random_qty() -> int:
 	if item == null:
 		return 0
 	
-	var amt: int = RandomNumberGenerator.new().randi_range(0, quantity)
+	if quantity == 0:
+		return 0
+	
+	var amt: int = RandomNumberGenerator.new().randi_range(1, quantity)
 	quantity -= amt
 	return amt
 
