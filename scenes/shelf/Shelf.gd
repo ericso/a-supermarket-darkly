@@ -1,4 +1,4 @@
-extends Node2D
+class_name Shelf extends Node2D
 
 # Item handling
 @export var item: Dictionary = {} # the item this shelf holds
@@ -6,7 +6,7 @@ extends Node2D
 
 @onready var item_sprite := $ItemSprite
 
-var ItemScene := preload("res://scenes/item/Item.tscn")
+#var ItemScene := preload("res://scenes/item/Item.tscn")
 
 # Interaction handling
 @onready var tap_hold_timer: Timer = $TapHoldTimer
@@ -54,19 +54,23 @@ func get_item_id() -> String:
 	if item != {}:
 		return item.get("id")
 	return ""
+	
+# get_item_name returns the name of the item that populates this shelf
+# returns an empty string "" if Shelf.item is not set.
+func get_item_name() -> String:
+	if item != {}:
+		return item.get("name")
+	return ""
 
-# pick_item reduces the shelf by quantity, leaving the quantity equal to zero
-# if qty > Shelf.quantity. The function returns the amount.
-func pick_item(qty: int) -> int:
+# pick_random_qty reduces the shelf by a random amount between 0 and the current
+# quantity. The amount picked is returned.
+func pick_random_qty() -> int:
 	if item == {}:
 		return 0
 	
-	if quantity <= qty:
-		quantity = 0
-		return qty
-	
-	quantity -= qty
-	return qty
+	var amt: int = RandomNumberGenerator.new().randi_range(0, quantity)
+	quantity -= amt
+	return amt
 
 # stock_with_item sets this shelf to the item id
 func stock_with_item(id: String):

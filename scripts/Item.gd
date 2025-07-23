@@ -1,4 +1,4 @@
-extends Node2D
+class_name Item extends Node2D
 
 @export var item_name: String
 @export var price: int
@@ -6,5 +6,7 @@ extends Node2D
 
 @onready var sprite := $Sprite
 
-func _ready():
+func _init(name, price, icon) -> void:
+	item_name = name
+	price = price
 	sprite.texture = icon
