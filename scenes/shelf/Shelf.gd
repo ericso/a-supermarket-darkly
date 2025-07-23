@@ -46,19 +46,8 @@ func open_shelf_menu():
 	menu.position = get_viewport().get_mouse_position()
 	menu.shelf = self
 
-# get_item_id returns the id of the item that populates this shelf
-# returns an empty string "" if Shelf.item is not set.
-func get_item_id() -> String:
-	if item != null:
-		return item.get("id")
-	return ""
-	
-# get_item_name returns the name of the item that populates this shelf
-# returns an empty string "" if Shelf.item is not set.
-func get_item_name() -> String:
-	if item != null:
-		return item.get("name")
-	return ""
+func get_item() -> Item:
+	return item
 
 # pick_random_qty reduces the shelf by a random amount between 0 and the current
 # quantity. The amount picked is returned.

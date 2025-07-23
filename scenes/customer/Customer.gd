@@ -7,7 +7,7 @@ extends CharacterBody2D
 @export var sprite_texture: Texture2D
 @onready var nav_agent := $NavigationAgent
 
-var basket: Array[Item] = []
+var basket: Dictionary = {}
 
 func _ready():
 	sprite.texture = sprite_texture
@@ -24,18 +24,19 @@ func visit_random_stocked_shelf():
 		var safe_pos = NavigationServer2D.map_get_closest_point(map, target_pos)
 		nav_agent.set_target_position(safe_pos)
 		
-		# Disconnect any previous connection made
+		# disconnect any previous connection made before connecting to new shelf
 		if nav_agent.is_connected("target_reached", Callable(self, "_on_reached_shelf")):
 			nav_agent.target_reached.disconnect(Callable(self, "_on_reached_shelf"))
-		# Use a lambda to capture the shelf
 		nav_agent.target_reached.connect(func(): _on_reached_shelf(shelf), CONNECT_ONE_SHOT)
 	else:
 		await get_tree().create_timer(1.0).timeout
 		visit_random_stocked_shelf()
 
-func fill_basket_from_shelf(item_id: String, qty: int):
-	print("DEBUG::fill_basket_from_shelf id: {item_id} amount: {qty}".format({"item_id": item_id, "qty": qty}))
-	# TODO fill the basket
+func fill_basket_from_shelf(item: Item, qty: int):
+	basket[item] = qty
+	# TODO remove after testing
+	for _item in basket.keys():
+		print("DEBUG:: {item} {qty}".format({"item": _item.get("label"), "qty": basket[_item]}))
 
 func _physics_process(_delta):
 	if nav_agent.is_navigation_finished():
@@ -50,7 +51,7 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func _on_reached_shelf(shelf: Shelf):
-	fill_basket_from_shelf(shelf.get_item_id(), shelf.pick_random_qty())
+	fill_basket_from_shelf(shelf.get_item(), shelf.pick_random_qty())
 
 func go_to_checkout():
 	# Placeholder
