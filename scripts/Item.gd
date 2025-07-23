@@ -1,18 +1,12 @@
 class_name Item extends Node
 
-@export var id: String
-@export var label: String
-@export var price: int
+var id: String = ""
+var label: String = ""
+var price: int = 0 # TODO change this to float
+var icon: CompressedTexture2D = null
 
-@onready var sprite := $Sprite
-
-var icon_path: String = ""
-
-func _init(id: String, label: String, price: int, icon_path: String) -> void:
-	id = id
-	label = label
-	price = price
-	icon_path = icon_path
-
-func _ready():
-	sprite.texture = icon_path
+func _init(_id: String, _label: String, _price: int, icon: CompressedTexture2D) -> void:
+	self.id = _id
+	self.label = _label
+	self.price = _price
+	self.icon = icon

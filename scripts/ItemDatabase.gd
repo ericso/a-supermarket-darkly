@@ -1,7 +1,7 @@
 extends Node
 
-var apple = Item.new("apple", "Apple", 1, "res://assets/sprites/items/apple.png")
-var cereal = Item.new("cereal", "Cereal", 3, "res://assets/sprites/items/cereal.png")
+var apple = Item.new("apple", "Apple", 1, preload("res://assets/sprites/items/apple.png"))
+var cereal = Item.new("cereal", "Cereal", 3, preload("res://assets/sprites/items/cereal.png"))
 
 var items = {
 	"apple": apple,

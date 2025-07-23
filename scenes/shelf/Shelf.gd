@@ -75,7 +75,7 @@ func pick_random_qty() -> int:
 # stock_with_item sets this shelf to the item id
 func stock_with_item(id: String):
 	item = ItemDatabase.get_item_data(id)
-	item_sprite.texture = item.get("texture")
+	item_sprite.texture = item.get("icon")
 
 # restock adds qty to the shelf quantity
 func restock(qty: int):
