@@ -1,12 +1,10 @@
-extends Node2D
+class_name Shelf extends Node2D
 
 # Item handling
-@export var item: Dictionary = {} # the item this shelf holds
+@export var item: Item = null # the item this shelf holds
 @export var quantity: int = 0
 
 @onready var item_sprite := $ItemSprite
-
-var ItemScene := preload("res://scenes/item/Item.tscn")
 
 # Interaction handling
 @onready var tap_hold_timer: Timer = $TapHoldTimer
@@ -48,34 +46,36 @@ func open_shelf_menu():
 	menu.position = get_viewport().get_mouse_position()
 	menu.shelf = self
 
-# get_item_id returns the id of the item that populates this shelf
-# returns an empty string "" if Shelf.item is not set.
-func get_item_id() -> String:
-	if item != {}:
-		return item.get("id")
-	return ""
+func get_item() -> Item:
+	return item
 
-# pick_item reduces the shelf by quantity, leaving the quantity equal to zero
-# if qty > Shelf.quantity. The function returns the amount.
-func pick_item(qty: int) -> int:
-	if item == {}:
+# pick_random_qty reduces the shelf by a random amount between 0 and the current
+# quantity. The amount picked is returned.
+func pick_random_qty() -> int:
+	if item == null:
 		return 0
 	
-	if quantity <= qty:
-		quantity = 0
-		return qty
+	if quantity == 0:
+		return 0
 	
-	quantity -= qty
-	return qty
+	var amt: int = RandomNumberGenerator.new().randi_range(1, quantity)
+	quantity -= amt
+	return amt
 
 # stock_with_item sets this shelf to the item id
 func stock_with_item(id: String):
-	item = ItemDatabase.get_item_data(id)
-	item_sprite.texture = item.get("texture")
+	var item_data = ItemDatabase.get_item_data(id)
+	item = Item.new(
+		item_data.id,
+		item_data.name,
+		item_data.price,
+		item_data.texture,
+	)
+	item_sprite.texture = item_data.texture
 
 # restock adds qty to the shelf quantity
 func restock(qty: int):
 	quantity += qty
 
 func has_stock() -> bool:
-	return !item.is_empty() and quantity != 0
+	return !item == null and quantity != 0

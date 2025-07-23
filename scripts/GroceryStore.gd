@@ -1,18 +1,18 @@
 extends Node2D
 
-var shelves: Array[Node2D] = []
+var shelves: Array[Shelf] = []
 
-func register_shelf(shelf: Node2D) -> void:
+func register_shelf(shelf: Shelf) -> void:
 	if not shelves.has(shelf):
 		shelves.append(shelf)
 
-func unregister_shelf(shelf: Node2D) -> void:
+func unregister_shelf(shelf: Shelf) -> void:
 	shelves.erase(shelf)
 
-func get_stocked_shelves() -> Array[Node2D]:
+func get_stocked_shelves() -> Array[Shelf]:
 	return shelves.filter(func(shelf): return shelf.has_stock())
 
-func get_random_stocked_shelf() -> Node2D:
+func get_random_stocked_shelf() -> Shelf:
 	var stocked = get_stocked_shelves()
 	if stocked.is_empty():
 		return null

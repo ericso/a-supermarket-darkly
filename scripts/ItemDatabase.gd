@@ -2,13 +2,15 @@ extends Node
 
 var items = {
 	"apple": {
+		"id": "apple",
 		"name": "Apple",
-		"price": 1,
+		"price": 0.5,
 		"texture": preload("res://assets/sprites/items/apple.png")
 	},
 	"cereal": {
+		"id": "cereal",
 		"name": "Cereal",
-		"price": 10,
+		"price": 3.95,
 		"texture": preload("res://assets/sprites/items/cereal.png")
 	},
 }
