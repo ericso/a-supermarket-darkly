@@ -2,6 +2,9 @@ extends Node2D
 
 var shelves: Array[Shelf] = []
 
+# bank is how much money the grocery store has
+var bank: float = 0.0
+
 func register_shelf(shelf: Shelf) -> void:
 	if not shelves.has(shelf):
 		shelves.append(shelf)
@@ -18,7 +21,5 @@ func get_random_stocked_shelf() -> Shelf:
 		return null
 	return stocked[randi() % stocked.size()]
 
-# TODO consider implementation
-#var checkout_node: Node2D
-#func get_checkout_position() -> Vector2i:
-	#return checkout_node.global_position if checkout_node else Vector2.ZERO
+func get_current_bank() -> float:
+	return bank

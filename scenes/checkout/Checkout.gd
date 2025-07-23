@@ -1,1 +1,1 @@
-extends Node2D
+class_name Checkout extends Node2D
