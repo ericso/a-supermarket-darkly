@@ -31,7 +31,10 @@ texture_region_size = Vector2i(32, 32)
 3:2/0 = 0
 3:1/0 = 0
 3:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_nha0i")
+3:1/0/custom_data_2 = "Floor"
 3:0/0 = 0
+3:0/0/custom_data_2 = "Sidewalk"
+3:0/0/custom_data_3 = true
 2:1/0 = 0
 2:1/0/custom_data_0 = true
 2:1/0/custom_data_1 = "res://scenes/checkout/Checkout.tscn"
@@ -51,6 +54,8 @@ custom_data_layer_1/name = "scene_path"
 custom_data_layer_1/type = 4
 custom_data_layer_2/name = "name"
 custom_data_layer_2/type = 4
+custom_data_layer_3/name = "spawn"
+custom_data_layer_3/type = 1
 sources/0 = SubResource("TileSetAtlasSource_dc040")
 
 [sub_resource type="GDScript" id="GDScript_nha0i"]
