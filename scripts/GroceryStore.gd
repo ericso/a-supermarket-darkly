@@ -2,12 +2,19 @@ extends Node2D
 
 var shelves: Array[Shelf] = []
 var checkouts: Array[Checkout] = []
+var front_door: Door = null
 
 # bank is how much money the grocery store has
 var bank: float = 0.0
 
 # items_sold keys are Item objects, value is the amount of that item sold
 var items_sold: Dictionary = {}
+
+func record_item_sold(item: Item, qty: int):
+	if !items_sold.has(item):
+		items_sold[item] = qty
+	else:
+		items_sold[item] += qty
 
 ## Shelves
 func register_shelf(shelf: Shelf) -> void:
@@ -40,8 +47,10 @@ func unregister_checkout(checkout: Checkout) -> void:
 func get_open_checkout() -> Checkout:
 	return checkouts[randi() % checkouts.size()]
 
-func record_item_sold(item: Item, qty: int):
-	if !items_sold.has(item):
-		items_sold[item] = qty
-	else:
-		items_sold[item] += qty
+## Doors
+func register_door(door: Door) -> void:
+	print("DEBUG register_door ", door)
+	front_door = door
+
+func get_front_door() -> Door:
+	return front_door
