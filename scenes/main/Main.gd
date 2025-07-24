@@ -5,11 +5,15 @@ const TILE_SIZE = 32
 var customer_scene := preload("res://scenes/customer/Customer.tscn")
 
 @onready var store_map: TileMapLayer = $Store
+@onready var money_label := $UI/MarginContainer/PanelContainer/Money
 
 func _ready():
 	# spawn shelves and customers
 	spawn_customer_at_tile(9, 18)
 	spawn_interactables()
+
+func _process(_delta):
+	update_money_label(GroceryStore.get_current_bank())
 
 func spawn_customer_at_tile(x_tile: int, y_tile: int):
 	var customer = customer_scene.instantiate()
@@ -38,3 +42,6 @@ func spawn_interactables():
 					node.name = tile_data.get_custom_data("name")
 				else:
 					print("⚠️ Could not load scene at path:", scene_path)
+
+func update_money_label(amt: float):
+	money_label.text = "Money: $%0.2f" % amt

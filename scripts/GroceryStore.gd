@@ -16,6 +16,9 @@ func record_item_sold(item: Item, qty: int):
 	else:
 		items_sold[item] += qty
 
+func get_current_bank() -> float:
+	return bank
+
 ## Shelves
 func register_shelf(shelf: Shelf) -> void:
 	if not shelves.has(shelf):
@@ -32,9 +35,6 @@ func get_random_stocked_shelf() -> Shelf:
 	if stocked.is_empty():
 		return null
 	return stocked[randi() % stocked.size()]
-
-func get_current_bank() -> float:
-	return bank
 
 ## Checkouts
 func register_checkout(checkout: Checkout) -> void:
