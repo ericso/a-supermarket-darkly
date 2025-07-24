@@ -1,8 +1,20 @@
-[gd_scene load_steps=9 format=4 uid="uid://nbfo3cn2hpmh"]
+[gd_scene load_steps=11 format=4 uid="uid://nbfo3cn2hpmh"]
 
 [ext_resource type="Script" uid="uid://dqgftvulsu404" path="res://scenes/main/Main.gd" id="1_uu6xs"]
 [ext_resource type="Texture2D" uid="uid://ca2swdbmqbx50" path="res://assets/sheets/grocery-store-tileset.png" id="2_q24mn"]
 [ext_resource type="Script" uid="uid://b2w2eyn4y8fcy" path="res://scenes/main/CustomerSpawner.gd" id="3_q24mn"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_q24mn"]
+vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-16, -16, -16, 16, 16, 16, 16, -16)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_gyg6b"]
+vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-16, -16, -16, 16, 16, 16, 16, -16)])
+agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_nha0i"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -33,6 +45,7 @@ texture_region_size = Vector2i(32, 32)
 3:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_nha0i")
 3:1/0/custom_data_2 = "Floor"
 3:0/0 = 0
+3:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_gyg6b")
 3:0/0/custom_data_2 = "Sidewalk"
 3:0/0/custom_data_3 = true
 2:1/0 = 0
@@ -41,6 +54,7 @@ texture_region_size = Vector2i(32, 32)
 2:1/0/custom_data_2 = "Checkout"
 1:1/animation_columns = 3
 1:1/0 = 0
+1:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_q24mn")
 1:1/0/custom_data_0 = true
 1:1/0/custom_data_1 = "res://scenes/door/Door.tscn"
 1:1/0/custom_data_2 = "Door"
