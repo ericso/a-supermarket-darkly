@@ -39,7 +39,7 @@ func run_customer_loop() -> void:
 		set_target_position(shelf.global_position)
 		await nav_agent.target_reached
 		visited_shelves[shelf.get_item().id] = null
-		fill_basket_from_shelf(shelf.get_item(), shelf.pick_random_qty())
+		basket[shelf.get_item()] = shelf.pick_random_qty()
 		num_items_to_buy -= 1
 	
 	var checkout: Checkout = GroceryStore.get_open_checkout()
@@ -62,6 +62,3 @@ func set_target_position(pos: Vector2) -> void:
 	nav_agent.set_target_position(Vector2.ZERO)
 	await get_tree().process_frame  # allow one frame to clear internal state
 	nav_agent.set_target_position(safe_pos)
-
-func fill_basket_from_shelf(item: Item, qty: int):
-	basket[item] = qty
