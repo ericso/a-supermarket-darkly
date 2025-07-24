@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 @export var speed := 300.0
+@export var min_items := 1
+@export var max_items := ItemDatabase.get_item_count()
 
 @onready var sprite := $Sprite
 
@@ -12,7 +14,7 @@ var num_items_to_buy: int = 0
 var visited_shelves: Dictionary = {}
 
 func _ready():
-	num_items_to_buy = RandomNumberGenerator.new().randi_range(1, 2)
+	num_items_to_buy = RandomNumberGenerator.new().randi_range(min_items, max_items)
 	sprite.texture = sprite_texture
 	visit_random_stocked_shelf()
 
