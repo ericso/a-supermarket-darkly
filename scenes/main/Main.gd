@@ -36,3 +36,5 @@ func spawn_interactables():
 					node.position = store_map.map_to_local(cell)
 					add_child(node)
 					node.name = tile_data.get_custom_data("name")
+				else:
+					print("⚠️ Could not load scene at path:", scene_path)
