@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=4 uid="uid://nbfo3cn2hpmh"]
+[gd_scene load_steps=9 format=4 uid="uid://nbfo3cn2hpmh"]
 
 [ext_resource type="Script" uid="uid://dqgftvulsu404" path="res://scenes/main/Main.gd" id="1_uu6xs"]
 [ext_resource type="Texture2D" uid="uid://ca2swdbmqbx50" path="res://assets/sheets/grocery-store-tileset.png" id="2_q24mn"]
+[ext_resource type="Script" uid="uid://b2w2eyn4y8fcy" path="res://scenes/main/CustomerSpawner.gd" id="3_q24mn"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_nha0i"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -82,3 +83,6 @@ layout_mode = 2
 layout_mode = 2
 text = "Monies: $0"
 label_settings = SubResource("LabelSettings_nha0i")
+
+[node name="CustomerSpawner" type="Node" parent="."]
+script = ExtResource("3_q24mn")
