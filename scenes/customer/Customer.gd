@@ -29,39 +29,32 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func run_customer_loop() -> void:
-	print("DEBUG:: num_items_to_buy ", num_items_to_buy)
-	
+	print("DEBUG::run_customer_loop num_items_to_buy ", num_items_to_buy)
 	while num_items_to_buy > 0:
-		#print("DEBUG:: num_items_to_buy ", num_items_to_buy)
 		var shelf: Shelf = GroceryStore.get_random_stocked_shelf()
 		if shelf == null or visited_shelves.has(shelf.get_item().id):
 			await get_tree().create_timer(1.0).timeout # wait 1 sec and try again
 			continue
 		
-		print("DEBUG:: navigating to shelf ", shelf.global_position)
 		set_target_position(shelf.global_position)
 		await nav_agent.target_reached
 		visited_shelves[shelf.get_item().id] = null
 		fill_basket_from_shelf(shelf.get_item(), shelf.pick_random_qty())
 		num_items_to_buy -= 1
 	
-	print("DEBUG:: customer is checking out")
 	var checkout: Checkout = GroceryStore.get_open_checkout()
 	set_target_position(checkout.global_position)
 	await nav_agent.target_reached
 	for _item in basket:
 		checkout.checkout_item(_item, basket[_item])
 	
-	print("DEBUG:: customer is exiting")
 	var front_door: Door = GroceryStore.get_front_door()
-	print("DEBUG::go_to_exit front_door ", front_door)
 	set_target_position(front_door.global_position)
 	await nav_agent.target_reached
-	print("DEBUG::goodbye!")
+	print("goodbye!")
 	queue_free()
 
 func set_target_position(pos: Vector2) -> void:
-	print("DEBUG::set_target_position ", pos)
 	var map = nav_agent.get_navigation_map()
 	var safe_pos = NavigationServer2D.map_get_closest_point(map, pos)
 
@@ -71,5 +64,4 @@ func set_target_position(pos: Vector2) -> void:
 	nav_agent.set_target_position(safe_pos)
 
 func fill_basket_from_shelf(item: Item, qty: int):
-	print("DEBUG::fill_basket_from_shelf")
 	basket[item] = qty

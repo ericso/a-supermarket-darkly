@@ -49,7 +49,6 @@ func get_open_checkout() -> Checkout:
 
 ## Doors
 func register_door(door: Door) -> void:
-	print("DEBUG register_door ", door)
 	front_door = door
 
 func get_front_door() -> Door:
