@@ -22,9 +22,10 @@ GroceryStore="*res://scripts/GroceryStore.gd"
 
 [display]
 
-window/size/viewport_width=540
-window/size/viewport_height=720
-window/stretch/mode="viewport"
+window/size/viewport_width=1080
+window/size/viewport_height=1440
+window/size/always_on_top=true
+window/stretch/scale=2.0
 
 [rendering]
 
