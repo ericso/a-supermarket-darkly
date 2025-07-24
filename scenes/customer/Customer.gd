@@ -13,6 +13,9 @@ var basket: Dictionary = {}
 var num_items_to_buy: int = 0
 var visited_shelves: Dictionary = {}
 
+# seconds to wait before re-trying for a stocked shelf
+const CUSTOMER_WAIT_INTERVAL: float = 0.5
+
 func _ready():
 	num_items_to_buy = RandomNumberGenerator.new().randi_range(min_items, max_items)
 	sprite.texture = sprite_texture
@@ -25,7 +28,6 @@ func _physics_process(_delta):
 		var next_pos = nav_agent.get_next_path_position()
 		var direction = (next_pos - global_position).normalized()
 		velocity = direction * speed
-
 	move_and_slide()
 
 func run_customer_loop() -> void:
@@ -33,7 +35,7 @@ func run_customer_loop() -> void:
 	while num_items_to_buy > 0:
 		var shelf: Shelf = GroceryStore.get_random_stocked_shelf()
 		if shelf == null or visited_shelves.has(shelf.get_item().id):
-			await get_tree().create_timer(1.0).timeout # wait 1 sec and try again
+			await get_tree().create_timer(CUSTOMER_WAIT_INTERVAL).timeout
 			continue
 		
 		set_target_position(shelf.global_position)
