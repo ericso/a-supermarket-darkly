@@ -3,6 +3,8 @@ extends Node
 # bank is how much money the grocery store has
 var bank: float = 100.0 # start off the game with $100
 
+var customers_served: int = 0 # number of customers checked out
+
 # profits maps item ids to the amount profit for that item.
 # spent: money spent to purchase units of item
 # earned: money earned from customer purchases

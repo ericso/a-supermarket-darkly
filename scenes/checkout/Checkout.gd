@@ -5,11 +5,6 @@ func _ready():
 
 func checkout_item(item: Item, qty: int):
 	var cost: float = item.sale_price * qty
-	print("DEBUG::checkout_item {id} {price} {qty} {cost}".format({
-		"id": item.id,
-		"price": item.sale_price,
-		"qty": qty,
-		"cost": cost,
-	}))
 	FinanceManager.bank += cost
+	FinanceManager.customers_served += 1
 	InventoryManager.sell_item(item, qty)

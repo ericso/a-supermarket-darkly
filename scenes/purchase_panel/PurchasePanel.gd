@@ -1,12 +1,12 @@
 extends PopupPanel
 
-@onready var item_list = $VBoxContainer/ItemList
+@onready var item_list = $MarginContainer/ItemContainer/ItemList
 
 # TODO purchase_amount should be set in UI
 var purchase_amount: int = 100
 
 func _ready():
-	$VBoxContainer/CloseButton.pressed.connect(on_close_pressed)
+	$MarginContainer/CloseButton.pressed.connect(on_close_pressed)
 	populate_items()
 	item_list.item_selected.connect(on_buy_pressed)
 
