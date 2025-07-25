@@ -1,6 +1,6 @@
 extends Node
 
-var items = {
+var products = {
 	"apple": {
 		"id": "apple",
 		"name": "Apple",
@@ -31,21 +31,21 @@ var items = {
 	},
 }
 
-func get_item(id: String) -> Item:
-	var item_data = ItemDatabase.get_item_data(id)
+func get_product(id: String) -> Item:
+	var data = ProductDatabase.get_product_data(id)
 	return Item.new(
-		item_data.id,
-		item_data.name,
-		item_data.sale_price,
-		item_data.texture,
-		item_data.unit_price,
+		data.id,
+		data.name,
+		data.sale_price,
+		data.texture,
+		data.unit_price,
 	)
 
-func get_item_data(id: String) -> Dictionary:
-	return items.get(id, {})
+func get_product_data(id: String) -> Dictionary:
+	return products.get(id, {})
 
-func get_item_ids() -> Array:
-	return items.keys()
+func get_product_ids() -> Array:
+	return products.keys()
 
-func get_item_count() -> int:
-	return get_item_ids().size()
+func get_product_count() -> int:
+	return get_product_ids().size()

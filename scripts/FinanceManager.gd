@@ -18,7 +18,7 @@ func get_current_bank() -> float:
 	return bank
 
 func record_purchase(item_id: String, qty: int):
-	var item: Item = ItemDatabase.get_item(item_id)
+	var item: Item = ProductDatabase.get_product(item_id)
 	var spent: float = qty * item.unit_price
 	if !profits.has(item_id):
 		profits[item_id] = {
@@ -29,7 +29,7 @@ func record_purchase(item_id: String, qty: int):
 		profits[item_id].spent += spent
 
 func record_sale(item_id: String, qty: int):
-	var item: Item = ItemDatabase.get_item(item_id)
+	var item: Item = ProductDatabase.get_product(item_id)
 	var earned: float = qty * item.sale_price
 	if !profits.has(item_id):
 		profits[item_id] = {

@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var speed := 300.0
 @export var min_items := 1
-@export var max_items := ItemDatabase.get_item_count()
+@export var max_items := ProductDatabase.get_product_count()
 
 @onready var sprite := $Sprite
 

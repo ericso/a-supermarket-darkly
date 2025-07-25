@@ -17,10 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-ItemDatabase="*res://scripts/ItemDatabase.gd"
 StoreManager="*res://scripts/StoreManager.gd"
 InventoryManager="*res://scripts/InventoryManager.gd"
 FinanceManager="*res://scripts/FinanceManager.gd"
+ProductDatabase="*res://scripts/ProductDatabase.gd"
 
 [display]
 
