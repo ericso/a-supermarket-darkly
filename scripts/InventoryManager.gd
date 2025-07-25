@@ -1,7 +1,7 @@
 extends Node
 
 # inventory is what the store currently has in stock
-# keys are the ID of the Item
+# keys are the ID of the Product
 # values are objects that store the current unit stock and sale price
 # {
 #     "apple": { "stock": 10, "sale_price": 2.00 },

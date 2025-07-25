@@ -1,14 +1,14 @@
 class_name Shelf extends Node2D
 
 # Product handling
-@export var product: Product = null # the item this shelf holds
+@export var product: Product = null # the Product this shelf holds
 @onready var product_sprite := $ProductSprite
 @onready var stock_bar: ProgressBar = $StockBar
 @export var max_stock: int = 20
 var current_stock: int = 0
 
-@export var min_item_purchase_count: int = 1
-@export var max_item_purchase_count: int = 4
+@export var min_product_purchase_count: int = 1
+@export var max_product_purchase_count: int = 4
 
 # Interaction handling
 @onready var tap_hold_timer: Timer = $TapHoldTimer
@@ -70,15 +70,15 @@ func pick_random_qty() -> int:
 	if current_stock == 0:
 		return 0
 	
-	var amt: int = RandomNumberGenerator.new().randi_range(min_item_purchase_count, max_item_purchase_count)
+	var amt: int = RandomNumberGenerator.new().randi_range(min_product_purchase_count, max_product_purchase_count)
 	if current_stock - amt < 0:
 		amt = current_stock
 	current_stock -= amt
 	update_stock_bar()
 	return amt
 
-# stock_with_item stocks this shelf with the item of id
-func stock_with_item(id: String):
+# stock_with_product stocks this shelf with the Product of id
+func stock_with_product(id: String):
 	product = ProductDatabase.get_product(id)
 	product_sprite.texture = product.texture
 	restock()
