@@ -88,6 +88,8 @@ func stock_with_item(id: String):
 func restock():
 	if item == null:
 		print("unable to restock, shelf has no item") # TODO notification center
+		return
+	
 	var amount_to_stock: int = max_stock - current_stock
 	var amt_stocked: int = InventoryManager.move_stock_to_shelf(item.id, amount_to_stock)
 	current_stock += amt_stocked
