@@ -1,6 +1,6 @@
 extends Node
 
-# inventory is what the store current has in stock
+# inventory is what the store currently has in stock
 # keys are the ID of the Item
 # values are objects that store the current unit stock and sale price
 # {
@@ -32,3 +32,8 @@ func get_stock(item_id: String) -> int:
 	if !inventory.has(item_id):
 		return 0
 	return inventory[item_id].stock
+
+# get_stock_ids returns the keys in inventory Dictionary, regardless of
+# whether or not there is current stock
+func get_inventory_ids() -> Array:
+	return inventory.keys()
