@@ -7,7 +7,7 @@ func _ready():
 	spawn_interactables()
 
 func _process(_delta):
-	update_money_label(GroceryStore.get_current_bank())
+	update_money_label(StoreManager.get_current_bank())
 
 # spawn_interactables instantiates all "interactable" tiles
 func spawn_interactables():

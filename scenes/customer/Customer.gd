@@ -33,7 +33,7 @@ func _physics_process(_delta):
 func run_customer_loop() -> void:
 	print("DEBUG::run_customer_loop num_items_to_buy ", num_items_to_buy)
 	while num_items_to_buy > 0:
-		var shelf: Shelf = GroceryStore.get_random_stocked_shelf()
+		var shelf: Shelf = StoreManager.get_random_stocked_shelf()
 		if shelf == null or visited_shelves.has(shelf.get_item().id):
 			await get_tree().create_timer(CUSTOMER_WAIT_INTERVAL).timeout
 			continue
@@ -44,13 +44,13 @@ func run_customer_loop() -> void:
 		basket[shelf.get_item()] = shelf.pick_random_qty()
 		num_items_to_buy -= 1
 	
-	var checkout: Checkout = GroceryStore.get_open_checkout()
+	var checkout: Checkout = StoreManager.get_open_checkout()
 	set_target_position(checkout.global_position)
 	await nav_agent.target_reached
 	for _item in basket:
 		checkout.checkout_item(_item, basket[_item])
 	
-	var front_door: Door = GroceryStore.get_front_door()
+	var front_door: Door = StoreManager.get_front_door()
 	set_target_position(front_door.global_position)
 	await nav_agent.target_reached
 	print("goodbye!")

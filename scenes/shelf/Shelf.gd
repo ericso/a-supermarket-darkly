@@ -17,7 +17,7 @@ var is_holding = false
 var hold_threshold = 0.3 # seconds to register hold
 
 func _ready():
-	GroceryStore.register_shelf(self)
+	StoreManager.register_shelf(self)
 	
 	connect("mouse_entered", on_mouse_entered)
 	connect("mouse_exited", on_mouse_exited)
@@ -79,14 +79,8 @@ func pick_random_qty() -> int:
 
 # stock_with_item sets this shelf to the item id
 func stock_with_item(id: String):
-	var item_data = ItemDatabase.get_item_data(id)
-	item = Item.new(
-		item_data.id,
-		item_data.name,
-		item_data.price,
-		item_data.texture,
-	)
-	item_sprite.texture = item_data.texture
+	item = ItemDatabase.get_item(id)
+	item_sprite.texture = item.texture
 	restock()
 	update_stock_bar()
 

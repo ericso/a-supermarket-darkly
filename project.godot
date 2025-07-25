@@ -18,7 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 ItemDatabase="*res://scripts/ItemDatabase.gd"
-GroceryStore="*res://scripts/GroceryStore.gd"
+StoreManager="*res://scripts/StoreManager.gd"
+InventoryManager="*res://scripts/InventoryManager.gd"
 
 [display]
 

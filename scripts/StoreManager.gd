@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 var shelves: Array[Shelf] = []
 var checkouts: Array[Checkout] = []
@@ -9,7 +9,7 @@ var bank: float = 0.0
 
 # items_sold keys are Item objects, value is the amount of that item sold
 var items_sold: Dictionary = {}
-
+	
 func record_item_sold(item: Item, qty: int):
 	if !items_sold.has(item):
 		items_sold[item] = qty
