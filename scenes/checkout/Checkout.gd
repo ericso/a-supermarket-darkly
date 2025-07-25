@@ -4,10 +4,10 @@ func _ready():
 	StoreManager.register_checkout(self)
 
 func checkout_item(item: Item, qty: int):
-	var cost: float = item.price * qty
+	var cost: float = item.sale_price * qty
 	print("DEBUG::checkout_item {id} {price} {qty} {cost}".format({
 		"id": item.id,
-		"price": item.price,
+		"price": item.sale_price,
 		"qty": qty,
 		"cost": cost,
 	}))

@@ -4,28 +4,42 @@ var items = {
 	"apple": {
 		"id": "apple",
 		"name": "Apple",
-		"price": 0.5,
-		"texture": preload("res://assets/sprites/items/apple.png")
+		"sale_price": 0.5,
+		"texture": preload("res://assets/sprites/items/apple.png"),
+		"unit_price": 0.1,
 	},
 	"cereal": {
 		"id": "cereal",
 		"name": "Cereal",
-		"price": 3.95,
-		"texture": preload("res://assets/sprites/items/cereal.png")
+		"sale_price": 3.95,
+		"texture": preload("res://assets/sprites/items/cereal.png"),
+		"unit_price": 0.1,
 	},
 	"fish": {
 		"id": "fish",
 		"name": "Fish",
-		"price": 7.88,
-		"texture": preload("res://assets/sprites/items/fish.png")
+		"sale_price": 7.88,
+		"texture": preload("res://assets/sprites/items/fish.png"),
+		"unit_price": 0.1,
 	},
 	"steak": {
 		"id": "steak",
 		"name": "Steak",
-		"price": 19.01,
-		"texture": preload("res://assets/sprites/items/steak.png")
+		"sale_price": 19.01,
+		"texture": preload("res://assets/sprites/items/steak.png"),
+		"unit_price": 0.1,
 	},
 }
+
+func get_item(id: String) -> Item:
+	var item_data = ItemDatabase.get_item_data(id)
+	return Item.new(
+		item_data.id,
+		item_data.name,
+		item_data.sale_price,
+		item_data.texture,
+		item_data.unit_price,
+	)
 
 func get_item_data(id: String) -> Dictionary:
 	return items.get(id, {})
