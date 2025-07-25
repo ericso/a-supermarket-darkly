@@ -14,6 +14,7 @@ var reserves: float = 100.0 # start off the game with $100
 # }
 var profits: Dictionary = {}
 
+# customers_served is a count of all customers that have checked out
 var customers_served: int = 0
 
 func record_purchase(product_id: String, qty: int):
@@ -38,7 +39,13 @@ func record_sale(product_id: String, qty: int):
 	else:
 		profits[product_id].earned += earned
 
-func get_profit_for_item(product_id) -> float:
+func get_profit_for_product(product_id) -> float:
 	if !profits.has(product_id):
 		return 0.00
 	return profits[product_id].earned - profits[product_id].spent
+
+func get_total_profit() -> float:
+	var total_profit: float = 0.0
+	for product_id in ProductDatabase.get_product_ids():
+		total_profit += get_profit_for_product(product_id)
+	return total_profit

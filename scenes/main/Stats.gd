@@ -10,5 +10,5 @@ func _process(delta: float) -> void:
 func update_labels():
 	customers_served_label.text = "Customers Served: %d" % FinanceManager.customers_served
 	# TODO implment profit calculation
-	profit_label.text = "Profit: %d" % FinanceManager.reserves
-	reserves_label.text = "Profit: %d" % FinanceManager.reserves
+	profit_label.text = "Profit: $%.2f" % FinanceManager.get_total_profit()
+	reserves_label.text = "Reserves: $%.2f" % FinanceManager.reserves
