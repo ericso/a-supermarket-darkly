@@ -50,10 +50,7 @@ func run_customer_loop() -> void:
 	var checkout: Checkout = StoreManager.get_open_checkout()
 	set_target_position(checkout.global_position)
 	await nav_agent.target_reached
-	# TODO refactor checkout to checkout the basked, and move the customers_served counter there
-	for _product in basket:
-		checkout.checkout_product(_product, basket[_product])
-	FinanceManager.customers_served += 1
+	checkout.checkout_basket(basket)
 	
 	var front_door: Door = StoreManager.get_front_door()
 	set_target_position(front_door.global_position)

@@ -13,3 +13,8 @@ func checkout_product(product: Product, qty: int):
 	}))
 	FinanceManager.reserves += cost
 	InventoryManager.sell_product(product, qty)
+
+func checkout_basket(basket: Dictionary):
+	for _product in basket:
+		checkout_product(_product, basket[_product])
+	FinanceManager.customers_served += 1
