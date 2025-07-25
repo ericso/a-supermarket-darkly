@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 ItemDatabase="*res://scripts/ItemDatabase.gd"
 StoreManager="*res://scripts/StoreManager.gd"
 InventoryManager="*res://scripts/InventoryManager.gd"
+FinanceManager="*res://scripts/FinanceManager.gd"
 
 [display]
 

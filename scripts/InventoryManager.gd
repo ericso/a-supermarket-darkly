@@ -9,23 +9,28 @@ extends Node
 # }
 var inventory: Dictionary = {}
 
+# items_sold keys are Item objects, value is the amount of that item sold
+var items_sold: Dictionary = {}
+
 # purchase_stock attempts to purchase qty units of item. Returns true if successful
 func purchase_stock(item_id: String, qty: int) -> bool:
 	var item: Item = ItemDatabase.get_item(item_id)
 	var purchase_price = qty * item.unit_price
-	if purchase_price > StoreManager.bank:
+	if purchase_price > FinanceManager.bank:
 		print("not enough money") # TODO need a notifications area
 		return false
 	
-	StoreManager.bank -= purchase_price
+	FinanceManager.bank -= purchase_price
+	# store inventory
 	if inventory.has(item_id):
-		#inventory[item_id]["stock"] += qty # TODO is it this or next line?
 		inventory[item_id].stock += qty
 	else:
 		inventory[item_id] = {
 			"stock": qty,
 			"sale_price": item.sale_price
 		}
+	# record ledger
+	FinanceManager.record_purchase(item_id, qty)
 	return true
 
 # get_stock returns the amount of item that is in stock
@@ -48,3 +53,10 @@ func move_stock_to_shelf(item_id: String, qty: int) -> int:
 		return in_stock_qty
 	inventory[item_id].stock -= qty
 	return qty
+
+func sell_item(item: Item, qty: int):
+	if !items_sold.has(item):
+		items_sold[item] = qty
+	else:
+		items_sold[item] += qty
+	FinanceManager.record_sale(item.id, qty)
