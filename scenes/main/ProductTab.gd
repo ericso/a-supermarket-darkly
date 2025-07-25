@@ -21,6 +21,7 @@ func populate_items():
 	print("DEBUG: product_list node = ", product_list)
 
 func on_buy_pressed(index: int):
+	print("DEBUG::on_buy_pressed ", index)
 	var product_id = product_list.get_item_metadata(index)
 	InventoryManager.purchase_stock(product_id, purchase_amount)
 	populate_items()
