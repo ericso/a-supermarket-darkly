@@ -37,7 +37,7 @@ func _input(event):
 		elif not event.pressed and is_mouse_over:
 			if tap_hold_timer.time_left > 0:
 				tap_hold_timer.stop()
-				restock(10)
+				restock()
 
 func on_mouse_entered():
 	is_mouse_over = true
@@ -87,12 +87,12 @@ func stock_with_item(id: String):
 		item_data.texture,
 	)
 	item_sprite.texture = item_data.texture
-	restock(10)
+	restock()
 	update_stock_bar()
 
-# restock adds qty to the shelf quantity
-func restock(qty: int):
-	current_stock += qty
+# restock sets current_stock to max
+func restock():
+	current_stock = max_stock
 	update_stock_bar()
 
 func has_stock() -> bool:
