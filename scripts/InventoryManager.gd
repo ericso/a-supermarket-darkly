@@ -12,7 +12,7 @@ var inventory: Dictionary = {}
 # purchase_stock attempts to purchase qty units of item. Returns true if successful
 func purchase_stock(item_id: String, qty: int) -> bool:
 	var item: Item = ItemDatabase.get_item(item_id)
-	var purchase_price = qty * item.uint_price
+	var purchase_price = qty * item.unit_price
 	if purchase_price > StoreManager.bank:
 		print("not enough money") # TODO need a notifications area
 		return false

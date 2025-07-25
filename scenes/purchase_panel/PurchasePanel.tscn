@@ -26,6 +26,8 @@ vertical_alignment = 1
 
 [node name="ItemList" type="ItemList" parent="VBoxContainer"]
 layout_mode = 2
+auto_width = true
+auto_height = true
 
 [node name="CloseButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2

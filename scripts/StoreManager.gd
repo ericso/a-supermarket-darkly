@@ -5,7 +5,7 @@ var checkouts: Array[Checkout] = []
 var front_door: Door = null
 
 # bank is how much money the grocery store has
-var bank: float = 0.0
+var bank: float = 100.0 # start off the game with $100
 
 # items_sold keys are Item objects, value is the amount of that item sold
 var items_sold: Dictionary = {}
