@@ -19,10 +19,16 @@ func purchase_stock(item_id: String, qty: int) -> bool:
 	
 	StoreManager.bank -= purchase_price
 	if inventory.has(item_id):
-		inventory[item_id]["stock"] += qty
+		#inventory[item_id]["stock"] += qty # TODO is it this or next line?
+		inventory[item_id].stock += qty
 	else:
 		inventory[item_id] = {
 			"stock": qty,
 			"sale_price": item.sale_price
 		}
 	return true
+
+func get_stock(item_id: String) -> int:
+	if !inventory.has(item_id):
+		return 0
+	return inventory[item_id].stock
