@@ -10,7 +10,7 @@ func _ready():
 	spawn_interactables()
 
 func _process(_delta):
-	update_money_label(FinanceManager.get_current_bank())
+	update_money_label()
 
 # spawn_interactables instantiates all "interactable" tiles
 func spawn_interactables():
@@ -31,8 +31,8 @@ func spawn_interactables():
 				else:
 					print("⚠️ Could not load scene at path:", scene_path)
 
-func update_money_label(amt: float):
-	money_label.text = "Money: $%0.2f" % amt
+func update_money_label():
+	money_label.text = "Money: $%0.2f" % FinanceManager.reserves
 
 func on_menu_button_pressed():
 	var menu = $UI/MenuPanel

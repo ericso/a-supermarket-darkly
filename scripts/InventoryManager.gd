@@ -17,11 +17,11 @@ var products_sold: Dictionary = {}
 func purchase_stock(product_id: String, qty: int) -> bool:
 	var product: Product = ProductDatabase.get_product(product_id)
 	var purchase_price = qty * product.unit_price
-	if purchase_price > FinanceManager.bank:
+	if purchase_price > FinanceManager.reserves:
 		print("not enough money") # TODO need a notifications area
 		return false
 	
-	FinanceManager.bank -= purchase_price
+	FinanceManager.reserves -= purchase_price
 	# store inventory
 	if inventory.has(product_id):
 		inventory[product_id].stock += qty
