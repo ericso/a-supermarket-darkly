@@ -12,5 +12,5 @@ func _ready():
 func _on_item_selected(id: String):
 	if shelf:
 		shelf.stock_with_item(id)
-		shelf.restock(10)
+		shelf.restock()
 	queue_free()
