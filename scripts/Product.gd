@@ -1,4 +1,4 @@
-class_name Item extends Node
+class_name Product extends Node
 
 var id: String = ""
 var label: String = ""

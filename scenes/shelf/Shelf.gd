@@ -1,8 +1,8 @@
 class_name Shelf extends Node2D
 
-# Item handling
-@export var item: Item = null # the item this shelf holds
-@onready var item_sprite := $ItemSprite
+# Product handling
+@export var product: Product = null # the item this shelf holds
+@onready var product_sprite := $ProductSprite
 @onready var stock_bar: ProgressBar = $StockBar
 @export var max_stock: int = 20
 var current_stock: int = 0
@@ -57,14 +57,14 @@ func open_shelf_menu():
 	menu.position = get_viewport().get_mouse_position()
 	menu.shelf = self
 
-func get_item() -> Item:
-	return item
+func get_product() -> Product:
+	return product
 
 # pick_random_qty reduces the shelf by a random amount between the min and max
-# item purchase counts. If the pick reduces the stock to zero, the available
+# product purchase counts. If the pick reduces the stock to zero, the available
 # stock is picked. The amount picked is returned.
 func pick_random_qty() -> int:
-	if item == null:
+	if product == null:
 		return 0
 	
 	if current_stock == 0:
@@ -79,24 +79,24 @@ func pick_random_qty() -> int:
 
 # stock_with_item stocks this shelf with the item of id
 func stock_with_item(id: String):
-	item = ProductDatabase.get_product(id)
-	item_sprite.texture = item.texture
+	product = ProductDatabase.get_product(id)
+	product_sprite.texture = product.texture
 	restock()
 	update_stock_bar()
 
 # restock tries to set the current stock to max_stock
 func restock():
-	if item == null:
-		print("unable to restock, shelf has no item") # TODO notification center
+	if product == null:
+		print("unable to restock, shelf has no product") # TODO notification center
 		return
 	
 	var amount_to_stock: int = max_stock - current_stock
-	var amt_stocked: int = InventoryManager.move_stock_to_shelf(item.id, amount_to_stock)
+	var amt_stocked: int = InventoryManager.move_stock_to_shelf(product.id, amount_to_stock)
 	current_stock += amt_stocked
 	update_stock_bar()
 
 func has_stock() -> bool:
-	return !item == null and current_stock != 0
+	return !product == null and current_stock != 0
 
 func update_stock_bar():
 	stock_bar.value = current_stock

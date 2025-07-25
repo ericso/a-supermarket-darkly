@@ -11,7 +11,7 @@ script = ExtResource("1_dc3cn")
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_aw007")
 
-[node name="ItemSprite" type="Sprite2D" parent="."]
+[node name="ProductSprite" type="Sprite2D" parent="."]
 
 [node name="StockBar" type="ProgressBar" parent="."]
 offset_left = -16.0

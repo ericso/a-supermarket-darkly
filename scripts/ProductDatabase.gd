@@ -31,9 +31,9 @@ var products = {
 	},
 }
 
-func get_product(id: String) -> Item:
+func get_product(id: String) -> Product:
 	var data = ProductDatabase.get_product_data(id)
-	return Item.new(
+	return Product.new(
 		data.id,
 		data.name,
 		data.sale_price,
