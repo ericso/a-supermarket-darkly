@@ -150,7 +150,7 @@ size_flags_vertical = 3
 layout_mode = 2
 current_tab = 0
 
-[node name="ProductTab" type="MarginContainer" parent="UI/MenuPanel/VBoxContainer/Content/Tabs"]
+[node name="Products" type="MarginContainer" parent="UI/MenuPanel/VBoxContainer/Content/Tabs"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -159,10 +159,10 @@ theme_override_constants/margin_bottom = 10
 script = ExtResource("4_dc040")
 metadata/_tab_index = 0
 
-[node name="BoxContainer" type="BoxContainer" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/ProductTab"]
+[node name="BoxContainer" type="BoxContainer" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/Products"]
 layout_mode = 2
 theme_override_constants/separation = 1
 
-[node name="ProductList" type="ItemList" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/ProductTab/BoxContainer"]
+[node name="ProductList" type="ItemList" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/Products/BoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
