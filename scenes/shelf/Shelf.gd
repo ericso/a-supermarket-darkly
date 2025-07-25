@@ -9,35 +9,45 @@ class_name Shelf extends Node2D
 # Interaction handling
 @onready var tap_hold_timer: Timer = $TapHoldTimer
 var is_mouse_over = false
+var is_holding = false
+var hold_threshold = 0.3 # seconds to register hold
 
 func _ready():
 	GroceryStore.register_shelf(self)
 	
-	tap_hold_timer.wait_time = 0.5
+	tap_hold_timer.wait_time = hold_threshold
 	tap_hold_timer.one_shot = true
-	tap_hold_timer.timeout.connect(_on_hold)
+	tap_hold_timer.timeout.connect(on_hold)
 
-	connect("mouse_entered", _on_mouse_entered)
-	connect("mouse_exited", _on_mouse_exited)
-
-func _on_hold():
-	if is_mouse_over:
-		open_shelf_menu()
+	connect("mouse_entered", on_mouse_entered)
+	connect("mouse_exited", on_mouse_exited)
 
 func _input(event):
-	if is_mouse_over:
-		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				tap_hold_timer.start()
-			else:
+	#if is_mouse_over:
+		#if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			#if event.pressed:
+				#tap_hold_timer.start()
+			#else:
+				#tap_hold_timer.stop()
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed and is_mouse_over:
+			is_holding = false
+			tap_hold_timer.start()
+		elif not event.pressed and is_mouse_over:
+			if tap_hold_timer.time_left > 0:
 				tap_hold_timer.stop()
+				restock(10)
 
-func _on_mouse_entered():
+func on_mouse_entered():
 	is_mouse_over = true
 
-func _on_mouse_exited():
+func on_mouse_exited():
 	is_mouse_over = false
 	tap_hold_timer.stop()
+
+func on_hold():
+	is_holding = true
+	open_shelf_menu()
 
 func open_shelf_menu():
 	var menu = preload("res://scenes/shelf_menu/ShelfMenu.tscn").instantiate()
@@ -75,6 +85,7 @@ func stock_with_item(id: String):
 
 # restock adds qty to the shelf quantity
 func restock(qty: int):
+	print("DEBUG::restocking")
 	quantity += qty
 
 func has_stock() -> bool:
