@@ -4,6 +4,9 @@ extends Node2D
 @onready var money_label := $UI/MarginContainer/PanelContainer/Money
 
 func _ready():
+	$UI/PurchasePanel.hide()
+	$UI/BtnMarginContainer/InventoryButton.pressed.connect(on_inventory_button_pressed)
+	
 	spawn_interactables()
 
 func _process(_delta):
@@ -30,3 +33,8 @@ func spawn_interactables():
 
 func update_money_label(amt: float):
 	money_label.text = "Money: $%0.2f" % amt
+
+func on_inventory_button_pressed():
+	var panel = $UI/PurchasePanel
+	panel.populate_items()
+	panel.popup_centered()

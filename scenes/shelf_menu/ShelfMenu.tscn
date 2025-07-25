@@ -3,11 +3,20 @@
 [ext_resource type="Script" uid="uid://dvp0xdyinnojx" path="res://scenes/shelf_menu/ShelfMenu.gd" id="1_7lohl"]
 
 [node name="ShelfMenu" type="PopupPanel"]
+size = Vector2i(153, 31)
 visible = true
+unresizable = false
 script = ExtResource("1_7lohl")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 96.0
-offset_bottom = 96.0
+offset_right = 149.0
+offset_bottom = 27.0
+size_flags_vertical = 0
+
+[node name="NoItemsLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "No Items Available"
+horizontal_alignment = 1
+vertical_alignment = 1

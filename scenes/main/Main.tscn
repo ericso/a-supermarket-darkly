@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=4 uid="uid://nbfo3cn2hpmh"]
+[gd_scene load_steps=12 format=4 uid="uid://nbfo3cn2hpmh"]
 
 [ext_resource type="Script" uid="uid://dqgftvulsu404" path="res://scenes/main/Main.gd" id="1_uu6xs"]
 [ext_resource type="Texture2D" uid="uid://ca2swdbmqbx50" path="res://assets/sheets/grocery-store-tileset.png" id="2_q24mn"]
+[ext_resource type="PackedScene" uid="uid://deyp8c1kypiee" path="res://scenes/purchase_panel/PurchasePanel.tscn" id="3_gyg6b"]
 [ext_resource type="Script" uid="uid://b2w2eyn4y8fcy" path="res://scenes/main/CustomerSpawner.gd" id="3_q24mn"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_q24mn"]
@@ -102,6 +103,19 @@ layout_mode = 2
 layout_mode = 2
 text = "Monies: $0"
 label_settings = SubResource("LabelSettings_nha0i")
+
+[node name="PurchasePanel" parent="UI" instance=ExtResource("3_gyg6b")]
+
+[node name="BtnMarginContainer" type="MarginContainer" parent="UI"]
+offset_left = 400.0
+offset_top = 650.0
+offset_right = 520.0
+offset_bottom = 692.0
+
+[node name="InventoryButton" type="Button" parent="UI/BtnMarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Inventory"
 
 [node name="CustomerSpawner" type="Node" parent="."]
 script = ExtResource("3_q24mn")

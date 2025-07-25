@@ -4,7 +4,7 @@ class_name Shelf extends Node2D
 @export var item: Item = null # the item this shelf holds
 @onready var item_sprite := $ItemSprite
 @onready var stock_bar: ProgressBar = $StockBar
-@export var max_stock: int = 10
+@export var max_stock: int = 20
 var current_stock: int = 0
 
 @export var min_item_purchase_count: int = 1
@@ -77,16 +77,22 @@ func pick_random_qty() -> int:
 	update_stock_bar()
 	return amt
 
-# stock_with_item sets this shelf to the item id
+# stock_with_item stocks this shelf with the item of id
 func stock_with_item(id: String):
 	item = ItemDatabase.get_item(id)
 	item_sprite.texture = item.texture
 	restock()
 	update_stock_bar()
 
-# restock sets current_stock to max
+# restock tries to set the current stock to max_stock
 func restock():
-	current_stock = max_stock
+	if item == null:
+		print("unable to restock, shelf has no item") # TODO notification center
+		return
+	
+	var amount_to_stock: int = max_stock - current_stock
+	var amt_stocked: int = InventoryManager.move_stock_to_shelf(item.id, amount_to_stock)
+	current_stock += amt_stocked
 	update_stock_bar()
 
 func has_stock() -> bool:
