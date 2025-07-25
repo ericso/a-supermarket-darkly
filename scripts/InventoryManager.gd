@@ -21,6 +21,7 @@ func purchase_stock(item_id: String, qty: int) -> bool:
 		return false
 	
 	FinanceManager.bank -= purchase_price
+	# store inventory
 	if inventory.has(item_id):
 		inventory[item_id].stock += qty
 	else:
@@ -28,6 +29,8 @@ func purchase_stock(item_id: String, qty: int) -> bool:
 			"stock": qty,
 			"sale_price": item.sale_price
 		}
+	# record ledger
+	FinanceManager.record_purchase(item_id, qty)
 	return true
 
 # get_stock returns the amount of item that is in stock
@@ -51,8 +54,9 @@ func move_stock_to_shelf(item_id: String, qty: int) -> int:
 	inventory[item_id].stock -= qty
 	return qty
 
-func record_item_sold(item: Item, qty: int):
+func sell_item(item: Item, qty: int):
 	if !items_sold.has(item):
 		items_sold[item] = qty
 	else:
 		items_sold[item] += qty
+	FinanceManager.record_sale(item.id, qty)

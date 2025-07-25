@@ -12,4 +12,4 @@ func checkout_item(item: Item, qty: int):
 		"cost": cost,
 	}))
 	FinanceManager.bank += cost
-	InventoryManager.record_item_sold(item, qty)
+	InventoryManager.sell_item(item, qty)
