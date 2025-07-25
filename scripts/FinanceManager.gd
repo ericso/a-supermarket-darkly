@@ -14,6 +14,8 @@ var bank: float = 100.0 # start off the game with $100
 # }
 var profits: Dictionary = {}
 
+var customers_served: int = 0
+
 func get_current_bank() -> float:
 	return bank
 
