@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=4 uid="uid://nbfo3cn2hpmh"]
+[gd_scene load_steps=13 format=4 uid="uid://nbfo3cn2hpmh"]
 
 [ext_resource type="Script" uid="uid://dqgftvulsu404" path="res://scenes/main/Main.gd" id="1_uu6xs"]
 [ext_resource type="Texture2D" uid="uid://ca2swdbmqbx50" path="res://assets/sheets/grocery-store-tileset.png" id="2_q24mn"]
-[ext_resource type="PackedScene" uid="uid://deyp8c1kypiee" path="res://scenes/purchase_panel/PurchasePanel.tscn" id="3_gyg6b"]
 [ext_resource type="Script" uid="uid://b2w2eyn4y8fcy" path="res://scenes/main/CustomerSpawner.gd" id="3_q24mn"]
+[ext_resource type="Script" uid="uid://clr5um4ilfww" path="res://scenes/main/MenuPanel.gd" id="4_1rhdn"]
+[ext_resource type="Script" uid="uid://d0p7yt1a1bcxc" path="res://scenes/main/ProductTab.gd" id="4_dc040"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_q24mn"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -89,6 +90,9 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAQAAAAAAACAAAAAAAAABEAAAAAAAM
 tile_set = SubResource("TileSet_1rhdn")
 script = SubResource("GDScript_nha0i")
 
+[node name="CustomerSpawner" type="Node" parent="."]
+script = ExtResource("3_q24mn")
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="MarginContainer" type="MarginContainer" parent="UI"]
@@ -104,18 +108,61 @@ layout_mode = 2
 text = "Monies: $0"
 label_settings = SubResource("LabelSettings_nha0i")
 
-[node name="PurchasePanel" parent="UI" instance=ExtResource("3_gyg6b")]
-
-[node name="BtnMarginContainer" type="MarginContainer" parent="UI"]
+[node name="ButtonContainer" type="MarginContainer" parent="UI"]
 offset_left = 400.0
 offset_top = 650.0
 offset_right = 520.0
 offset_bottom = 692.0
 
-[node name="InventoryButton" type="Button" parent="UI/BtnMarginContainer"]
+[node name="MenuButton" type="Button" parent="UI/ButtonContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Inventory"
 
-[node name="CustomerSpawner" type="Node" parent="."]
-script = ExtResource("3_q24mn")
+[node name="MenuPanel" type="PopupPanel" parent="UI"]
+size = Vector2i(540, 720)
+visible = true
+script = ExtResource("4_1rhdn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MenuPanel"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 536.0
+offset_bottom = 716.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Header" type="HBoxContainer" parent="UI/MenuPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="CloseButton" type="Button" parent="UI/MenuPanel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+text = "X"
+
+[node name="Content" type="MarginContainer" parent="UI/MenuPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tabs" type="TabContainer" parent="UI/MenuPanel/VBoxContainer/Content"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Products" type="MarginContainer" parent="UI/MenuPanel/VBoxContainer/Content/Tabs"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("4_dc040")
+metadata/_tab_index = 0
+
+[node name="BoxContainer" type="BoxContainer" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/Products"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="ProductList" type="ItemList" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/Products/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
