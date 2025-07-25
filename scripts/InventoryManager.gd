@@ -9,9 +9,8 @@ extends Node
 # }
 var inventory: Dictionary = {}
 
-# products_sold keys are Product objects, value is the dollar amount of that
-# product sold
-var products_sold: Dictionary = {}
+# products_sold_count keys are Product ids, value is the quantity of that product sold
+var products_sold_count: Dictionary = {}
 
 # purchase_stock attempts to purchase qty units of product. Returns true if successful
 func purchase_stock(product_id: String, qty: int) -> bool:
@@ -55,9 +54,16 @@ func move_stock_to_shelf(product_id: String, qty: int) -> int:
 	inventory[product_id].stock -= qty
 	return qty
 
-func sell_product(product: Product, qty: int):
-	if !products_sold.has(product):
-		products_sold[product] = qty
+func sell_product(product_id: String, qty: int):
+	if !products_sold_count.has(product_id):
+		products_sold_count[product_id] = qty
 	else:
-		products_sold[product] += qty
-	FinanceManager.record_sale(product.id, qty)
+		products_sold_count[product_id] += qty
+	FinanceManager.record_sale(product_id, qty)
+
+func get_sold_count(product_id: String) -> int:
+	if !products_sold_count.has(product_id):
+		return 0
+	else:
+		return products_sold_count[product_id]
+	

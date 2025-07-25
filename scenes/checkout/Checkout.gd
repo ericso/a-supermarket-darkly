@@ -12,7 +12,7 @@ func checkout_product(product: Product, qty: int):
 		"cost": cost,
 	}))
 	FinanceManager.reserves += cost
-	InventoryManager.sell_product(product, qty)
+	InventoryManager.sell_product(product.id, qty)
 
 func checkout_basket(basket: Dictionary):
 	for _product in basket:
