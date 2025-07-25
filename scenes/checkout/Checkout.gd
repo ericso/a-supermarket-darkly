@@ -11,5 +11,5 @@ func checkout_product(product: Product, qty: int):
 		"qty": qty,
 		"cost": cost,
 	}))
-	FinanceManager.bank += cost
+	FinanceManager.reserves += cost
 	InventoryManager.sell_product(product, qty)

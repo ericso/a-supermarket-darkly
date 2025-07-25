@@ -1,7 +1,7 @@
 extends Node
 
-# bank is how much money the grocery store has
-var bank: float = 100.0 # start off the game with $100
+# reserves is how much money the grocery store has
+var reserves: float = 100.0 # start off the game with $100
 
 # profits maps product ids to the amount profit for that product.
 # spent: money spent to purchase units of product
@@ -15,9 +15,6 @@ var bank: float = 100.0 # start off the game with $100
 var profits: Dictionary = {}
 
 var customers_served: int = 0
-
-func get_current_bank() -> float:
-	return bank
 
 func record_purchase(product_id: String, qty: int):
 	var product: Product = ProductDatabase.get_product(product_id)
