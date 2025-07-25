@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0w4niurlt3rc"
-path="res://.godot/imported/cereal.png-8a277cc32d92c628c7d7269d8c20c611.ctex"
+uid="uid://dh8c7otrjrf6a"
+path="res://.godot/imported/steak.png-0534a0ac9ac50b6a1330dcd20063a0e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/items/cereal.png"
-dest_files=["res://.godot/imported/cereal.png-8a277cc32d92c628c7d7269d8c20c611.ctex"]
+source_file="res://assets/sprites/products/steak.png"
+dest_files=["res://.godot/imported/steak.png-0534a0ac9ac50b6a1330dcd20063a0e3.ctex"]
 
 [params]
 

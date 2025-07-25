@@ -12,7 +12,7 @@ func _ready():
 
 func populate_items():
 	item_list.clear()
-	for item_id in ItemDatabase.get_item_ids():
+	for item_id in ProductDatabase.get_product_ids():
 		var stock = InventoryManager.get_stock(item_id)
 		var index = item_list.add_item("%s: %d" % [item_id.capitalize(), stock])
 		item_list.set_item_metadata(index, item_id)

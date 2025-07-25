@@ -1,7 +1,7 @@
 extends Node
 
 # inventory is what the store currently has in stock
-# keys are the ID of the Item
+# keys are the ID of the Product
 # values are objects that store the current unit stock and sale price
 # {
 #     "apple": { "stock": 10, "sale_price": 2.00 },
@@ -9,54 +9,55 @@ extends Node
 # }
 var inventory: Dictionary = {}
 
-# items_sold keys are Item objects, value is the amount of that item sold
-var items_sold: Dictionary = {}
+# products_sold keys are Product objects, value is the dollar amount of that
+# product sold
+var products_sold: Dictionary = {}
 
-# purchase_stock attempts to purchase qty units of item. Returns true if successful
-func purchase_stock(item_id: String, qty: int) -> bool:
-	var item: Item = ItemDatabase.get_item(item_id)
-	var purchase_price = qty * item.unit_price
+# purchase_stock attempts to purchase qty units of product. Returns true if successful
+func purchase_stock(product_id: String, qty: int) -> bool:
+	var product: Product = ProductDatabase.get_product(product_id)
+	var purchase_price = qty * product.unit_price
 	if purchase_price > FinanceManager.bank:
 		print("not enough money") # TODO need a notifications area
 		return false
 	
 	FinanceManager.bank -= purchase_price
 	# store inventory
-	if inventory.has(item_id):
-		inventory[item_id].stock += qty
+	if inventory.has(product_id):
+		inventory[product_id].stock += qty
 	else:
-		inventory[item_id] = {
+		inventory[product_id] = {
 			"stock": qty,
-			"sale_price": item.sale_price
+			"sale_price": product.sale_price
 		}
 	# record ledger
-	FinanceManager.record_purchase(item_id, qty)
+	FinanceManager.record_purchase(product_id, qty)
 	return true
 
-# get_stock returns the amount of item that is in stock
-func get_stock(item_id: String) -> int:
-	if !inventory.has(item_id):
+# get_stock returns the amount of product that is in stock
+func get_stock(product_id: String) -> int:
+	if !inventory.has(product_id):
 		return 0
-	return inventory[item_id].stock
+	return inventory[product_id].stock
 
 # get_stock_ids returns the keys in inventory Dictionary, regardless of
 # whether or not there is current stock
 func get_inventory_ids() -> Array:
 	return inventory.keys()
 
-# move_stock_to_shelf tries to subtract qty of item from inventory and returns
+# move_stock_to_shelf tries to subtract qty of product from inventory and returns
 # the amount it was actually able to subtract.
-func move_stock_to_shelf(item_id: String, qty: int) -> int:
-	var in_stock_qty = inventory[item_id].stock
+func move_stock_to_shelf(product_id: String, qty: int) -> int:
+	var in_stock_qty = inventory[product_id].stock
 	if in_stock_qty < qty:
-		inventory[item_id].stock = 0
+		inventory[product_id].stock = 0
 		return in_stock_qty
-	inventory[item_id].stock -= qty
+	inventory[product_id].stock -= qty
 	return qty
 
-func sell_item(item: Item, qty: int):
-	if !items_sold.has(item):
-		items_sold[item] = qty
+func sell_product(product: Product, qty: int):
+	if !products_sold.has(product):
+		products_sold[product] = qty
 	else:
-		items_sold[item] += qty
-	FinanceManager.record_sale(item.id, qty)
+		products_sold[product] += qty
+	FinanceManager.record_sale(product.id, qty)

@@ -1,8 +1,11 @@
 extends CharacterBody2D
 
 @export var speed := 300.0
-@export var min_items := 1
-@export var max_items := ItemDatabase.get_item_count()
+
+# min and max products is the range of unique products which the customer
+# will attempt to purchase
+@export var min_products := 1
+@export var max_products := ProductDatabase.get_product_count()
 
 @onready var sprite := $Sprite
 
@@ -10,14 +13,14 @@ extends CharacterBody2D
 @onready var nav_agent := $NavigationAgent
 
 var basket: Dictionary = {}
-var num_items_to_buy: int = 0
+var num_products_to_buy: int = 0
 var visited_shelves: Dictionary = {}
 
 # seconds to wait before re-trying for a stocked shelf
 const CUSTOMER_WAIT_INTERVAL: float = 0.5
 
 func _ready():
-	num_items_to_buy = RandomNumberGenerator.new().randi_range(min_items, max_items)
+	num_products_to_buy = RandomNumberGenerator.new().randi_range(min_products, max_products)
 	sprite.texture = sprite_texture
 	run_customer_loop()
 
@@ -31,24 +34,24 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func run_customer_loop() -> void:
-	print("DEBUG::run_customer_loop num_items_to_buy ", num_items_to_buy)
-	while num_items_to_buy > 0:
+	print("DEBUG::run_customer_loop num_products_to_buy ", num_products_to_buy)
+	while num_products_to_buy > 0:
 		var shelf: Shelf = StoreManager.get_random_stocked_shelf()
-		if shelf == null or visited_shelves.has(shelf.get_item().id):
+		if shelf == null or visited_shelves.has(shelf.get_product().id):
 			await get_tree().create_timer(CUSTOMER_WAIT_INTERVAL).timeout
 			continue
 		
 		set_target_position(shelf.global_position)
 		await nav_agent.target_reached
-		visited_shelves[shelf.get_item().id] = null
-		basket[shelf.get_item()] = shelf.pick_random_qty()
-		num_items_to_buy -= 1
+		visited_shelves[shelf.get_product().id] = null
+		basket[shelf.get_product()] = shelf.pick_random_qty()
+		num_products_to_buy -= 1
 	
 	var checkout: Checkout = StoreManager.get_open_checkout()
 	set_target_position(checkout.global_position)
 	await nav_agent.target_reached
-	for _item in basket:
-		checkout.checkout_item(_item, basket[_item])
+	for _product in basket:
+		checkout.checkout_product(_product, basket[_product])
 	
 	var front_door: Door = StoreManager.get_front_door()
 	set_target_position(front_door.global_position)
