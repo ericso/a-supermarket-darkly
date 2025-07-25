@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 var shelves: Array[Shelf] = []
 var checkouts: Array[Checkout] = []

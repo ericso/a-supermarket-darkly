@@ -1,7 +1,7 @@
 class_name Checkout extends Node2D
 
 func _ready():
-	GroceryStore.register_checkout(self)
+	StoreManager.register_checkout(self)
 
 func checkout_item(item: Item, qty: int):
 	var cost: float = item.price * qty
@@ -11,5 +11,5 @@ func checkout_item(item: Item, qty: int):
 		"qty": qty,
 		"cost": cost,
 	}))
-	GroceryStore.bank += cost
-	GroceryStore.record_item_sold(item, qty)
+	StoreManager.bank += cost
+	StoreManager.record_item_sold(item, qty)

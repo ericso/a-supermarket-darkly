@@ -17,7 +17,7 @@ var is_holding = false
 var hold_threshold = 0.3 # seconds to register hold
 
 func _ready():
-	GroceryStore.register_shelf(self)
+	StoreManager.register_shelf(self)
 	
 	connect("mouse_entered", on_mouse_entered)
 	connect("mouse_exited", on_mouse_exited)
