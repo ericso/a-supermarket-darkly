@@ -1,35 +1,31 @@
 extends Node
 
-var products = {
-	"apple": {
-		"id": "apple",
-		"name": "Apple",
-		"sale_price": 0.5,
-		"texture": preload("res://assets/sprites/products/apple.png"),
-		"unit_price": 0.1,
-	},
-	"cereal": {
-		"id": "cereal",
-		"name": "Cereal",
-		"sale_price": 3.95,
-		"texture": preload("res://assets/sprites/products/cereal.png"),
-		"unit_price": 0.1,
-	},
-	"fish": {
-		"id": "fish",
-		"name": "Fish",
-		"sale_price": 7.88,
-		"texture": preload("res://assets/sprites/products/fish.png"),
-		"unit_price": 0.1,
-	},
-	"steak": {
-		"id": "steak",
-		"name": "Steak",
-		"sale_price": 19.01,
-		"texture": preload("res://assets/sprites/products/steak.png"),
-		"unit_price": 0.1,
-	},
-}
+var products = {}
+
+func _ready():
+	var to_process = load_products_from_json("res://data/products.json")
+	for p in to_process:
+		products[p["id"]] = {
+			"id": p["id"],
+			"name": p["name"],
+			"sale_price": p["sale_price"],
+			"unit_price": p["unit_price"],
+			"texture": load(p["icon_path"]),
+		}
+		
+
+func load_products_from_json(path: String) -> Array:
+	var file = FileAccess.open(path, FileAccess.READ)
+	if file:
+		var content = file.get_as_text()
+		var result = JSON.parse_string(content)
+		if typeof(result) == TYPE_DICTIONARY and result.has("products"):
+			return result["products"]
+		else:
+			push_error("invalid JSON structure in products file")
+	else:
+		push_error("failed to open file: " + path)
+	return []
 
 func get_product(id: String) -> Product:
 	var data = ProductDatabase.get_product_data(id)
