@@ -1,0 +1,32 @@
+{
+	"products": [
+		{
+			"id": "apple",
+			"name": "Apple",
+			"sale_price": 0.5,
+			"unit_price": 0.1,
+			"icon_path": "res://assets/sprites/products/apple.png"
+		},
+		{
+			"id": "cereal",
+			"name": "Cereal",
+			"sale_price": 3.95,
+			"unit_price": 0.1,
+			"icon_path": "res://assets/sprites/products/cereal.png"
+		},
+		{
+			"id": "fish",
+			"name": "Fish",
+			"sale_price": 7.88,
+			"unit_price": 0.1,
+			"icon_path": "res://assets/sprites/products/fish.png"
+		},
+		{
+			"id": "steak",
+			"name": "Steak",
+			"sale_price": 19.01,
+			"unit_price": 0.1,
+			"icon_path": "res://assets/sprites/products/steak.png"
+		}
+	]
+}
