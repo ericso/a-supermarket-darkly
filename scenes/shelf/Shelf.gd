@@ -7,6 +7,7 @@ class_name Shelf extends Node2D
 @export var max_stock: int = 20
 var current_stock: int = 0
 
+# TODO refactor this to customer, the shelf shouldn't limit how much a customer buys
 @export var min_product_purchase_count: int = 1
 @export var max_product_purchase_count: int = 4
 

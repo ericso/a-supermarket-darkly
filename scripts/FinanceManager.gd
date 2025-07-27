@@ -12,10 +12,13 @@ var reserves: float = 100.0 # start off the game with $100
 #         "earned": float,
 #     },
 # }
-var profits: Dictionary = {}
+var profits: Dictionary[String, Dictionary] = {}
 
 # customers_served is a count of all customers that have checked out
 var customers_served: int = 0
+
+# missed_sales stores a count of missed sales for each product_id
+var missed_sales: Dictionary[String, int] = {}
 
 func record_purchase(product_id: String, qty: int):
 	var product: Product = ProductDatabase.get_product(product_id)
@@ -38,6 +41,12 @@ func record_sale(product_id: String, qty: int):
 		}
 	else:
 		profits[product_id].earned += earned
+
+func record_missed_sale(product_id: String):
+	if !missed_sales.has(product_id):
+		missed_sales[product_id] = 1
+	else:
+		missed_sales[product_id] += 1
 
 func get_profit_for_product(product_id) -> float:
 	if !profits.has(product_id):

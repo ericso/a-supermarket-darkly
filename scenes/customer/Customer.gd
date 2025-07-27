@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed := 300.0
+@export var speed := 50.0
 
 # min and max products is the range of unique products which the customer
 # will attempt to purchase
@@ -14,7 +14,6 @@ extends CharacterBody2D
 
 var basket: Dictionary = {}
 var products_wanted: Array[String] = []
-var visited_shelves: Dictionary = {}
 
 # seconds to wait before re-trying for a stocked shelf
 const CUSTOMER_WAIT_INTERVAL: float = 0.5
@@ -35,18 +34,22 @@ func _physics_process(_delta):
 
 func run_customer_loop() -> void:
 	NotificationManager.add_notification("new customer wanting to buy %d products " % products_wanted.size())
-	var num_products_to_buy = products_wanted.size()
-	while num_products_to_buy > 0:
-		var shelf: Shelf = StoreManager.get_random_stocked_shelf()
-		if shelf == null or visited_shelves.has(shelf.get_product().id):
-			await get_tree().create_timer(CUSTOMER_WAIT_INTERVAL).timeout
+	
+	var product_id: String = ""
+	while !products_wanted.is_empty():
+		product_id = products_wanted.pop_front()
+		var shelves_for_product = StoreManager.get_shelf_for_product_id(product_id)
+		if shelves_for_product.size() == 0:
+			# no available shelves with product_id, move on
+			NotificationManager.add_notification("no shelves with prouduct %s" % product_id)
+			FinanceManager.record_missed_sale(product_id)
 			continue
 		
-		set_target_position(shelf.global_position)
+		# just take the first shelf
+		var target_shelf: Shelf = shelves_for_product[0]
+		set_target_position(target_shelf.global_position)
 		await nav_agent.target_reached
-		visited_shelves[shelf.get_product().id] = null
-		basket[shelf.get_product()] = shelf.pick_random_qty()
-		num_products_to_buy -= 1
+		basket[target_shelf.get_product()] = target_shelf.pick_random_qty()
 	
 	var checkout: Checkout = StoreManager.get_open_checkout()
 	set_target_position(checkout.global_position)
