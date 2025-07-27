@@ -1,6 +1,6 @@
 extends Node
 
-var products = {}
+var products: Dictionary[String, Dictionary] = {}
 
 func _ready():
 	var to_process = load_products_from_json("res://data/products.json")
@@ -33,14 +33,15 @@ func get_product(id: String) -> Product:
 		data.id,
 		data.name,
 		data.sale_price,
-		data.texture,
 		data.unit_price,
+		data.texture,
 	)
 
 func get_product_data(id: String) -> Dictionary:
 	return products.get(id, {})
 
-func get_product_ids() -> Array:
+# get_product_ids returns the currently available product ids
+func get_product_ids() -> Array[String]:
 	return products.keys()
 
 func get_product_count() -> int:

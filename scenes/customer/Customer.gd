@@ -13,14 +13,14 @@ extends CharacterBody2D
 @onready var nav_agent := $NavigationAgent
 
 var basket: Dictionary = {}
-var num_products_to_buy: int = 0
+var products_wanted: Array[String] = []
 var visited_shelves: Dictionary = {}
 
 # seconds to wait before re-trying for a stocked shelf
 const CUSTOMER_WAIT_INTERVAL: float = 0.5
 
 func _ready():
-	num_products_to_buy = RandomNumberGenerator.new().randi_range(min_products, max_products)
+	products_wanted = get_wanted_products()
 	sprite.texture = sprite_texture
 	run_customer_loop()
 
@@ -34,7 +34,8 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func run_customer_loop() -> void:
-	NotificationManager.add_notification("new customer wanting to buy %d products " % num_products_to_buy)
+	NotificationManager.add_notification("new customer wanting to buy %d products " % products_wanted.size())
+	var num_products_to_buy = products_wanted.size()
 	while num_products_to_buy > 0:
 		var shelf: Shelf = StoreManager.get_random_stocked_shelf()
 		if shelf == null or visited_shelves.has(shelf.get_product().id):
@@ -65,3 +66,9 @@ func set_target_position(pos: Vector2) -> void:
 	nav_agent.set_target_position(Vector2.ZERO)
 	await get_tree().process_frame  # allow one frame to clear internal state
 	nav_agent.set_target_position(safe_pos)
+
+# get_wanted_products returns a random number of available product ids
+func get_wanted_products() -> Array[String]:
+	var available_product_ids: Array[String] = ProductDatabase.get_product_ids()
+	available_product_ids.shuffle()
+	return available_product_ids.slice(0, randi_range(min_products, max_products))
