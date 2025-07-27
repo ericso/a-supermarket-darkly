@@ -6,7 +6,7 @@ extends MarginContainer
 
 @onready var profit_container = $StatsContainer/MarginContainer/ProfitContainer
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	update_labels()
 	
 func update_labels():

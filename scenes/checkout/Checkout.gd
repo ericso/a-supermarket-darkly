@@ -5,7 +5,7 @@ func _ready():
 
 func checkout_product(product: Product, qty: int):
 	var cost: float = product.sale_price * qty
-	print("DEBUG::checkout_product {id} {price} {qty} {cost}".format({
+	NotificationManager.add_notification("checkout_product {id} {price} {qty} {cost}".format({
 		"id": product.id,
 		"price": product.sale_price,
 		"qty": qty,

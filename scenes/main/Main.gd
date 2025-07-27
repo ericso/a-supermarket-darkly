@@ -29,7 +29,7 @@ func spawn_interactables():
 					add_child(node)
 					node.name = tile_data.get_custom_data("name")
 				else:
-					print("⚠️ Could not load scene at path:", scene_path)
+					push_error("⚠️ Could not load scene at path: ", scene_path)
 
 func update_money_label():
 	money_label.text = "Money: $%0.2f" % FinanceManager.reserves
