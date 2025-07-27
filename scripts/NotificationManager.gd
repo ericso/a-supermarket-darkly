@@ -24,7 +24,8 @@ func add_notification(message: String):
 	var label = Label.new()
 	label.text = message
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD
-	notifications_container.add_child(label, true) # add to the top
+	notifications_container.add_child(label)
+	notifications_container.move_child(label, 0)
 	
 	if notifications_container.get_child_count() > max_notifications:
 		# remove the bottom notification, since we're adding to top
