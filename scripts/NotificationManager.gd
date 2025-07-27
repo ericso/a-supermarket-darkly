@@ -42,10 +42,10 @@ func add_toast(message: String):
 		toast_container.get_child(0).queue_free()
 	
 	# Start fade and removal
-	var tween = toast_container.create_tween()
+	var tween = label.create_tween()
 	tween.tween_interval(toast_lifetime)
 	tween.tween_property(label, "modulate:a", 0.0, toast_fade_time)
-	tween.finished.connect(func() -> void:
+	tween.finished.connect(func():
 		if is_instance_valid(label):
 			label.queue_free()
 	)
