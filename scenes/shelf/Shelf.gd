@@ -87,7 +87,7 @@ func stock_with_product(id: String):
 # restock tries to set the current stock to max_stock
 func restock():
 	if product == null:
-		print("unable to restock, shelf has no product") # TODO notification center
+		NotificationManager.add_toast("unable to restock, shelf has no product")
 		return
 	
 	var amount_to_stock: int = max_stock - current_stock

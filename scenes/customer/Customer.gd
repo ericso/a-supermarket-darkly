@@ -34,7 +34,7 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func run_customer_loop() -> void:
-	print("DEBUG::run_customer_loop num_products_to_buy ", num_products_to_buy)
+	NotificationManager.add_notification("new customer wanting to buy %d products " % num_products_to_buy)
 	while num_products_to_buy > 0:
 		var shelf: Shelf = StoreManager.get_random_stocked_shelf()
 		if shelf == null or visited_shelves.has(shelf.get_product().id):
@@ -55,7 +55,6 @@ func run_customer_loop() -> void:
 	var front_door: Door = StoreManager.get_front_door()
 	set_target_position(front_door.global_position)
 	await nav_agent.target_reached
-	print("goodbye!")
 	queue_free()
 
 func set_target_position(pos: Vector2) -> void:
