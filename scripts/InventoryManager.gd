@@ -7,17 +7,22 @@ extends Node
 #     "apple": { "stock": 10, "sale_price": 2.00 },
 #     "milk": { "stock": 200, "sale_price": 4.95 }
 # }
-var inventory: Dictionary = {}
+var inventory: Dictionary[String, Dictionary] = {}
 
 # products_sold_count keys are Product ids, value is the quantity of that product sold
 var products_sold_count: Dictionary = {}
+
+# populate_inventory initializes the inventory Dictionary with purchasable products
+func populate_inventory() -> void:
+	for product_id in ProductDatabase.get_product_ids():
+		inventory[product_id] = { "stock": 0, "sale_price": 0 }
 
 # purchase_stock attempts to purchase qty units of product. Returns true if successful
 func purchase_stock(product_id: String, qty: int) -> bool:
 	var product: Product = ProductDatabase.get_product(product_id)
 	var purchase_price = qty * product.unit_price
 	if purchase_price > FinanceManager.reserves:
-		print("not enough money") # TODO need a notifications area
+		NotificationManager.add_toast("not enough money")
 		return false
 	
 	FinanceManager.reserves -= purchase_price

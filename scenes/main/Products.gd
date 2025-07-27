@@ -19,9 +19,10 @@ func populate_items():
 
 func on_buy_pressed(index: int):
 	var product_id = product_list.get_item_metadata(index)
-	InventoryManager.purchase_stock(product_id, purchase_amount)
-	populate_items()
-	NotificationManager.add_toast("bought %d of %s" % [purchase_amount, product_id])
+	var success: bool = InventoryManager.purchase_stock(product_id, purchase_amount)
+	if success:
+		populate_items()
+		NotificationManager.add_toast("bought %d of %s" % [purchase_amount, product_id])
 
 func on_close_pressed():
 	hide()

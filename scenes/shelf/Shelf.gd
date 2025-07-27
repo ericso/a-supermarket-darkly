@@ -7,9 +7,6 @@ class_name Shelf extends Node2D
 @export var max_stock: int = 20
 var current_stock: int = 0
 
-@export var min_product_purchase_count: int = 1
-@export var max_product_purchase_count: int = 4
-
 # Interaction handling
 @onready var tap_hold_timer: Timer = $TapHoldTimer
 var is_mouse_over = false
@@ -60,22 +57,20 @@ func open_shelf_menu():
 func get_product() -> Product:
 	return product
 
-# pick_random_qty reduces the shelf by a random amount between the min and max
-# product purchase counts. If the pick reduces the stock to zero, the available
-# stock is picked. The amount picked is returned.
-func pick_random_qty() -> int:
+# pick_quantity reduces the shelf by qty. If the pick reduces the stock to zero,
+# the available stock is picked. The amount picked is returned.
+func pick_quantity(qty: int) -> int:
 	if product == null:
 		return 0
 	
 	if current_stock == 0:
 		return 0
 	
-	var amt: int = RandomNumberGenerator.new().randi_range(min_product_purchase_count, max_product_purchase_count)
-	if current_stock - amt < 0:
-		amt = current_stock
-	current_stock -= amt
+	if current_stock - qty < 0:
+		qty = current_stock
+	current_stock -= qty
 	update_stock_bar()
-	return amt
+	return qty
 
 # stock_with_product stocks this shelf with the Product of id
 func stock_with_product(id: String):
