@@ -9,6 +9,11 @@ extends CharacterBody2D
 @export var min_products := 1
 @export var max_products := ProductDatabase.get_product_count()
 
+# min and max purchase amounts are the range of units of product a customer
+# will attempt to buy for each product
+@export var min_purchase_amount := 1
+@export var max_purchase_amount := 4
+
 @onready var sprite := $Sprite
 
 @export var sprite_texture: Texture2D
@@ -52,7 +57,7 @@ func run_customer_loop() -> void:
 		set_target_position(target_shelf.global_position)
 		await nav_agent.target_reached
 		await wait_at_location(shelf_wait_time)
-		basket[target_shelf.get_product()] = target_shelf.pick_random_qty()
+		basket[target_shelf.get_product()] = target_shelf.pick_quantity(randi_range(min_purchase_amount, max_purchase_amount))
 	
 	var checkout: Checkout = StoreManager.get_open_checkout()
 	set_target_position(checkout.global_position)
