@@ -21,6 +21,7 @@ StoreManager="*res://scripts/StoreManager.gd"
 InventoryManager="*res://scripts/InventoryManager.gd"
 FinanceManager="*res://scripts/FinanceManager.gd"
 ProductDatabase="*res://scripts/ProductDatabase.gd"
+NotificationsManager="*res://scripts/NotificationsManager.gd"
 
 [display]
 
