@@ -21,10 +21,11 @@ func update_profit_container():
 	clear_labels()
 	for product_id in InventoryManager.get_inventory_ids():
 		var product: Product = ProductDatabase.get_product(product_id)
-		add_label("%s | Sold: %d | Profit: $%.2f" % [
+		add_label("%s: Sold: %d | Profit: $%.2f | Missed Sales: %d" % [
 			product.label, 
 			InventoryManager.get_sold_count(product_id), 
 			FinanceManager.get_profit_for_product(product_id),
+			FinanceManager.get_missed_sales_for_product(product_id),
 		])
 
 func add_label(text: String):

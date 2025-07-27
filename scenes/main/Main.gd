@@ -8,6 +8,8 @@ func _ready():
 	$UI/ButtonContainer/MenuButton.pressed.connect(on_menu_button_pressed)
 	
 	spawn_interactables()
+	
+	InventoryManager.populate_inventory()
 
 func _process(_delta):
 	update_money_label()

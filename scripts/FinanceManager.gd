@@ -61,3 +61,10 @@ func get_total_profit() -> float:
 	for product_id in ProductDatabase.get_product_ids():
 		total_profit += get_profit_for_product(product_id)
 	return total_profit
+
+# get_missed_sales_for_product returns the number of times a customer wanted
+# to buy product_id but was unable to
+func get_missed_sales_for_product(product_id) -> int:
+	if !missed_sales.has(product_id):
+		return 0
+	return missed_sales[product_id]
