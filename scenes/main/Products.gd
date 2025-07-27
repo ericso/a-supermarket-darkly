@@ -10,8 +10,6 @@ func _ready():
 	product_list.item_selected.connect(on_buy_pressed)
 
 func populate_items():
-	# TODO remove after debugging
-	NotificationManager.add_log_message("populate_items")
 	product_list.clear()
 	for product_id in ProductDatabase.get_product_ids():
 		var stock = InventoryManager.get_stock(product_id)

@@ -60,9 +60,7 @@ func add_toast(message: String):
 	)
 
 func check_hide_panel():
-	print("DEBUG::check_hide_panel")
 	if toast_container.get_child_count() == 0:
-		print("DEBUG::get_child_count is zero")
 		toast_panel.visible = false
 
 func add_log_message(message: String):
