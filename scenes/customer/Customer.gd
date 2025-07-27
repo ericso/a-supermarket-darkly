@@ -55,6 +55,8 @@ func run_customer_loop() -> void:
 	var front_door: Door = StoreManager.get_front_door()
 	set_target_position(front_door.global_position)
 	await nav_agent.target_reached
+	# TODO remove after debugging
+	NotificationManager.add_toast("goodbye!")
 	queue_free()
 
 func set_target_position(pos: Vector2) -> void:
