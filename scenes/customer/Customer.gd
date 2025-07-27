@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 @export var speed := 50.0
+@export var shelf_wait_time: float = 2.0
+@export var checkout_wait_time: float = 4.0
 
 # min and max products is the range of unique products which the customer
 # will attempt to purchase
@@ -49,11 +51,13 @@ func run_customer_loop() -> void:
 		var target_shelf: Shelf = shelves_for_product[0]
 		set_target_position(target_shelf.global_position)
 		await nav_agent.target_reached
+		await wait_at_location(shelf_wait_time)
 		basket[target_shelf.get_product()] = target_shelf.pick_random_qty()
 	
 	var checkout: Checkout = StoreManager.get_open_checkout()
 	set_target_position(checkout.global_position)
 	await nav_agent.target_reached
+	await wait_at_location(checkout_wait_time)
 	checkout.checkout_basket(basket)
 	
 	var front_door: Door = StoreManager.get_front_door()
@@ -75,3 +79,6 @@ func get_wanted_products() -> Array[String]:
 	var available_product_ids: Array[String] = ProductDatabase.get_product_ids()
 	available_product_ids.shuffle()
 	return available_product_ids.slice(0, randi_range(min_products, max_products))
+
+func wait_at_location(time: float):
+	await get_tree().create_timer(time).timeout

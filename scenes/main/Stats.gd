@@ -2,6 +2,7 @@ extends MarginContainer
 
 @onready var reserves_label = $StatsContainer/Reserves
 @onready var customers_served_label = $StatsContainer/CustomersServed
+@onready var customers_disappointed_label = $StatsContainer/CustomersDisappointed
 @onready var profit_label = $StatsContainer/TotalProfit
 
 @onready var profit_container = $StatsContainer/MarginContainer/ProfitContainer
@@ -12,6 +13,7 @@ func _process(_delta: float) -> void:
 func update_labels():
 	reserves_label.text = "Reserves: $%.2f" % FinanceManager.reserves
 	customers_served_label.text = "Customers Served: %d" % FinanceManager.customers_served
+	customers_disappointed_label.text = "Customers Disappointed: %d" % FinanceManager.customers_disappointed
 	profit_label.text = "Total Profit: $%.2f" % FinanceManager.get_total_profit()
 	update_profit_container()
 

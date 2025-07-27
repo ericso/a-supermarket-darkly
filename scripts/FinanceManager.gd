@@ -17,6 +17,9 @@ var profits: Dictionary[String, Dictionary] = {}
 # customers_served is a count of all customers that have checked out
 var customers_served: int = 0
 
+# customers_disappointed is a count of all customers that have left without buying something
+var customers_disappointed: int = 0
+
 # missed_sales stores a count of missed sales for each product_id
 var missed_sales: Dictionary[String, int] = {}
 

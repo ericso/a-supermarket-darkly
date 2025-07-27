@@ -114,7 +114,7 @@ layout_mode = 2
 
 [node name="Money" type="Label" parent="UI/MarginContainer/PanelContainer"]
 layout_mode = 2
-text = "Monies: $0"
+text = "Bank: $0"
 label_settings = SubResource("LabelSettings_nha0i")
 
 [node name="ButtonContainer" type="MarginContainer" parent="UI"]
@@ -126,7 +126,7 @@ offset_bottom = 662.0
 [node name="MenuButton" type="Button" parent="UI/ButtonContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "Inventory"
+text = "Menu"
 
 [node name="MenuPanel" type="PopupPanel" parent="UI"]
 size = Vector2i(540, 720)
@@ -193,6 +193,9 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="CustomersServed" type="Label" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/Stats/StatsContainer"]
+layout_mode = 2
+
+[node name="CustomersDisappointed" type="Label" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/Stats/StatsContainer"]
 layout_mode = 2
 
 [node name="TotalProfit" type="Label" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/Stats/StatsContainer"]

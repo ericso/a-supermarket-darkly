@@ -15,6 +15,10 @@ func checkout_product(product: Product, qty: int):
 	InventoryManager.sell_product(product.id, qty)
 
 func checkout_basket(basket: Dictionary):
+	if basket.size() == 0:
+		FinanceManager.customers_disappointed += 1
+		return
+	
 	for _product in basket:
 		checkout_product(_product, basket[_product])
 	FinanceManager.customers_served += 1
