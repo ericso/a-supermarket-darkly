@@ -88,7 +88,7 @@ func restock():
 	var amount_to_stock: int = max_stock - current_stock
 	var amt_stocked: int = InventoryManager.move_stock_to_shelf(product.id, amount_to_stock)
 	if amt_stocked == 0:
-		NotificationManager.add_toast("not stock of %s to restock" % product.label)
+		NotificationManager.add_toast("no stock of %s to restock" % product.label)
 	current_stock += amt_stocked
 	update_stock_bar()
 
