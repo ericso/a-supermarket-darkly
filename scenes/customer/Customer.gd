@@ -24,12 +24,22 @@ extends CharacterBody2D
 var basket: Dictionary = {}
 var products_wanted: Array[String] = []
 
+var wandering := false
+var wander_timer: Timer = null
+
 # seconds to wait before re-trying for a stocked shelf
 const CUSTOMER_WAIT_INTERVAL: float = 0.5
 
 func _ready():
 	products_wanted = get_wanted_products()
 	sprite.texture = sprite_texture
+	
+	wander_timer = Timer.new()
+	wander_timer.wait_time = 10.0
+	wander_timer.one_shot = true
+	add_child(wander_timer)
+	wander_timer.timeout.connect(on_wander_timeout)
+	
 	run_customer_loop()
 
 func _physics_process(_delta):
@@ -49,8 +59,14 @@ func run_customer_loop() -> void:
 		product_id = products_wanted.pop_front()
 		var shelves_for_product = StoreManager.get_shelf_for_product_id(product_id)
 		if shelves_for_product.size() == 0:
-			# no available shelves with product_id, move on
-			NotificationManager.add_notification("no shelves with prouduct %s" % product_id)
+			# no available shelves with product_id
+			
+			# TODO have customer randomly walk around for 10 seconds and check again
+			wandering = true
+			start_wandering()
+			wander_timer.start()
+			
+			add_floating_notification("can't find %s" % product_id)
 			FinanceManager.record_missed_sale(product_id)
 			continue
 		
@@ -67,9 +83,12 @@ func run_customer_loop() -> void:
 	await wait_at_location(checkout_wait_time)
 	checkout.checkout_basket(basket)
 	
+	add_floating_notification("bye!")
+	
 	var front_door: Door = StoreManager.get_front_door()
 	set_target_position(front_door.global_position)
 	await nav_agent.target_reached
+	
 	queue_free()
 
 func set_target_position(pos: Vector2) -> void:
@@ -102,3 +121,32 @@ func add_floating_notification(message: String, duration: float = 5.0):
 		if is_instance_valid(notification_label):
 			notification_label.text = ""
 	)
+
+# get_random_navigable_point returns a point in the grocery store
+func get_random_navigable_point() -> Vector2:
+	# some reasonable area of the grocery store
+	var bounds := Rect2(Vector2(0, 0), Vector2(540, 600))
+	return Vector2(
+		randf_range(bounds.position.x, bounds.end.x),
+		randf_range(bounds.position.y, bounds.end.y)
+	)
+
+func start_wandering():
+	if not wandering:
+		return
+	
+	set_target_position(get_random_navigable_point())
+	await wait_until_reached()
+	
+	# Schedule next wander step
+	await get_tree().create_timer(1.5).timeout
+	start_wandering()  # recursively continue wandering
+
+func wait_until_reached():
+	while not nav_agent.is_target_reached():
+		await get_tree().process_frame
+
+func on_wander_timeout():
+	NotificationManager.add_log_message("done wandering")
+	add_floating_notification("done wandering")
+	wandering = false
