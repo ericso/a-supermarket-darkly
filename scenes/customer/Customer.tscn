@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://govjt0sg8wd3"]
+[gd_scene load_steps=4 format=3 uid="uid://govjt0sg8wd3"]
 
 [ext_resource type="Script" uid="uid://bgxbhfj6geqjx" path="res://scenes/customer/Customer.gd" id="1_7m56o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7m56o"]
 size = Vector2(32, 32)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7m56o"]
+font_size = 9
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Customer" type="CharacterBody2D"]
 collision_mask = 0
@@ -14,6 +19,18 @@ script = ExtResource("1_7m56o")
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_7m56o")
 
-[node name="Basket" type="Node" parent="."]
+[node name="FloatingUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -16.0
+offset_top = -27.0
+offset_right = 16.0
+offset_bottom = -16.0
+
+[node name="NotificationLabel" type="Label" parent="FloatingUI"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_7m56o")
 
 [node name="NavigationAgent" type="NavigationAgent2D" parent="."]

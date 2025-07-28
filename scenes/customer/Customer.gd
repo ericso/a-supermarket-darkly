@@ -19,6 +19,8 @@ extends CharacterBody2D
 @export var sprite_texture: Texture2D
 @onready var nav_agent := $NavigationAgent
 
+@onready var notification_label: Label = $FloatingUI/NotificationLabel
+
 var basket: Dictionary = {}
 var products_wanted: Array[String] = []
 
@@ -40,7 +42,7 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func run_customer_loop() -> void:
-	NotificationManager.add_notification("new customer wanting to buy %d products " % products_wanted.size())
+	add_floating_notification("need to buy %d things" % products_wanted.size())
 	
 	var product_id: String = ""
 	while !products_wanted.is_empty():
@@ -87,3 +89,16 @@ func get_wanted_products() -> Array[String]:
 
 func wait_at_location(time: float):
 	await get_tree().create_timer(time).timeout
+
+# add_floating_notification displays the provided message above the customer sprite
+# for the given duration. The label used is not despawned, but the text is cleared.
+func add_floating_notification(message: String, duration: float = 5.0):
+	notification_label.text = message
+	
+	var tween = notification_label.create_tween()
+	tween.tween_interval(duration)
+	tween.tween_property(notification_label, "modulate:a", 0.0, 0.5)
+	tween.finished.connect(func():
+		if is_instance_valid(notification_label):
+			notification_label.text = ""
+	)
