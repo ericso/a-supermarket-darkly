@@ -16,6 +16,11 @@ func _ready():
 	toast_panel = get_tree().current_scene.get_node_or_null("UI/ToastContainer")
 	toast_container = get_tree().current_scene.get_node_or_null("UI/ToastContainer/VBoxContainer")
 
+func _process(_delta):
+	if notifications_container.get_child_count() > max_notifications:
+		# remove the bottom notification, since we're adding to top
+		notifications_container.get_child(-1, false).queue_free()
+
 func add_notification(message: String):
 	if notifications_container == null:
 		push_warning("notifications container not assigned")
@@ -26,10 +31,6 @@ func add_notification(message: String):
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD
 	notifications_container.add_child(label)
 	notifications_container.move_child(label, 0)
-	
-	if notifications_container.get_child_count() > max_notifications:
-		# remove the bottom notification, since we're adding to top
-		notifications_container.get_child(notifications_container.get_child_count() - 1).queue_free()
 
 func add_toast(message: String):
 	if toast_panel == null or toast_container == null:
