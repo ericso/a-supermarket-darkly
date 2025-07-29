@@ -1,6 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://govjt0sg8wd3"]
+[gd_scene load_steps=12 format=3 uid="uid://govjt0sg8wd3"]
 
 [ext_resource type="Script" uid="uid://bgxbhfj6geqjx" path="res://scenes/customer/Customer.gd" id="1_7m56o"]
+[ext_resource type="PackedScene" uid="uid://dg6qj8qcte5di" path="res://state_machine/StateMachine.tscn" id="2_xvxe4"]
+[ext_resource type="Script" uid="uid://bxm2pi0d7j52e" path="res://scenes/customer/states/FindingProduct.gd" id="3_povrb"]
+[ext_resource type="Script" uid="uid://hrpk5m0104ty" path="res://scenes/customer/states/Wandering.gd" id="4_d815e"]
+[ext_resource type="Script" uid="uid://d257gbkfpa0s8" path="res://scenes/customer/states/CheckingOut.gd" id="5_0p143"]
+[ext_resource type="Script" uid="uid://8k4gv40xs74j" path="res://scenes/customer/states/Leaving.gd" id="6_0p143"]
+[ext_resource type="Script" uid="uid://c0eob5qejnqra" path="res://scenes/customer/states/InteractingWithShelf.gd" id="6_gu2e8"]
+[ext_resource type="Script" uid="uid://d17mchind6y" path="res://scenes/customer/WalkingToShelf.gd" id="6_via2e"]
+[ext_resource type="Script" uid="uid://djcqq3cs0hcbm" path="res://scenes/customer/states/WalkingToCheckout.gd" id="7_ncdiv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7m56o"]
 size = Vector2(32, 32)
@@ -34,3 +42,34 @@ offset_bottom = 23.0
 label_settings = SubResource("LabelSettings_7m56o")
 
 [node name="NavigationAgent" type="NavigationAgent2D" parent="."]
+
+[node name="StateMachine" parent="." node_paths=PackedStringArray("starting_state") instance=ExtResource("2_xvxe4")]
+starting_state = NodePath("Wandering")
+
+[node name="FindingProduct" type="Node" parent="StateMachine"]
+script = ExtResource("3_povrb")
+metadata/_custom_type_script = "uid://b410q60jy23fl"
+
+[node name="Wandering" type="Node" parent="StateMachine"]
+script = ExtResource("4_d815e")
+metadata/_custom_type_script = "uid://b410q60jy23fl"
+
+[node name="CheckingOut" type="Node" parent="StateMachine"]
+script = ExtResource("5_0p143")
+metadata/_custom_type_script = "uid://b410q60jy23fl"
+
+[node name="Leaving" type="Node" parent="StateMachine"]
+script = ExtResource("6_0p143")
+metadata/_custom_type_script = "uid://b410q60jy23fl"
+
+[node name="InteractingWithShelf" type="Node" parent="StateMachine"]
+script = ExtResource("6_gu2e8")
+metadata/_custom_type_script = "uid://b410q60jy23fl"
+
+[node name="WalkingToCheckout" type="Node" parent="StateMachine"]
+script = ExtResource("7_ncdiv")
+metadata/_custom_type_script = "uid://b410q60jy23fl"
+
+[node name="WalkingToShelf" type="Node" parent="StateMachine"]
+script = ExtResource("6_via2e")
+metadata/_custom_type_script = "uid://b410q60jy23fl"
