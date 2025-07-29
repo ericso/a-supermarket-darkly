@@ -51,6 +51,7 @@ func run_customer_loop() -> void:
 		if shelves_for_product.size() == 0:
 			# no available shelves with product_id, move on
 			NotificationManager.add_notification("no shelves with prouduct %s" % product_id)
+			add_floating_notification("can't find %s" % product_id)
 			FinanceManager.record_missed_sale(product_id)
 			continue
 		
