@@ -8,7 +8,7 @@ func enter() -> void:
 	set_target_position(front_door.global_position)
 	await nav_agent.target_reached
 
-func process_frame(delta: float) -> State:
+func process_frame(_delta: float) -> State:
 	move_towards_target()
 	parent.queue_free()
 	return

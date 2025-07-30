@@ -10,7 +10,7 @@ func enter() -> void:
 		push_error("checkout should not be null")
 	set_target_position(parent.checkout.global_position)
 
-func process_frame(delta: float) -> State:
+func process_frame(_delta: float) -> State:
 	move_towards_target()
 	await nav_agent.target_reached
 	return checking_out

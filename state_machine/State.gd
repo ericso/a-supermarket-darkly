@@ -15,23 +15,23 @@ func enter() -> void:
 func exit() -> void:
 	pass
 
-func process_input(event: InputEvent) -> State:
+func process_input(_event: InputEvent) -> State:
 	return null
 
-func process_frame(delta: float) -> State:
+func process_frame(_delta: float) -> State:
 	return null
 
-func process_physics(delta: float) -> State:
+func process_physics(_delta: float) -> State:
 	return null
 
 func set_target_position(pos: Vector2) -> void:
+	# defer calls to next frame
+	await get_tree().process_frame
+	
 	var map = nav_agent.get_navigation_map()
 	var safe_pos = NavigationServer2D.map_get_closest_point(map, pos)
-
-	# Clear the current target if needed
-	nav_agent.set_target_position(Vector2.ZERO)
-	await get_tree().process_frame  # allow one frame to clear internal state
 	nav_agent.set_target_position(safe_pos)
+	await nav_agent.path_changed
 
 func move_towards_target() -> void:
 	if nav_agent.is_navigation_finished():

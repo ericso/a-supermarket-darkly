@@ -11,6 +11,7 @@ func enter() -> void:
 	super()
 	
 	if parent.current_product == null:
+		print("DEBUG::apparently current_product is null, but is it? ", parent.current_product)
 		_should_transition = true
 		_next_state = wandering
 		return
@@ -25,11 +26,13 @@ func enter() -> void:
 	# just take the first shelf
 	parent.target_shelf = shelves_for_product[0]
 	set_target_position(parent.target_shelf.global_position)
+	print("DEBUG::WalkingToShelf state just set target_shelf", parent.target_shelf)
 	await nav_agent.target_reached
+	print("DEBUG::WalkingToShelf awaited nav_agent.target_reached")
 	_should_transition = true
 	_next_state = interacting_with_shelf
 
-func process_frame(delta: float) -> State:
+func process_frame(_delta: float) -> State:
 	if _should_transition:
 		return _next_state
 	

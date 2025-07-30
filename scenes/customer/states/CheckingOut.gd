@@ -16,7 +16,7 @@ func enter() -> void:
 		_next_state = wandering
 		return
 
-func process_frame(delta: float) -> State:
+func process_frame(_delta: float) -> State:
 	if _should_transition:
 		return _next_state
 	

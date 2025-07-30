@@ -7,14 +7,13 @@ extends State
 var _should_transition: bool = false
 var _next_state: State = null
 
-# TODO figure out how to set the product correctly
-
 func enter() -> void:
 	print("DEBUG::entering FindingProduct state")
 	super()
 	
 	if parent.current_product == null:
 		print("DEBUG::current_product ", parent.current_product)
+		print("DEBUG::products_wanted ", parent.products_wanted)
 		
 		if parent.products_wanted.is_empty():
 			# no products to purchase
@@ -29,7 +28,7 @@ func enter() -> void:
 			_should_transition = true
 			_next_state = walking_to_shelf
 
-func process_frame(delta: float) -> State:
+func process_frame(_delta: float) -> State:
 	if _should_transition:
 		return _next_state
 	return

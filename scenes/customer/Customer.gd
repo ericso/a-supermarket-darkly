@@ -30,6 +30,10 @@ func _ready():
 	products_wanted = get_wanted_products()
 	print("customer products wanted: ", products_wanted)
 	sprite.texture = sprite_texture
+	
+	# TODO remove after debugging
+	print("Navigation map:", nav_agent.get_navigation_map())
+	
 	state_machine.init(self, nav_agent)
 
 func _unhandled_input(event: InputEvent) -> void:
