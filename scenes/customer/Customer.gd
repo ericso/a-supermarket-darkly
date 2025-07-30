@@ -28,11 +28,9 @@ var checkout: Checkout = null
 
 func _ready():
 	products_wanted = get_wanted_products()
-	print("customer products wanted: ", products_wanted)
-	sprite.texture = sprite_texture
+	NotificationManager.add_log_message("new customer wants: %s" % str(products_wanted))
 	
-	# TODO remove after debugging
-	print("Navigation map:", nav_agent.get_navigation_map())
+	sprite.texture = sprite_texture
 	
 	state_machine.init(self, nav_agent)
 

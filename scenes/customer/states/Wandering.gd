@@ -4,7 +4,6 @@ extends State
 @export var checking_out: State
 
 func enter() -> void:
-	print("DEBUG::wandering state enter")
 	super()
 	
 	# set wandering destination

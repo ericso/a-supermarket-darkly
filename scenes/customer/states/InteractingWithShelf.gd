@@ -9,7 +9,6 @@ extends State
 @export var max_purchase_amount := 4
 
 func enter() -> void:
-	print("DEBUG::enter state InteractingWithShelf with target_shelf ", parent.target_shelf)
 	super()
 	
 	if parent.target_shelf == null:

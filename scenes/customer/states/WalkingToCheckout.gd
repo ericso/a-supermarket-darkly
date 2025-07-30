@@ -3,7 +3,6 @@ extends State
 @export var checking_out: State
 
 func enter() -> void:
-	print("DEBUG::entering WalkingToCheckout state")
 	super()
 	parent.checkout = StoreManager.get_open_checkout()
 	if parent.checkout == null:
