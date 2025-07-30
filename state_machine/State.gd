@@ -4,15 +4,6 @@ class_name State extends Node
 
 @export var move_speed: float = 100
 
-# the product the customer currently is looking for
-var current_product: Product = null
-
-# the shelf the customer currently wants to interact with
-var target_shelf: Shelf = null
-
-# the checkout counter at which the customer will check out
-var checkout: Checkout = null
-
 # reference to the parent so that it can be controlled by the state
 var parent: CharacterBody2D
 

@@ -3,11 +3,12 @@ extends State
 @export var checking_out: State
 
 func enter() -> void:
+	print("DEBUG::entering WalkingToCheckout state")
 	super()
-	checkout = StoreManager.get_open_checkout()
-	if checkout == null:
+	parent.checkout = StoreManager.get_open_checkout()
+	if parent.checkout == null:
 		push_error("checkout should not be null")
-	set_target_position(checkout.global_position)
+	set_target_position(parent.checkout.global_position)
 
 func process_frame(delta: float) -> State:
 	move_towards_target()

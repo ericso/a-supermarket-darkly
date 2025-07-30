@@ -16,7 +16,7 @@ var _next_state: State = null
 func enter() -> void:
 	super()
 	
-	if target_shelf == null:
+	if parent.target_shelf == null:
 		_should_transition = true
 		_next_state = wandering
 		return
@@ -26,7 +26,7 @@ func process_frame(delta: float) -> State:
 		return _next_state
 	
 	await wait_at_location(shelf_wait_time)
-	parent.basket[target_shelf.get_product()] = target_shelf.pick_quantity(randi_range(min_purchase_amount, max_purchase_amount))
-	current_product = null
-	target_shelf = null
+	parent.basket[parent.target_shelf.get_product()] = parent.target_shelf.pick_quantity(randi_range(min_purchase_amount, max_purchase_amount))
+	parent.current_product = null
+	parent.target_shelf = null
 	return finding_product

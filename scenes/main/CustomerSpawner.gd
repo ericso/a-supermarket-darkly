@@ -18,6 +18,7 @@ func _ready():
 	spawn_timer = Timer.new()
 	spawn_timer.wait_time = spawn_interval
 	spawn_timer.autostart = true
+	spawn_timer.one_shot = true # TODO cleanup
 	spawn_timer.timeout.connect(spawn_customer)
 	add_child(spawn_timer)
 	

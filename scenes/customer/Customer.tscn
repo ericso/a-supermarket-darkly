@@ -46,30 +46,42 @@ label_settings = SubResource("LabelSettings_7m56o")
 [node name="StateMachine" parent="." node_paths=PackedStringArray("starting_state") instance=ExtResource("2_xvxe4")]
 starting_state = NodePath("Wandering")
 
-[node name="FindingProduct" type="Node" parent="StateMachine"]
+[node name="FindingProduct" type="Node" parent="StateMachine" node_paths=PackedStringArray("wandering", "walking_to_shelf", "walking_to_checkout")]
 script = ExtResource("3_povrb")
+wandering = NodePath("../Wandering")
+walking_to_shelf = NodePath("../WalkingToShelf")
+walking_to_checkout = NodePath("../WalkingToCheckout")
 metadata/_custom_type_script = "uid://b410q60jy23fl"
 
-[node name="Wandering" type="Node" parent="StateMachine"]
+[node name="Wandering" type="Node" parent="StateMachine" node_paths=PackedStringArray("finding_product", "checking_out")]
 script = ExtResource("4_d815e")
+finding_product = NodePath("../FindingProduct")
+checking_out = NodePath("../CheckingOut")
 metadata/_custom_type_script = "uid://b410q60jy23fl"
 
-[node name="CheckingOut" type="Node" parent="StateMachine"]
+[node name="CheckingOut" type="Node" parent="StateMachine" node_paths=PackedStringArray("wandering", "leaving")]
 script = ExtResource("5_0p143")
+wandering = NodePath("../Wandering")
+leaving = NodePath("../Leaving")
 metadata/_custom_type_script = "uid://b410q60jy23fl"
 
 [node name="Leaving" type="Node" parent="StateMachine"]
 script = ExtResource("6_0p143")
 metadata/_custom_type_script = "uid://b410q60jy23fl"
 
-[node name="InteractingWithShelf" type="Node" parent="StateMachine"]
+[node name="InteractingWithShelf" type="Node" parent="StateMachine" node_paths=PackedStringArray("wandering", "finding_product")]
 script = ExtResource("6_gu2e8")
+wandering = NodePath("../Wandering")
+finding_product = NodePath("../FindingProduct")
 metadata/_custom_type_script = "uid://b410q60jy23fl"
 
-[node name="WalkingToCheckout" type="Node" parent="StateMachine"]
+[node name="WalkingToCheckout" type="Node" parent="StateMachine" node_paths=PackedStringArray("checking_out")]
 script = ExtResource("7_ncdiv")
+checking_out = NodePath("../CheckingOut")
 metadata/_custom_type_script = "uid://b410q60jy23fl"
 
-[node name="WalkingToShelf" type="Node" parent="StateMachine"]
+[node name="WalkingToShelf" type="Node" parent="StateMachine" node_paths=PackedStringArray("wandering", "interacting_with_shelf")]
 script = ExtResource("6_via2e")
+wandering = NodePath("../Wandering")
+interacting_with_shelf = NodePath("../InteractingWithShelf")
 metadata/_custom_type_script = "uid://b410q60jy23fl"

@@ -1,11 +1,10 @@
 extends State
 
 @export var finding_product: State
-@export var wandering: State
 @export var checking_out: State
 
 var wander_timer: Timer = null
-@export var wander_time: float = 3.0
+@export var wander_time: float = 10.0
 
 var is_wandering: bool = true
 
@@ -13,15 +12,19 @@ func enter() -> void:
 	print("DEBUG::wandering state enter")
 	super()
 	
+	is_wandering = true
+	
 	# set up wandering time
 	wander_timer = Timer.new()
 	wander_timer.wait_time = wander_time
 	wander_timer.one_shot = true
 	add_child(wander_timer)
 	wander_timer.timeout.connect(on_wander_timeout)
+	wander_timer.start()
 	
 	# set wandering destination
 	set_target_position(get_random_navigable_point())
+	await nav_agent.target_reached
 
 func process_frame(delta: float) -> State:
 	move_towards_target()
@@ -30,6 +33,7 @@ func process_frame(delta: float) -> State:
 	return finding_product
 
 func on_wander_timeout():
+	print("DEBUG::wandering state timeout")
 	is_wandering = false
 
 # get_random_navigable_point returns a point in the grocery store

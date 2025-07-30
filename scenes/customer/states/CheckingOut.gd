@@ -11,7 +11,7 @@ var _next_state: State = null
 func enter() -> void:
 	super()
 	
-	if checkout == null:
+	if parent.checkout == null:
 		_should_transition = true
 		_next_state = wandering
 		return
@@ -21,5 +21,5 @@ func process_frame(delta: float) -> State:
 		return _next_state
 	
 	await wait_at_location(checkout_wait_time)
-	checkout.checkout_basket(parent.basket)
+	parent.checkout.checkout_basket(parent.basket)
 	return leaving

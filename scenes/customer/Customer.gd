@@ -17,8 +17,18 @@ var products_wanted: Array[String] = []
 
 @export var speed := 50.0
 
+# the product the customer currently is looking for
+var current_product: Product = null
+
+# the shelf the customer currently wants to interact with
+var target_shelf: Shelf = null
+
+# the checkout counter at which the customer will check out
+var checkout: Checkout = null
+
 func _ready():
 	products_wanted = get_wanted_products()
+	print("customer products wanted: ", products_wanted)
 	sprite.texture = sprite_texture
 	state_machine.init(self, nav_agent)
 
