@@ -3,8 +3,6 @@ extends State
 @export var wandering: State
 @export var interacting_with_shelf: State
 
-var shelves_for_product: Array[Shelf] = []
-
 var _should_transition: bool = false
 var _next_state: State = null
 
@@ -16,8 +14,8 @@ func enter() -> void:
 		_should_transition = true
 		_next_state = wandering
 		return
-		
-	var shelves_for_product = StoreManager.get_shelf_for_product_id(parent.current_product.id)
+	
+	var shelves_for_product: Array[Shelf] = StoreManager.get_shelf_for_product_id(parent.current_product.id)
 	if shelves_for_product.size() == 0:
 		parent.add_floating_notification("can't find %s" % parent.current_product.label)
 		_should_transition = true

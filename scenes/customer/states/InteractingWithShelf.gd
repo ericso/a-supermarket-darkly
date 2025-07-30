@@ -14,19 +14,26 @@ var _next_state: State = null
 @export var max_purchase_amount := 4
 
 func enter() -> void:
+	print("DEBUG::enter state InteractingWithShelf with target_shelf ", parent.target_shelf)
 	super()
 	
 	if parent.target_shelf == null:
 		_should_transition = true
 		_next_state = wandering
 		return
-
-func process_frame(delta: float) -> State:
-	if _should_transition:
-		return _next_state
 	
 	await wait_at_location(shelf_wait_time)
 	parent.basket[parent.target_shelf.get_product()] = parent.target_shelf.pick_quantity(randi_range(min_purchase_amount, max_purchase_amount))
 	parent.current_product = null
 	parent.target_shelf = null
-	return finding_product
+	
+	# next state
+	_should_transition = true
+	_next_state = finding_product
+	return
+
+func process_frame(delta: float) -> State:
+	if _should_transition:
+		return _next_state
+	return
+	

@@ -34,6 +34,6 @@ func process_input(event: InputEvent) -> void:
 		change_state(new_state)
 
 func process_frame(delta: float) -> void:
-	var new_state = current_state.process_frame(delta)
+	var new_state = await current_state.process_frame(delta)
 	if new_state:
 		change_state(new_state)
