@@ -27,8 +27,11 @@ func enter() -> void:
 			parent.current_product = ProductDatabase.get_product(product_id)
 			_should_transition = true
 			_next_state = walking_to_shelf
+	else:
+		_should_transition = true
+		_next_state = walking_to_shelf
 
 func process_frame(_delta: float) -> State:
 	if _should_transition:
 		return _next_state
-	return
+	return null

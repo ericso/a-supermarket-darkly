@@ -18,6 +18,7 @@ func enter() -> void:
 	
 	var shelves_for_product: Array[Shelf] = StoreManager.get_shelf_for_product_id(parent.current_product.id)
 	if shelves_for_product.size() == 0:
+		print("DEBUG::no shelves for product", shelves_for_product)
 		parent.add_floating_notification("can't find %s" % parent.current_product.label)
 		_should_transition = true
 		_next_state = wandering
@@ -25,16 +26,16 @@ func enter() -> void:
 	
 	# just take the first shelf
 	parent.target_shelf = shelves_for_product[0]
-	set_target_position(parent.target_shelf.global_position)
+	await set_target_position(parent.target_shelf.global_position)
 	print("DEBUG::WalkingToShelf state just set target_shelf", parent.target_shelf)
-	await nav_agent.target_reached
-	print("DEBUG::WalkingToShelf awaited nav_agent.target_reached")
-	_should_transition = true
-	_next_state = interacting_with_shelf
 
 func process_frame(_delta: float) -> State:
 	if _should_transition:
 		return _next_state
 	
+	if nav_agent.is_navigation_finished():
+		print("DEBUG::WalkingToShelf state navigation finished")
+		return interacting_with_shelf
+	
 	move_towards_target()
-	return
+	return null
