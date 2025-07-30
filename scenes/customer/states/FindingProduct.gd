@@ -4,9 +4,6 @@ extends State
 @export var walking_to_shelf: State
 @export var walking_to_checkout: State
 
-var _should_transition: bool = false
-var _next_state: State = null
-
 func enter() -> void:
 	print("DEBUG::entering FindingProduct state")
 	super()

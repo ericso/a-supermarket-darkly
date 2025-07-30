@@ -3,8 +3,8 @@ extends State
 @export var wandering: State
 @export var interacting_with_shelf: State
 
-var _should_transition: bool = false
-var _next_state: State = null
+## WalkingToShelf state: the destination shelf is set in the enter() function
+## by finding a stocked shelf with the parent.current_product
 
 func enter() -> void:
 	print("DEBUG::enter state WalkingToShelf with current_product ", parent.current_product)
@@ -31,6 +31,7 @@ func enter() -> void:
 
 func process_frame(_delta: float) -> State:
 	if _should_transition:
+		print("DEBUG::WalkingToShelf _should_transition to ", _next_state)
 		return _next_state
 	
 	if nav_agent.is_navigation_finished():

@@ -1,16 +1,18 @@
 class_name State extends Node
 
 @export var animation_name: String
-
 @export var move_speed: float = 100
 
-# reference to the parent so that it can be controlled by the state
-var parent: CharacterBody2D
-
+var parent: CharacterBody2D = null
 var nav_agent: NavigationAgent2D = null
 
+var _should_transition: bool = false
+var _next_state: State = null
+
 func enter() -> void:
-	pass
+	# reset _should_transition and _next_state
+	_should_transition = false
+	_next_state = null
 
 func exit() -> void:
 	pass
