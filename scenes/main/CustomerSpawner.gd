@@ -9,7 +9,7 @@ var customer_sprites: Array[Resource] = [
 @export var tilemap_path: NodePath = ^"../Store"
 @onready var store_tilemap := get_node(tilemap_path)
 
-@export var spawn_interval: float = 1.0 # in seconds
+@export var spawn_interval: float = 3.0 # in seconds
 
 var spawn_timer: Timer = null
 var spawn_positions: Array[Vector2] = []
