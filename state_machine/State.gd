@@ -43,6 +43,3 @@ func move_towards_target() -> void:
 		var direction = (next_pos - parent.global_position).normalized()
 		parent.velocity = direction * parent.speed
 	parent.move_and_slide()
-
-func wait_at_location(time: float):
-	await get_tree().create_timer(time).timeout
