@@ -16,7 +16,14 @@ func enter() -> void:
 	
 	var shelves_for_product: Array[Shelf] = StoreManager.get_shelf_for_product_id(parent.current_product.id)
 	if shelves_for_product.size() == 0:
+		# customer unable to find product, log as a miss and move on
+		# record the missed sale
+		FinanceManager.record_missed_sale(parent.current_product.id)
 		parent.add_floating_notification("can't find %s" % parent.current_product.label)
+		# unset the product and shelf on the customer
+		parent.current_product = null
+		parent.target_shelf = null
+		# transition to wandering
 		_should_transition = true
 		_next_state = wandering
 		return
