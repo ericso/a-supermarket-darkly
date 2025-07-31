@@ -1,4 +1,4 @@
-class_name Shelf extends Node2D
+class_name Shelf extends StaticBody2D
 
 # Product handling
 @export var product: Product = null # the Product this shelf holds
