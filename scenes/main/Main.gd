@@ -1,18 +1,11 @@
 extends Node2D
 
 @onready var store_map: TileMapLayer = $Store
-@onready var money_label := $UI/MarginContainer/PanelContainer/Money
 
-func _ready():
-	$UI/MenuPanel.hide()
-	$UI/ButtonContainer/MenuButton.pressed.connect(on_menu_button_pressed)
-	
+func _ready() -> void:
 	spawn_interactables()
 	
 	InventoryManager.populate_inventory()
-
-func _process(_delta):
-	update_money_label()
 
 # spawn_interactables instantiates all "interactable" tiles
 func spawn_interactables():
@@ -32,11 +25,3 @@ func spawn_interactables():
 					node.name = tile_data.get_custom_data("name")
 				else:
 					push_error("⚠️ Could not load scene at path: ", scene_path)
-
-func update_money_label():
-	money_label.text = "Money: $%0.2f" % FinanceManager.reserves
-
-func on_menu_button_pressed():
-	var menu = $UI/MenuPanel
-	menu.refresh_tabs()
-	menu.popup_centered()
