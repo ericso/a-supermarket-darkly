@@ -30,33 +30,26 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		print("DEBUG::_input InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT")
 		if event.pressed and is_mouse_over:
-			print("DEBUG::_input event.pressed and is_mouse_over")
 			is_holding = false
 			tap_hold_timer.start()
 		elif not event.pressed and is_mouse_over:
-			print("DEBUG::_input not event.pressed and is_mouse_over")
 			if tap_hold_timer.time_left > 0:
 				tap_hold_timer.stop()
 				restock()
 
 func on_mouse_entered():
-	print("DEBUG::on_mouse_entered called")
 	is_mouse_over = true
 
 func on_mouse_exited():
-	print("DEBUG::on_mouse_exited called")
 	is_mouse_over = false
 	tap_hold_timer.stop()
 
 func on_hold():
-	print("DEBUG::on_hold called")
 	is_holding = true
 	open_shelf_menu()
 
 func open_shelf_menu():
-	print("DEBUG::open_shelf_menu called")
 	var menu = preload("res://scenes/shelf_menu/ShelfMenu.tscn").instantiate()
 	get_tree().current_scene.add_child(menu)
 	menu.popup()
