@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Control
 
 @onready var money_label := $MarginContainer/PanelContainer/Money
 

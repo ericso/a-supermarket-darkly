@@ -85,7 +85,9 @@ navigation_polygon = SubResource("NavigationPolygon_sjxhf")
 [node name="CustomerSpawner" type="Node" parent="."]
 script = ExtResource("3_q24mn")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("4_sjxhf")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI"]
@@ -223,6 +225,7 @@ size_flags_vertical = 3
 [node name="ToastContainer" type="Panel" parent="UI"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
+layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0

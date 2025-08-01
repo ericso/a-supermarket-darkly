@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var store_map: TileMapLayer = $Store
 @onready var nav_region: NavigationRegion2D = $NavigationRegion
-@onready var ui: CanvasLayer = $UI
+@onready var ui: Control = $UI
 @onready var shelf_scene = preload("res://scenes/shelf/Shelf.tscn")
 
 # shadow_shelf_scene is used to show where a shelf will be placed
