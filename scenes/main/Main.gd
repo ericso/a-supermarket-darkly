@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var store_map: TileMapLayer = $Store
 @onready var nav_region: NavigationRegion2D = $NavigationRegion
+@onready var ui: CanvasLayer = $UI
 @onready var shelf_scene = preload("res://scenes/shelf/Shelf.tscn")
 
 # shadow_shelf_scene is used to show where a shelf will be placed
@@ -13,7 +14,7 @@ func _ready() -> void:
 	
 	InventoryManager.populate_inventory()
 	
-	$UI.connect("place_shelf_mode_activated", self.on_place_shelf_pressed)
+	$UI.connect("place_shelf_button_pressed", self.on_place_shelf_pressed)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if is_placing_shelf and event is InputEventMouseButton and event.pressed:
@@ -50,6 +51,7 @@ func spawn_interactables():
 					push_error("⚠️ Could not load scene at path: ", scene_path)
 
 func on_place_shelf_pressed():
+	ui.set_place_shelf_mode_enabled(!is_placing_shelf)
 	if is_placing_shelf:
 		stop_placing_shelf()
 	else:
