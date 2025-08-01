@@ -1,17 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://385a013kmort"]
+[gd_scene load_steps=5 format=3 uid="uid://385a013kmort"]
 
 [ext_resource type="Script" uid="uid://d2qk8nlkp1d2k" path="res://scenes/shelf/Shelf.gd" id="1_dc3cn"]
+[ext_resource type="Texture2D" uid="uid://xauplyiecu4t" path="res://assets/sprites/shelves/basic-shelf.png" id="2_ky55h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aw007"]
 size = Vector2(32, 32)
 
-[node name="Shelf" type="Area2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ky55h"]
+size = Vector2(32, 32)
+
+[node name="Shelf" type="StaticBody2D"]
+collision_layer = 2
 script = ExtResource("1_dc3cn")
+
+[node name="ProductSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_ky55h")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_aw007")
 
-[node name="ProductSprite" type="Sprite2D" parent="."]
+[node name="HoverArea" type="Area2D" parent="."]
+
+[node name="CollisionShape" type="CollisionShape2D" parent="HoverArea"]
+shape = SubResource("RectangleShape2D_ky55h")
+
+[node name="NavigationObstacle" type="NavigationObstacle2D" parent="."]
+radius = 16.0
+affect_navigation_mesh = true
+avoidance_layers = 3
 
 [node name="StockBar" type="ProgressBar" parent="."]
 offset_left = -16.0

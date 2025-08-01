@@ -32,6 +32,7 @@ func _ready():
 	
 	sprite.texture = sprite_texture
 	
+	nav_agent.avoidance_enabled = true
 	state_machine.init(self, nav_agent)
 
 func _unhandled_input(event: InputEvent) -> void:

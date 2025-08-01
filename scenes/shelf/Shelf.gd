@@ -1,9 +1,10 @@
-class_name Shelf extends Node2D
+class_name Shelf extends StaticBody2D
 
 # Product handling
 @export var product: Product = null # the Product this shelf holds
 @onready var product_sprite := $ProductSprite
 @onready var stock_bar: ProgressBar = $StockBar
+@onready var hover_area: Area2D = $HoverArea
 @export var max_stock: int = 20
 var current_stock: int = 0
 
@@ -16,8 +17,9 @@ var hold_threshold = 0.3 # seconds to register hold
 func _ready():
 	StoreManager.register_shelf(self)
 	
-	connect("mouse_entered", on_mouse_entered)
-	connect("mouse_exited", on_mouse_exited)
+	hover_area.mouse_entered.connect(on_mouse_entered)
+	hover_area.mouse_exited.connect(on_mouse_exited)
+	
 	tap_hold_timer.wait_time = hold_threshold
 	tap_hold_timer.one_shot = true
 	tap_hold_timer.timeout.connect(on_hold)
