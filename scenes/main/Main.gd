@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var store_map: TileMapLayer = $Store
+@onready var nav_region: NavigationRegion2D = $NavigationRegion
 @onready var shelf_scene = preload("res://scenes/shelf/Shelf.tscn")
 
 var placing_shelf: bool = false
@@ -53,4 +54,8 @@ func can_place_shelf_at(tile_pos: Vector2i) -> bool:
 func place_shelf_at(tile_pos: Vector2i):
 	var shelf = shelf_scene.instantiate()
 	shelf.position = store_map.map_to_local(tile_pos)
-	add_child(shelf)
+	# shelves must be added as children of the NavigationRegion2D so that
+	# customers avoid them when pathing
+	nav_region.add_child(shelf)
+	nav_region.bake_navigation_polygon()
+	await get_tree().process_frame
