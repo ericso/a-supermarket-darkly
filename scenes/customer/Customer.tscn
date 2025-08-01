@@ -45,7 +45,6 @@ label_settings = SubResource("LabelSettings_7m56o")
 [node name="NavigationAgent" type="NavigationAgent2D" parent="."]
 avoidance_enabled = true
 avoidance_mask = 3
-debug_enabled = true
 
 [node name="StateMachine" parent="." node_paths=PackedStringArray("starting_state") instance=ExtResource("2_xvxe4")]
 starting_state = NodePath("Wandering")
