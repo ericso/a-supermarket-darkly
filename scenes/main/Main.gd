@@ -77,7 +77,6 @@ func start_placing_shelf() -> void:
 	is_placing_shelf = true
 	shadow_shelf_scene = preload("res://scenes/shelf/ShadowShelf.tscn").instantiate()
 	add_child(shadow_shelf_scene)
-	Input.set_default_cursor_shape(Input.CURSOR_CROSS)
 
 func stop_placing_shelf() -> void:
 	is_placing_shelf = false

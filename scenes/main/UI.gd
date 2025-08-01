@@ -29,3 +29,7 @@ func on_shelf_button_pressed():
 func set_place_shelf_mode_enabled(enabled: bool):
 	shelf_button.text = "Placing Shelves" if enabled else "Place Shelves"
 	shelf_button.modulate = Color(0.7, 1, 0.7) if enabled else Color(1, 1, 1)
+	if enabled:
+		Input.set_default_cursor_shape(Input.CURSOR_CROSS)
+	else:
+		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
