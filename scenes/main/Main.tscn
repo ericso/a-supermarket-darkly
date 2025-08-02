@@ -110,15 +110,20 @@ size_flags_horizontal = 4
 text = "Bank: $0"
 label_settings = SubResource("LabelSettings_nha0i")
 
+[node name="ShelfButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Place Shelves"
+
 [node name="TabButton" type="Button" parent="UI"]
 offset_right = 18.0
 offset_bottom = 31.0
 text = ">"
 
 [node name="ButtonContainer" type="MarginContainer" parent="UI"]
-offset_left = 272.0
+offset_left = 455.0
 offset_top = 620.0
-offset_right = 513.0
+offset_right = 535.0
 offset_bottom = 662.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/ButtonContainer"]
@@ -128,11 +133,6 @@ layout_mode = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Menu"
-
-[node name="ShelfButton" type="Button" parent="UI/ButtonContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Place Shelves"
 
 [node name="MenuPanel" type="PopupPanel" parent="UI"]
 size = Vector2i(540, 720)
