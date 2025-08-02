@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@onready var money_label := $MarginContainer/PanelContainer/Money
+@onready var money_label := $SideMenu/MarginContainer/VBoxContainer/MoneyLabel
 
 @onready var menu_button := $ButtonContainer/HBoxContainer/MenuButton
 @onready var shelf_button := $ButtonContainer/HBoxContainer/ShelfButton
@@ -9,7 +9,7 @@ extends CanvasLayer
 @onready var side_menu := $SideMenu
 @onready var side_menu_tab_button := $TabButton
 
-@export var menu_width: int = 300
+@export var menu_width: int = 250
 @export var menu_height: int = 720
 @export var button_width: int = 40
 @export var button_height: int = 40
