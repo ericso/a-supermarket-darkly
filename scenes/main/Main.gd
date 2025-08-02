@@ -22,7 +22,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if can_place_shelf_at(tile_pos):
 			place_shelf_at(tile_pos)
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	if is_placing_shelf and shadow_shelf_scene:
 		var mouse_pos = get_global_mouse_position()
 		var tile_pos: Vector2i = store_map.local_to_map(mouse_pos)
