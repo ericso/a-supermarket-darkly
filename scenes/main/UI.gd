@@ -45,9 +45,9 @@ func on_side_menu_tab_button_pressed() -> void:
 	animate_menu_slide(side_menu_visible)
 	update_menu_tab_button(side_menu_visible)
 
-func animate_menu_slide(show: bool):
-	var menu_target_x = 0 if show else -menu_width
-	var button_target_x = menu_width if show else 0
+func animate_menu_slide(show_menu: bool):
+	var menu_target_x = 0 if show_menu else -menu_width
+	var button_target_x = menu_width if show_menu else 0
 	var tween = create_tween()
 	tween.set_parallel(true)
 	tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
