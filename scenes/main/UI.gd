@@ -1,15 +1,15 @@
 extends CanvasLayer
 
-@onready var money_label := $MarginContainer/PanelContainer/Money
+@onready var money_label := $SideMenu/MarginContainer/VBoxContainer/MoneyLabel
+@onready var shelf_button := $SideMenu/MarginContainer/VBoxContainer/ShelfButton
 
 @onready var menu_button := $ButtonContainer/HBoxContainer/MenuButton
-@onready var shelf_button := $ButtonContainer/HBoxContainer/ShelfButton
 
 @onready var menu_panel := $MenuPanel
 @onready var side_menu := $SideMenu
 @onready var side_menu_tab_button := $TabButton
 
-@export var menu_width: int = 300
+@export var menu_width: int = 220
 @export var menu_height: int = 720
 @export var button_width: int = 40
 @export var button_height: int = 40
@@ -45,9 +45,9 @@ func on_side_menu_tab_button_pressed() -> void:
 	animate_menu_slide(side_menu_visible)
 	update_menu_tab_button(side_menu_visible)
 
-func animate_menu_slide(show: bool):
-	var menu_target_x = 0 if show else -menu_width
-	var button_target_x = menu_width if show else 0
+func animate_menu_slide(show_menu: bool):
+	var menu_target_x = 0 if show_menu else -menu_width
+	var button_target_x = menu_width if show_menu else 0
 	var tween = create_tween()
 	tween.set_parallel(true)
 	tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
