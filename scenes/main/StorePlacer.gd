@@ -4,15 +4,13 @@ extends Node2D
 
 @onready var shelf_scene = preload("res://scenes/shelf/Shelf.tscn")
 var shadow_shelf_scene: Node2D = null
+var is_placing_shelf: bool = false
 
 @onready var checkout_scene = preload("res://scenes/checkout/Checkout.tscn")
 var shadow_checkout_scene: Node2D = null
 
 @onready var store_map: TileMapLayer = get_parent().get_node("Store")
 @onready var nav_region: NavigationRegion2D = get_parent().get_node("NavigationRegion")
-
-# shadow_shelf_scene is used to show where a shelf will be placed
-var is_placing_shelf: bool = false
 var is_placing_checkout: bool = false
 
 func _ready() -> void:
@@ -20,10 +18,15 @@ func _ready() -> void:
 	ui.connect("place_checkout_button_pressed", self.on_place_checkout_pressed)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if is_placing_shelf and event is InputEventMouseButton and event.pressed:
-		var tile_pos = store_map.local_to_map(event.position)
-		if can_place_shelf_at(tile_pos):
-			place_shelf_at(tile_pos)
+	if event is InputEventMouseButton and event.pressed:
+		if is_placing_shelf:
+			var tile_pos = store_map.local_to_map(event.position)
+			if can_place_shelf_at(tile_pos):
+				place_shelf_at(tile_pos)
+		if is_placing_checkout:
+			var tile_pos = store_map.local_to_map(event.position)
+			if can_place_checkout_at(tile_pos):
+				place_checkout_at(tile_pos)
 
 func _process(_delta) -> void:
 	if is_placing_shelf and shadow_shelf_scene: 
@@ -33,6 +36,14 @@ func _process(_delta) -> void:
 		shadow_shelf_scene.position = snapped_pos
 		
 		update_shadow_color(can_place_shelf_at(snapped_pos))
+	
+	if is_placing_checkout and shadow_checkout_scene: 
+		var mouse_pos = get_global_mouse_position()
+		var tile_pos: Vector2i = store_map.local_to_map(mouse_pos)
+		var snapped_pos = store_map.map_to_local(tile_pos)
+		shadow_checkout_scene.position = snapped_pos
+		
+		update_shadow_color(can_place_checkout_at(snapped_pos))
 
 func on_place_shelf_pressed():
 	ui.set_place_shelf_mode_enabled(!is_placing_shelf)
@@ -42,6 +53,7 @@ func on_place_shelf_pressed():
 		start_placing_shelf()
 
 func on_place_checkout_pressed():
+	print("DEBUG::on_place_checkout_pressed")
 	ui.set_place_checkout_mode_enabled(!is_placing_checkout)
 	if is_placing_checkout:
 		stop_placing_checkout()
@@ -72,6 +84,7 @@ func place_shelf_at(tile_pos: Vector2i):
 	await get_tree().process_frame
 
 func place_checkout_at(tile_pos: Vector2i):
+	print("DEBUG::place_checkout_at ", tile_pos)
 	var checkout = checkout_scene.instantiate()
 	checkout.position = store_map.map_to_local(tile_pos)
 	# checkout must be added as children of the NavigationRegion2D so that
@@ -92,11 +105,13 @@ func stop_placing_shelf() -> void:
 		shadow_shelf_scene = null
 
 func start_placing_checkout() -> void:
+	print("DEBUG::start_placing_checkout")
 	is_placing_checkout = true
 	shadow_checkout_scene = preload("res://scenes/checkout/ShadowCheckout.tscn").instantiate()
 	add_child(shadow_checkout_scene)
 
 func stop_placing_checkout() -> void:
+	print("DEBUG::stop_placing_checkout")
 	is_placing_checkout = false
 	if shadow_checkout_scene:
 		shadow_checkout_scene.queue_free()
