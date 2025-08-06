@@ -53,7 +53,6 @@ func on_place_shelf_pressed():
 		start_placing_shelf()
 
 func on_place_checkout_pressed():
-	print("DEBUG::on_place_checkout_pressed")
 	ui.set_place_checkout_mode_enabled(!is_placing_checkout)
 	if is_placing_checkout:
 		stop_placing_checkout()
@@ -84,7 +83,6 @@ func place_shelf_at(tile_pos: Vector2i):
 	await get_tree().process_frame
 
 func place_checkout_at(tile_pos: Vector2i):
-	print("DEBUG::place_checkout_at ", tile_pos)
 	var checkout = checkout_scene.instantiate()
 	checkout.position = store_map.map_to_local(tile_pos)
 	# checkout must be added as children of the NavigationRegion2D so that
@@ -105,13 +103,11 @@ func stop_placing_shelf() -> void:
 		shadow_shelf_scene = null
 
 func start_placing_checkout() -> void:
-	print("DEBUG::start_placing_checkout")
 	is_placing_checkout = true
 	shadow_checkout_scene = preload("res://scenes/checkout/ShadowCheckout.tscn").instantiate()
 	add_child(shadow_checkout_scene)
 
 func stop_placing_checkout() -> void:
-	print("DEBUG::stop_placing_checkout")
 	is_placing_checkout = false
 	if shadow_checkout_scene:
 		shadow_checkout_scene.queue_free()
