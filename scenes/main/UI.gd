@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+@onready var margin_container := $SideMenu/MarginContainer
+
 @onready var money_label := $SideMenu/MarginContainer/VBoxContainer/MoneyLabel
 @onready var shelf_button := $SideMenu/MarginContainer/VBoxContainer/ShelfButton
 @onready var checkout_button := $SideMenu/MarginContainer/VBoxContainer/CheckoutButton
@@ -62,6 +64,14 @@ func update_menu_tab_button(show_menu: bool) -> void:
 
 func _process(_delta) -> void:
 	update_money_label()
+	
+	if side_menu_visible:
+		# resize the side menu to match its contents
+		side_menu.size.x = margin_container.size.x
+		
+		# reposition the tab button
+		# NOTE: this causes the tween animation to fail
+		side_menu_tab_button.position.x = margin_container.size.x
 
 func update_money_label():
 	money_label.text = "Money: $%0.2f" % FinanceManager.reserves

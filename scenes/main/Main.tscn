@@ -93,13 +93,11 @@ script = ExtResource("4_ko0rf")
 script = ExtResource("4_sjxhf")
 
 [node name="SideMenu" type="Panel" parent="UI"]
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/SideMenu"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 216.0
+offset_bottom = 146.0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
