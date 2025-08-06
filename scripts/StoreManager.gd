@@ -42,6 +42,8 @@ func unregister_checkout(checkout: Checkout) -> void:
 	checkouts.erase(checkout)
 
 func get_open_checkout() -> Checkout:
+	if checkouts.size() == 0:
+		return null
 	return checkouts[randi() % checkouts.size()]
 
 ## Doors
