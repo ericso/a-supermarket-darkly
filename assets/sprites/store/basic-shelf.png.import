@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://xauplyiecu4t"
-path="res://.godot/imported/basic-shelf.png-21cf85e8f72b83cc594c50ecbc13fab1.ctex"
+path="res://.godot/imported/basic-shelf.png-b1288b2c426f081adbb08c08dfe22993.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/shelves/basic-shelf.png"
-dest_files=["res://.godot/imported/basic-shelf.png-21cf85e8f72b83cc594c50ecbc13fab1.ctex"]
+source_file="res://assets/sprites/store/basic-shelf.png"
+dest_files=["res://.godot/imported/basic-shelf.png-b1288b2c426f081adbb08c08dfe22993.ctex"]
 
 [params]
 

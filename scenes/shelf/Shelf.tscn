@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://385a013kmort"]
 
 [ext_resource type="Script" uid="uid://d2qk8nlkp1d2k" path="res://scenes/shelf/Shelf.gd" id="1_dc3cn"]
-[ext_resource type="Texture2D" uid="uid://xauplyiecu4t" path="res://assets/sprites/shelves/basic-shelf.png" id="2_ky55h"]
+[ext_resource type="Texture2D" uid="uid://xauplyiecu4t" path="res://assets/sprites/store/basic-shelf.png" id="2_ky55h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aw007"]
 size = Vector2(32, 32)

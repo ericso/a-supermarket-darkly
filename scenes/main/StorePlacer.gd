@@ -93,7 +93,7 @@ func stop_placing_shelf() -> void:
 
 func start_placing_checkout() -> void:
 	is_placing_checkout = true
-	shadow_checkout_scene = preload("res://scenes/shelf/ShadowCheckout.tscn").instantiate()
+	shadow_checkout_scene = preload("res://scenes/checkout/ShadowCheckout.tscn").instantiate()
 	add_child(shadow_checkout_scene)
 
 func stop_placing_checkout() -> void:
