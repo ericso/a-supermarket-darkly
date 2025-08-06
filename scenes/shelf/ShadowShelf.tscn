@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://blup5pa2w6cx8"]
 
-[ext_resource type="Texture2D" uid="uid://xauplyiecu4t" path="res://assets/sprites/shelves/basic-shelf.png" id="1_cseyf"]
+[ext_resource type="Texture2D" uid="uid://xauplyiecu4t" path="res://assets/sprites/store/basic-shelf.png" id="1_cseyf"]
 
 [node name="ShadowShelf" type="Node2D"]
 
