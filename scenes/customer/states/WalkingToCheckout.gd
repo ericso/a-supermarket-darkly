@@ -5,10 +5,14 @@ extends State
 
 func enter() -> void:
 	super()
+	
+	parent.add_floating_notification("done shopping, going to check out!")
+	
 	parent.checkout = StoreManager.get_open_checkout()
 	if parent.checkout != null:
 		set_target_position(parent.checkout.global_position)
 	else:
+		parent.add_floating_notification("no checkouts available! :(")
 		_should_transition = true
 		_next_state = wandering
 

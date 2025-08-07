@@ -6,6 +6,8 @@ extends State
 func enter() -> void:
 	super()
 	
+	parent.add_floating_notification("checkout out!")
+	
 	if parent.checkout == null:
 		_should_transition = true
 		_next_state = wandering
