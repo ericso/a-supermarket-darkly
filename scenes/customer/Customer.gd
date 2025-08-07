@@ -10,6 +10,8 @@ extends CharacterBody2D
 var basket: Dictionary = {}
 var products_wanted: Array[String] = []
 
+var notification_tween: Tween = null # tween used to fade out floating notifcation
+
 # min and max products amounts are the range of numbers of product a customer
 # will attempt to purchase
 @export var min_products := 1
@@ -52,13 +54,21 @@ func get_wanted_products() -> Array[String]:
 
 # add_floating_notification displays the provided message above the customer sprite
 # for the given duration. The label used is not despawned, but the text is cleared.
-func add_floating_notification(message: String, duration: float = 5.0):
+func add_floating_notification(message: String, duration: float = 3.0):
+	# Cancel any existing tween
+	if notification_tween and notification_tween.is_valid():
+		notification_tween.kill()
+
+	# Reset opacity and set new message
+	notification_label.modulate.a = 1.0
 	notification_label.text = message
-	
-	var tween = notification_label.create_tween()
-	tween.tween_interval(duration)
-	tween.tween_property(notification_label, "modulate:a", 0.0, 0.5)
-	tween.finished.connect(func():
+
+	# Create and store new tween
+	notification_tween = notification_label.create_tween()
+	notification_tween.tween_interval(duration)
+	notification_tween.tween_property(notification_label, "modulate:a", 0.0, 0.5)
+
+	notification_tween.finished.connect(func():
 		if is_instance_valid(notification_label):
 			notification_label.text = ""
 	)

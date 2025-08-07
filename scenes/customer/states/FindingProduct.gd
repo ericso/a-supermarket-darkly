@@ -15,6 +15,8 @@ func enter() -> void:
 		else:
 			var product_id = parent.products_wanted.pop_front()
 			parent.current_product = ProductDatabase.get_product(product_id)
+			parent.add_floating_notification("getting %s" % parent.current_product.label)
+			
 			_should_transition = true
 			_next_state = walking_to_shelf
 	else:

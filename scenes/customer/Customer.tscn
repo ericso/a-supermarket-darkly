@@ -78,9 +78,10 @@ wandering = NodePath("../Wandering")
 finding_product = NodePath("../FindingProduct")
 metadata/_custom_type_script = "uid://b410q60jy23fl"
 
-[node name="WalkingToCheckout" type="Node" parent="StateMachine" node_paths=PackedStringArray("checking_out")]
+[node name="WalkingToCheckout" type="Node" parent="StateMachine" node_paths=PackedStringArray("checking_out", "wandering")]
 script = ExtResource("7_ncdiv")
 checking_out = NodePath("../CheckingOut")
+wandering = NodePath("../Wandering")
 metadata/_custom_type_script = "uid://b410q60jy23fl"
 
 [node name="WalkingToShelf" type="Node" parent="StateMachine" node_paths=PackedStringArray("wandering", "interacting_with_shelf")]
