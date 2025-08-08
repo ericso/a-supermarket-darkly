@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var ui: CanvasLayer = get_parent().get_node("UI")
+@onready var store_panel: VBoxContainer = get_parent().get_node("UI/SideMenu/MarginContainer/VBoxContainer/StorePanel")
 
 @onready var shelf_scene = preload("res://scenes/shelf/Shelf.tscn")
 var shadow_shelf_scene: Node2D = null
@@ -14,8 +14,8 @@ var shadow_checkout_scene: Node2D = null
 var is_placing_checkout: bool = false
 
 func _ready() -> void:
-	ui.connect("place_shelf_button_pressed", self.on_place_shelf_pressed)
-	ui.connect("place_checkout_button_pressed", self.on_place_checkout_pressed)
+	store_panel.connect("place_shelf_button_pressed", self.on_place_shelf_pressed)
+	store_panel.connect("place_checkout_button_pressed", self.on_place_checkout_pressed)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -46,14 +46,14 @@ func _process(_delta) -> void:
 		update_shadow_color(can_place_checkout_at(snapped_pos))
 
 func on_place_shelf_pressed():
-	ui.set_place_shelf_mode_enabled(!is_placing_shelf)
+	store_panel.set_place_shelf_mode_enabled(!is_placing_shelf)
 	if is_placing_shelf:
 		stop_placing_shelf()
 	else:
 		start_placing_shelf()
 
 func on_place_checkout_pressed():
-	ui.set_place_checkout_mode_enabled(!is_placing_checkout)
+	store_panel.set_place_checkout_mode_enabled(!is_placing_checkout)
 	if is_placing_checkout:
 		stop_placing_checkout()
 	else:
