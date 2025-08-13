@@ -118,6 +118,8 @@ layout_mode = 2
 [node name="MainPanel" type="VBoxContainer" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 script = ExtResource("7_p5fgu")
+side_menu_path = NodePath("../../..")
+store_panel_path = NodePath("../StorePanel")
 
 [node name="MoneyLabel" type="Label" parent="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel"]
 layout_mode = 2
@@ -125,12 +127,15 @@ size_flags_horizontal = 4
 text = "Bank: $0"
 label_settings = SubResource("LabelSettings_nha0i")
 
-[node name="StorePanelButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel"]
+[node name="StoreButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel"]
 layout_mode = 2
+text = "Store"
 
 [node name="StorePanel" type="VBoxContainer" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("7_qkm1d")
+side_menu_path = NodePath("../../..")
 
 [node name="ShelfButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel"]
 layout_mode = 2
@@ -141,6 +146,10 @@ text = "Place Shelves"
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Place Checkouts"
+
+[node name="BackButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel"]
+layout_mode = 2
+text = "< Back"
 
 [node name="ButtonContainer" type="MarginContainer" parent="UI"]
 offset_left = 455.0
@@ -279,3 +288,6 @@ anchor_bottom = 1.0
 offset_top = -30.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[connection signal="pressed" from="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel/StoreButton" to="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel" method="on_store_button_pressed"]
+[connection signal="pressed" from="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel/BackButton" to="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel" method="on_back_button_pressed"]

@@ -1,5 +1,6 @@
 extends Panel
 
+# SideMenu handling
 @onready var side_menu := self
 @onready var tab_button := $TabButton
 @onready var margin_container := $MarginContainer
@@ -9,10 +10,21 @@ extends Panel
 
 var side_menu_visible: bool = false
 
+# Children Panel handling
+@export var fade_duration := 0.3
+
+var current_panel: Control = null
+var panel_stack: Array[Control] = []
+var tween: Tween = null
+
 func _ready() -> void:
 	set_up_side_menu()
 	tab_button.pressed.connect(on_tab_button_pressed)
-
+	
+	current_panel = $MarginContainer/VBoxContainer/MainPanel
+	current_panel.visible = true
+	current_panel.modulate.a = 1.0
+	
 func _process(_delta) -> void:
 	if side_menu_visible:
 		# resize the side menu to match its contents
@@ -49,3 +61,44 @@ func animate_menu_slide(show_menu: bool):
  
 func update_menu_tab_button(show_menu: bool) -> void:
 	tab_button.text = "<" if show_menu else ">"
+
+### ----------------------------------------------------------------------------
+func show_panel(new_panel: Control):
+	if current_panel == new_panel:
+		return
+	
+	panel_stack.append(current_panel)
+	transition_to_panel(new_panel, -1)
+
+func go_back():
+	if panel_stack.is_empty():
+		return
+	
+	var previous = panel_stack.pop_back()
+	transition_to_panel(previous, 1)
+
+func transition_to_panel(new_panel: Control, direction: int):
+	var old_panel = current_panel
+	current_panel = new_panel
+
+	# Fade out old panel
+	var t = create_tween_for_panel()
+	t.tween_property(old_panel, "modulate:a", 0.0, fade_duration)
+
+	# Fade in new panel
+	new_panel.visible = true
+	new_panel.modulate.a = 0.0
+	t.parallel().tween_property(new_panel, "modulate:a", 1.0, fade_duration)
+
+	t.finished.connect(func ():
+		if is_instance_valid(old_panel):
+			old_panel.visible = false
+	)
+
+func create_tween_for_panel() -> Tween:
+	if tween and tween.is_valid():
+		tween.kill()
+	tween = create_tween()
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	return tween

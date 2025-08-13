@@ -6,6 +6,8 @@ signal place_checkout_button_pressed
 @onready var shelf_button := $ShelfButton
 @onready var checkout_button := $CheckoutButton
 
+@export var side_menu_path: NodePath
+
 func _ready() -> void:
 	shelf_button.pressed.connect(on_shelf_button_pressed)
 	checkout_button.pressed.connect(on_checkout_button_pressed)
@@ -33,3 +35,7 @@ func set_place_checkout_mode_enabled(enabled: bool):
 		Input.set_default_cursor_shape(Input.CURSOR_CROSS)
 	else:
 		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+
+func on_back_button_pressed():
+	var side_menu = get_node(side_menu_path)
+	side_menu.go_back()
