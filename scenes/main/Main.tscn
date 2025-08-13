@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://nbfo3cn2hpmh"]
+[gd_scene load_steps=17 format=4 uid="uid://nbfo3cn2hpmh"]
 
 [ext_resource type="Script" uid="uid://dqgftvulsu404" path="res://scenes/main/Main.gd" id="1_uu6xs"]
 [ext_resource type="Texture2D" uid="uid://ca2swdbmqbx50" path="res://assets/sheets/grocery-store-tileset.png" id="2_q24mn"]
@@ -8,6 +8,9 @@
 [ext_resource type="Script" uid="uid://cirno57nkfb67" path="res://scenes/main/StorePlacer.gd" id="4_ko0rf"]
 [ext_resource type="Script" uid="uid://hujdixt8dwkk" path="res://scenes/main/UI.gd" id="4_sjxhf"]
 [ext_resource type="Script" uid="uid://da00fv86t3yr3" path="res://scenes/main/Stats.gd" id="6_1rhdn"]
+[ext_resource type="Script" uid="uid://63mssmvb4awl" path="res://scenes/main/side_menu/SideMenu.gd" id="6_3km4f"]
+[ext_resource type="Script" uid="uid://c7nmmq0x4uenj" path="res://scenes/main/side_menu/MainPanel.gd" id="7_p5fgu"]
+[ext_resource type="Script" uid="uid://bgk2l45t0jugn" path="res://scenes/main/side_menu/StorePanel.gd" id="7_qkm1d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dc040"]
 texture = ExtResource("2_q24mn")
@@ -93,6 +96,12 @@ script = ExtResource("4_ko0rf")
 script = ExtResource("4_sjxhf")
 
 [node name="SideMenu" type="Panel" parent="UI"]
+script = ExtResource("6_3km4f")
+
+[node name="TabButton" type="Button" parent="UI/SideMenu"]
+offset_right = 40.0
+offset_bottom = 40.0
+text = ">"
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/SideMenu"]
 layout_mode = 0
@@ -106,26 +115,41 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/SideMenu/MarginContainer"]
 layout_mode = 2
 
-[node name="MoneyLabel" type="Label" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
+[node name="MainPanel" type="VBoxContainer" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("7_p5fgu")
+side_menu_path = NodePath("../../..")
+store_panel_path = NodePath("../StorePanel")
+
+[node name="MoneyLabel" type="Label" parent="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Bank: $0"
 label_settings = SubResource("LabelSettings_nha0i")
 
-[node name="ShelfButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
+[node name="StoreButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel"]
+layout_mode = 2
+text = "Store"
+
+[node name="StorePanel" type="VBoxContainer" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("7_qkm1d")
+side_menu_path = NodePath("../../..")
+
+[node name="ShelfButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Place Shelves"
 
-[node name="CheckoutButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
+[node name="CheckoutButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Place Checkouts"
 
-[node name="TabButton" type="Button" parent="UI"]
-offset_right = 18.0
-offset_bottom = 31.0
-text = ">"
+[node name="BackButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel"]
+layout_mode = 2
+text = "< Back"
 
 [node name="ButtonContainer" type="MarginContainer" parent="UI"]
 offset_left = 455.0
@@ -264,3 +288,6 @@ anchor_bottom = 1.0
 offset_top = -30.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[connection signal="pressed" from="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel/StoreButton" to="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel" method="on_store_button_pressed"]
+[connection signal="pressed" from="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel/BackButton" to="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel" method="on_back_button_pressed"]
