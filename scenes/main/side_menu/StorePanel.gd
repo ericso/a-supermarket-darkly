@@ -2,6 +2,7 @@ extends VBoxContainer
 
 signal place_shelf_button_pressed
 signal place_checkout_button_pressed
+signal back_button_pressed
 
 @onready var shelf_button := $ShelfButton
 @onready var checkout_button := $CheckoutButton
@@ -18,8 +19,11 @@ func on_shelf_button_pressed():
 func on_checkout_button_pressed():
 	emit_signal("place_checkout_button_pressed")
 
-# TODO refactor placing shelves and checkouts into common code
-# probably do it when changing this to purchasing checkouts and shelves
+func on_back_button_pressed():
+	emit_signal("back_button_pressed")
+	var side_menu = get_node(side_menu_path)
+	side_menu.go_back()
+
 func set_place_shelf_mode_enabled(enabled: bool):
 	shelf_button.text = "Placing Shelves" if enabled else "Place Shelves"
 	shelf_button.modulate = Color(0.7, 1, 0.7) if enabled else Color(1, 1, 1)
@@ -35,7 +39,3 @@ func set_place_checkout_mode_enabled(enabled: bool):
 		Input.set_default_cursor_shape(Input.CURSOR_CROSS)
 	else:
 		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
-
-func on_back_button_pressed():
-	var side_menu = get_node(side_menu_path)
-	side_menu.go_back()
