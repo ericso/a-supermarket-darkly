@@ -99,6 +99,7 @@ script = ExtResource("4_sjxhf")
 script = ExtResource("6_3km4f")
 
 [node name="TabButton" type="Button" parent="UI/SideMenu"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 text = ">"

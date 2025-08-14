@@ -46,14 +46,18 @@ func _process(_delta) -> void:
 		update_shadow_color(can_place_checkout_at(snapped_pos))
 
 func on_place_shelf_pressed():
-	store_panel.set_place_shelf_mode_enabled(!is_placing_shelf)
+	if is_placing_checkout:
+		stop_placing_checkout()
+	
 	if is_placing_shelf:
 		stop_placing_shelf()
 	else:
 		start_placing_shelf()
 
 func on_place_checkout_pressed():
-	store_panel.set_place_checkout_mode_enabled(!is_placing_checkout)
+	if is_placing_shelf:
+		stop_placing_shelf()
+	
 	if is_placing_checkout:
 		stop_placing_checkout()
 	else:
@@ -95,23 +99,27 @@ func start_placing_shelf() -> void:
 	is_placing_shelf = true
 	shadow_shelf_scene = preload("res://scenes/shelf/ShadowShelf.tscn").instantiate()
 	add_child(shadow_shelf_scene)
+	store_panel.set_place_shelf_mode_enabled(true)
 
 func stop_placing_shelf() -> void:
 	is_placing_shelf = false
 	if shadow_shelf_scene:
 		shadow_shelf_scene.queue_free()
 		shadow_shelf_scene = null
+	store_panel.set_place_shelf_mode_enabled(false)
 
 func start_placing_checkout() -> void:
 	is_placing_checkout = true
 	shadow_checkout_scene = preload("res://scenes/checkout/ShadowCheckout.tscn").instantiate()
 	add_child(shadow_checkout_scene)
+	store_panel.set_place_checkout_mode_enabled(true)
 
 func stop_placing_checkout() -> void:
 	is_placing_checkout = false
 	if shadow_checkout_scene:
 		shadow_checkout_scene.queue_free()
 		shadow_checkout_scene = null
+	store_panel.set_place_checkout_mode_enabled(false)
 
 func update_shadow_color(is_valid: bool):
 	if shadow_shelf_scene:

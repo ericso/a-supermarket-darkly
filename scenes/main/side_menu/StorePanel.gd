@@ -20,6 +20,7 @@ func on_checkout_button_pressed():
 
 # TODO refactor placing shelves and checkouts into common code
 # probably do it when changing this to purchasing checkouts and shelves
+# maybe this isn't worth it as there are only two modes
 func set_place_shelf_mode_enabled(enabled: bool):
 	shelf_button.text = "Placing Shelves" if enabled else "Place Shelves"
 	shelf_button.modulate = Color(0.7, 1, 0.7) if enabled else Color(1, 1, 1)
