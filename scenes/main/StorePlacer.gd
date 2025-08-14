@@ -16,6 +16,7 @@ var is_placing_checkout: bool = false
 func _ready() -> void:
 	store_panel.connect("place_shelf_button_pressed", self.on_place_shelf_pressed)
 	store_panel.connect("place_checkout_button_pressed", self.on_place_checkout_pressed)
+	store_panel.connect("back_button_pressed", self.terminate_all_placing_modes)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -62,6 +63,10 @@ func on_place_checkout_pressed():
 		stop_placing_checkout()
 	else:
 		start_placing_checkout()
+		
+func terminate_all_placing_modes() -> void:
+	stop_placing_shelf()
+	stop_placing_checkout()
 
 func can_place_shelf_at(tile_pos: Vector2i) -> bool:
 	var world_pos = store_map.map_to_local(tile_pos)
