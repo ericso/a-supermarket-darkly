@@ -22,11 +22,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if is_placing_shelf:
 			var tile_pos = store_map.local_to_map(event.position)
-			if can_place_shelf_at(tile_pos):
+			if can_place_node_at(tile_pos):
 				place_shelf_at(tile_pos)
 		if is_placing_checkout:
 			var tile_pos = store_map.local_to_map(event.position)
-			if can_place_checkout_at(tile_pos):
+			if can_place_node_at(tile_pos):
 				place_checkout_at(tile_pos)
 
 func _process(_delta) -> void:
@@ -36,7 +36,7 @@ func _process(_delta) -> void:
 		var snapped_pos = store_map.map_to_local(tile_pos)
 		shadow_shelf_scene.position = snapped_pos
 		
-		update_shadow_color(can_place_shelf_at(snapped_pos))
+		update_shadow_color(can_place_node_at(snapped_pos))
 	
 	if is_placing_checkout and shadow_checkout_scene: 
 		var mouse_pos = get_global_mouse_position()
@@ -44,7 +44,7 @@ func _process(_delta) -> void:
 		var snapped_pos = store_map.map_to_local(tile_pos)
 		shadow_checkout_scene.position = snapped_pos
 		
-		update_shadow_color(can_place_checkout_at(snapped_pos))
+		update_shadow_color(can_place_node_at(snapped_pos))
 
 func on_place_shelf_pressed():
 	if is_placing_checkout:
@@ -68,18 +68,26 @@ func terminate_all_placing_modes() -> void:
 	stop_placing_shelf()
 	stop_placing_checkout()
 
-func can_place_shelf_at(tile_pos: Vector2i) -> bool:
+# TODO update these functions to check that there are no obstacles to placing the node
+# obstacles: other shelves and checkouts
+# customers
+# walls
+# outside of the store
+func can_place_node_at(tile_pos: Vector2i) -> bool:
 	var world_pos = store_map.map_to_local(tile_pos)
-	for child in get_children():
-		if child is Shelf and child.position == world_pos:
-			return false
-	return true
 
-func can_place_checkout_at(tile_pos: Vector2i) -> bool:
-	var world_pos = store_map.map_to_local(tile_pos)
-	for child in get_children():
-		if child is Checkout and child.position == world_pos:
+	for shelf in get_tree().get_nodes_in_group("shelves"):
+		if shelf.position == world_pos:
 			return false
+
+	for checkout in get_tree().get_nodes_in_group("checkouts"):
+		if checkout.position == world_pos:
+			return false
+
+	for customer in get_tree().get_nodes_in_group("customers"):
+		if customer.global_position.distance_to(world_pos) < 4.0:
+			return false
+
 	return true
 
 func place_shelf_at(tile_pos: Vector2i):

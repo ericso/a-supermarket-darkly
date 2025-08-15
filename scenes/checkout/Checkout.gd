@@ -1,6 +1,7 @@
 class_name Checkout extends Node2D
 
 func _ready():
+	add_to_group("checkouts")
 	StoreManager.register_checkout(self)
 
 func checkout_product(product: Product, qty: int):
