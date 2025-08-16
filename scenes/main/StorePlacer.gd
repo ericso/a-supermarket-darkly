@@ -35,16 +35,14 @@ func _process(_delta) -> void:
 		var tile_pos: Vector2i = store_map.local_to_map(mouse_pos)
 		var snapped_pos = store_map.map_to_local(tile_pos)
 		shadow_shelf_scene.position = snapped_pos
-		
-		update_shadow_color(can_place_node_at(snapped_pos))
+		update_shadow_color(can_place_node_at(tile_pos))
 	
 	if is_placing_checkout and shadow_checkout_scene: 
 		var mouse_pos = get_global_mouse_position()
 		var tile_pos: Vector2i = store_map.local_to_map(mouse_pos)
 		var snapped_pos = store_map.map_to_local(tile_pos)
 		shadow_checkout_scene.position = snapped_pos
-		
-		update_shadow_color(can_place_node_at(snapped_pos))
+		update_shadow_color(can_place_node_at(tile_pos))
 
 func on_place_shelf_pressed():
 	if is_placing_checkout:
@@ -134,17 +132,18 @@ func stop_placing_checkout() -> void:
 		shadow_checkout_scene = null
 	store_panel.set_place_checkout_mode_enabled(false)
 
-func update_shadow_color(is_valid: bool):
+func update_shadow_color(can_place: bool):
+	var color_placeable := Color(0.0, 1.0, 0.0, 0.7)  # Bright green, semi-transparent
+	var color_blocked := Color(1.0, 0.0, 0.0, 0.7)   # Bright red, semi-transparent
+
+	var color := color_placeable if can_place else color_blocked
+
 	if shadow_shelf_scene:
-		var color = Color(0, 1, 0, 0.4) \
-			if is_valid \
-			else Color(1, 0, 0, 0.4)
-		if shadow_shelf_scene.has_node("Sprite"):
-			shadow_shelf_scene.get_node("Sprite").modulate = color
-	
+		var sprite = shadow_shelf_scene.get_node_or_null("Sprite")
+		if sprite:
+			sprite.self_modulate = color
+
 	if shadow_checkout_scene:
-		var color = Color(0, 1, 0, 0.4) \
-			if is_valid \
-			else Color(1, 0, 0, 0.4)
-		if shadow_checkout_scene.has_node("Sprite"):
-			shadow_checkout_scene.get_node("Sprite").modulate = color
+		var sprite = shadow_checkout_scene.get_node_or_null("Sprite")
+		if sprite:
+			sprite.self_modulate = color
