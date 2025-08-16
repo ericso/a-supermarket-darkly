@@ -15,6 +15,7 @@ var is_holding = false
 var hold_threshold = 0.3 # seconds to register hold
 
 func _ready():
+	add_to_group("shelves")
 	StoreManager.register_shelf(self)
 	
 	hover_area.mouse_entered.connect(on_mouse_entered)
