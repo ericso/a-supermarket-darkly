@@ -66,11 +66,6 @@ func terminate_all_placing_modes() -> void:
 	stop_placing_shelf()
 	stop_placing_checkout()
 
-# TODO update these functions to check that there are no obstacles to placing the node
-# obstacles: other shelves and checkouts
-# customers
-# walls
-# outside of the store
 func can_place_node_at(tile_pos: Vector2i) -> bool:
 	var world_pos = store_map.map_to_local(tile_pos)
 
@@ -83,7 +78,7 @@ func can_place_node_at(tile_pos: Vector2i) -> bool:
 			return false
 
 	for customer in get_tree().get_nodes_in_group("customers"):
-		if customer.global_position.distance_to(world_pos) < 4.0:
+		if customer.global_position.distance_to(world_pos) < 16.0:
 			return false
 
 	return true
