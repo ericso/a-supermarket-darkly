@@ -13,7 +13,11 @@ var shadow_checkout_scene: Node2D = null
 @onready var nav_region: NavigationRegion2D = get_parent().get_node("NavigationRegion")
 var is_placing_checkout: bool = false
 
+# placeable_tiles are tiles that nodes can be placed upon
 var placeable_tiles: Array[String] = ["Floor"]
+
+# non_adj_tiles are tiles which nodes cannot be placed adjacent to
+var non_adj_tiles: Array[String] = ["Door"]
 
 func _ready() -> void:
 	store_panel.connect("place_shelf_button_pressed", self.on_place_shelf_pressed)
@@ -61,29 +65,54 @@ func on_place_checkout_pressed():
 		stop_placing_checkout()
 	else:
 		start_placing_checkout()
-		
+
 func terminate_all_placing_modes() -> void:
 	stop_placing_shelf()
 	stop_placing_checkout()
 
 func can_place_node_at(tile_pos: Vector2i) -> bool:
-	var world_pos = store_map.map_to_local(tile_pos)
-	var tile_data: TileData = store_map.get_cell_tile_data(tile_pos)
-	if tile_data and tile_data.get_custom_data("name") not in placeable_tiles:
+	if not is_valid_store_tile(tile_pos):
 		return false
-		
+	
+	var world_pos = store_map.map_to_local(tile_pos)
+	
 	for shelf in get_tree().get_nodes_in_group("shelves"):
 		if shelf.position == world_pos:
 			return false
-
+	
 	for checkout in get_tree().get_nodes_in_group("checkouts"):
 		if checkout.position == world_pos:
 			return false
-
+	
 	for customer in get_tree().get_nodes_in_group("customers"):
 		if customer.global_position.distance_to(world_pos) < 16.0:
 			return false
+	
+	return true
 
+# is_valid_store_tile returns true if the tile at tile_pos can have a node
+# placed at it.
+func is_valid_store_tile(tile_pos: Vector2i) -> bool:
+	var tile_data: TileData = store_map.get_cell_tile_data(tile_pos)
+	if tile_data == null or tile_data.get_custom_data("name") not in placeable_tiles:
+		return false
+
+	# directions to check: up, down, left, right
+	var directions = [
+		Vector2i(0, -1),  # up
+		Vector2i(0, 1),   # down
+		Vector2i(-1, 0),  # left
+		Vector2i(1, 0)    # right
+	]
+	
+	# check that the position is not adjacent to a tile that should not have
+	# a node placed next to it
+	for dir in directions:
+		var neighbor_pos = tile_pos + dir
+		var neighbor_data = store_map.get_cell_tile_data(neighbor_pos)
+		if neighbor_data and neighbor_data.get_custom_data("name") in non_adj_tiles:
+			return false
+	
 	return true
 
 func place_shelf_at(tile_pos: Vector2i):
