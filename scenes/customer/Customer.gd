@@ -29,6 +29,8 @@ var target_shelf: Shelf = null
 var checkout: Checkout = null
 
 func _ready():
+	add_to_group("customers")
+	
 	products_wanted = get_wanted_products()
 	NotificationManager.add_log_message("new customer wants: %s" % str(products_wanted))
 	

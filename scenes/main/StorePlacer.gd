@@ -13,6 +13,12 @@ var shadow_checkout_scene: Node2D = null
 @onready var nav_region: NavigationRegion2D = get_parent().get_node("NavigationRegion")
 var is_placing_checkout: bool = false
 
+# placeable_tiles are tiles that nodes can be placed upon
+var placeable_tiles: Array[String] = ["Floor"]
+
+# non_adj_tiles are tiles which nodes cannot be placed adjacent to
+var non_adj_tiles: Array[String] = ["Door"]
+
 func _ready() -> void:
 	store_panel.connect("place_shelf_button_pressed", self.on_place_shelf_pressed)
 	store_panel.connect("place_checkout_button_pressed", self.on_place_checkout_pressed)
@@ -22,29 +28,25 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if is_placing_shelf:
 			var tile_pos = store_map.local_to_map(event.position)
-			if can_place_shelf_at(tile_pos):
+			if can_place_node_at(tile_pos):
 				place_shelf_at(tile_pos)
 		if is_placing_checkout:
 			var tile_pos = store_map.local_to_map(event.position)
-			if can_place_checkout_at(tile_pos):
+			if can_place_node_at(tile_pos):
 				place_checkout_at(tile_pos)
 
 func _process(_delta) -> void:
+	var mouse_pos = get_global_mouse_position()
+	var tile_pos: Vector2i = store_map.local_to_map(mouse_pos)
+	var snapped_pos = store_map.map_to_local(tile_pos)
+	
 	if is_placing_shelf and shadow_shelf_scene: 
-		var mouse_pos = get_global_mouse_position()
-		var tile_pos: Vector2i = store_map.local_to_map(mouse_pos)
-		var snapped_pos = store_map.map_to_local(tile_pos)
 		shadow_shelf_scene.position = snapped_pos
-		
-		update_shadow_color(can_place_shelf_at(snapped_pos))
+		update_shadow_color(can_place_node_at(tile_pos))
 	
 	if is_placing_checkout and shadow_checkout_scene: 
-		var mouse_pos = get_global_mouse_position()
-		var tile_pos: Vector2i = store_map.local_to_map(mouse_pos)
-		var snapped_pos = store_map.map_to_local(tile_pos)
 		shadow_checkout_scene.position = snapped_pos
-		
-		update_shadow_color(can_place_checkout_at(snapped_pos))
+		update_shadow_color(can_place_node_at(tile_pos))
 
 func on_place_shelf_pressed():
 	if is_placing_checkout:
@@ -63,23 +65,54 @@ func on_place_checkout_pressed():
 		stop_placing_checkout()
 	else:
 		start_placing_checkout()
-		
+
 func terminate_all_placing_modes() -> void:
 	stop_placing_shelf()
 	stop_placing_checkout()
 
-func can_place_shelf_at(tile_pos: Vector2i) -> bool:
+func can_place_node_at(tile_pos: Vector2i) -> bool:
+	if not is_valid_store_tile(tile_pos):
+		return false
+	
 	var world_pos = store_map.map_to_local(tile_pos)
-	for child in get_children():
-		if child is Shelf and child.position == world_pos:
+	
+	for shelf in get_tree().get_nodes_in_group("shelves"):
+		if shelf.position == world_pos:
 			return false
+	
+	for checkout in get_tree().get_nodes_in_group("checkouts"):
+		if checkout.position == world_pos:
+			return false
+	
+	for customer in get_tree().get_nodes_in_group("customers"):
+		if customer.global_position.distance_to(world_pos) < 16.0:
+			return false
+	
 	return true
 
-func can_place_checkout_at(tile_pos: Vector2i) -> bool:
-	var world_pos = store_map.map_to_local(tile_pos)
-	for child in get_children():
-		if child is Checkout and child.position == world_pos:
+# is_valid_store_tile returns true if the tile at tile_pos can have a node
+# placed at it.
+func is_valid_store_tile(tile_pos: Vector2i) -> bool:
+	var tile_data: TileData = store_map.get_cell_tile_data(tile_pos)
+	if tile_data == null or tile_data.get_custom_data("name") not in placeable_tiles:
+		return false
+
+	# directions to check: up, down, left, right
+	var directions = [
+		Vector2i(0, -1),  # up
+		Vector2i(0, 1),   # down
+		Vector2i(-1, 0),  # left
+		Vector2i(1, 0)    # right
+	]
+	
+	# check that the position is not adjacent to a tile that should not have
+	# a node placed next to it
+	for dir in directions:
+		var neighbor_pos = tile_pos + dir
+		var neighbor_data = store_map.get_cell_tile_data(neighbor_pos)
+		if neighbor_data and neighbor_data.get_custom_data("name") in non_adj_tiles:
 			return false
+	
 	return true
 
 func place_shelf_at(tile_pos: Vector2i):
@@ -126,17 +159,18 @@ func stop_placing_checkout() -> void:
 		shadow_checkout_scene = null
 	store_panel.set_place_checkout_mode_enabled(false)
 
-func update_shadow_color(is_valid: bool):
+func update_shadow_color(can_place: bool):
+	var color_placeable := Color(0.0, 1.0, 0.0, 0.7)  # Bright green, semi-transparent
+	var color_blocked := Color(1.0, 0.0, 0.0, 0.7)   # Bright red, semi-transparent
+
+	var color := color_placeable if can_place else color_blocked
+
 	if shadow_shelf_scene:
-		var color = Color(0, 1, 0, 0.4) \
-			if is_valid \
-			else Color(1, 0, 0, 0.4)
-		if shadow_shelf_scene.has_node("Sprite"):
-			shadow_shelf_scene.get_node("Sprite").modulate = color
-	
+		var sprite = shadow_shelf_scene.get_node_or_null("Sprite")
+		if sprite:
+			sprite.self_modulate = color
+
 	if shadow_checkout_scene:
-		var color = Color(0, 1, 0, 0.4) \
-			if is_valid \
-			else Color(1, 0, 0, 0.4)
-		if shadow_checkout_scene.has_node("Sprite"):
-			shadow_checkout_scene.get_node("Sprite").modulate = color
+		var sprite = shadow_checkout_scene.get_node_or_null("Sprite")
+		if sprite:
+			sprite.self_modulate = color
