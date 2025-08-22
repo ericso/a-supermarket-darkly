@@ -4,6 +4,7 @@ extends VBoxContainer
 
 @export var side_menu_path: NodePath
 @export var store_panel_path: NodePath
+@export var products_panel_path: NodePath
 
 func _process(_delta) -> void:
 	update_money_label()
@@ -15,3 +16,9 @@ func on_store_button_pressed():
 	var side_menu = get_node(side_menu_path)
 	var store_panel = get_node(store_panel_path)
 	side_menu.show_panel(store_panel)
+
+func on_products_button_pressed():
+	var side_menu = get_node(side_menu_path)
+	var products_panel = get_node(products_panel_path)
+	side_menu.show_panel(products_panel)
+	products_panel.populate_items()
