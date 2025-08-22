@@ -127,6 +127,7 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="MainPanel" type="VBoxContainer" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("7_p5fgu")
 side_menu_path = NodePath("../../..")
@@ -172,6 +173,11 @@ visible = false
 layout_mode = 2
 script = ExtResource("9_p5fgu")
 side_menu_path = NodePath("../../..")
+product_list_path = NodePath("ProductsList")
+
+[node name="ProductsList" type="ItemList" parent="UI/SideMenu/MarginContainer/VBoxContainer/ProductsPanel"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="BackButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/ProductsPanel"]
 layout_mode = 2

@@ -21,3 +21,4 @@ func on_products_button_pressed():
 	var side_menu = get_node(side_menu_path)
 	var products_panel = get_node(products_panel_path)
 	side_menu.show_panel(products_panel)
+	products_panel.populate_items()
