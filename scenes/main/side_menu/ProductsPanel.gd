@@ -9,23 +9,18 @@ signal back_button_pressed
 var purchase_amount: int = 100
 
 func _ready():
-	# TODO remove the call from here
-	#populate_items()
 	var product_list = get_node(product_list_path)
 	product_list.item_selected.connect(on_buy_pressed)
 	# TODO play with sizing (maybe set it dynamically)
 	product_list.custom_minimum_size = Vector2(100, 200)
 
 func populate_items():
-	print("DEBUG::populate_items")
 	var product_list = get_node(product_list_path)
 	product_list.clear()
 	for product_id in ProductDatabase.get_product_ids():
 		var stock = InventoryManager.get_stock(product_id)
 		var index = product_list.add_item("%s: %d" % [product_id.capitalize(), stock])
 		product_list.set_item_metadata(index, product_id)
-		print("DEBUG::product_id ", product_id)
-		print("DEBUG::index ", index)
 
 func on_buy_pressed(index: int):
 	var product_list = get_node(product_list_path)

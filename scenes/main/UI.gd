@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-# TODO move the menu panel stuff into a script attached to the MenuPanel node
 @onready var menu_button := $ButtonContainer/HBoxContainer/MenuButton
 @onready var menu_panel := $MenuPanel
 
