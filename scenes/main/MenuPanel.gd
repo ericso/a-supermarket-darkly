@@ -5,7 +5,6 @@ func _ready():
 	refresh_tabs()
 
 func refresh_tabs():
-	$VBoxContainer/Content/Tabs/Products.populate_items()
 	$VBoxContainer/Content/Tabs/Stats.update_labels()
 
 func on_close_pressed():
