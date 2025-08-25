@@ -4,13 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://ca2swdbmqbx50" path="res://assets/sheets/grocery-store-tileset.png" id="2_q24mn"]
 [ext_resource type="Script" uid="uid://b2w2eyn4y8fcy" path="res://scenes/main/CustomerSpawner.gd" id="3_q24mn"]
 [ext_resource type="Script" uid="uid://clr5um4ilfww" path="res://scenes/main/MenuPanel.gd" id="4_1rhdn"]
-[ext_resource type="Script" uid="uid://d0p7yt1a1bcxc" path="res://scenes/main/Products.gd" id="4_dc040"]
 [ext_resource type="Script" uid="uid://cirno57nkfb67" path="res://scenes/main/StorePlacer.gd" id="4_ko0rf"]
 [ext_resource type="Script" uid="uid://hujdixt8dwkk" path="res://scenes/main/UI.gd" id="4_sjxhf"]
 [ext_resource type="Script" uid="uid://da00fv86t3yr3" path="res://scenes/main/Stats.gd" id="6_1rhdn"]
 [ext_resource type="Script" uid="uid://63mssmvb4awl" path="res://scenes/main/side_menu/SideMenu.gd" id="6_3km4f"]
 [ext_resource type="Script" uid="uid://c7nmmq0x4uenj" path="res://scenes/main/side_menu/MainPanel.gd" id="7_p5fgu"]
 [ext_resource type="Script" uid="uid://bgk2l45t0jugn" path="res://scenes/main/side_menu/StorePanel.gd" id="7_qkm1d"]
+[ext_resource type="Script" uid="uid://bq5rh3v7vg2k5" path="res://scenes/main/side_menu/ProductsPanel.gd" id="9_p5fgu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dc040"]
 resource_name = "Store"
@@ -126,10 +126,12 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="MainPanel" type="VBoxContainer" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("7_p5fgu")
 side_menu_path = NodePath("../../..")
 store_panel_path = NodePath("../StorePanel")
+products_panel_path = NodePath("../ProductsPanel")
 
 [node name="MoneyLabel" type="Label" parent="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel"]
 layout_mode = 2
@@ -140,6 +142,10 @@ label_settings = SubResource("LabelSettings_nha0i")
 [node name="StoreButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel"]
 layout_mode = 2
 text = "Store"
+
+[node name="ProductsButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel"]
+layout_mode = 2
+text = "Products"
 
 [node name="StorePanel" type="VBoxContainer" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
 visible = false
@@ -158,6 +164,21 @@ theme_override_font_sizes/font_size = 24
 text = "Place Checkouts"
 
 [node name="BackButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel"]
+layout_mode = 2
+text = "< Back"
+
+[node name="ProductsPanel" type="VBoxContainer" parent="UI/SideMenu/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("9_p5fgu")
+side_menu_path = NodePath("../../..")
+product_list_path = NodePath("ProductsList")
+
+[node name="ProductsList" type="ItemList" parent="UI/SideMenu/MarginContainer/VBoxContainer/ProductsPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackButton" type="Button" parent="UI/SideMenu/MarginContainer/VBoxContainer/ProductsPanel"]
 layout_mode = 2
 text = "< Back"
 
@@ -205,32 +226,14 @@ size_flags_vertical = 3
 layout_mode = 2
 current_tab = 0
 
-[node name="Products" type="MarginContainer" parent="UI/MenuPanel/VBoxContainer/Content/Tabs"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-script = ExtResource("4_dc040")
-metadata/_tab_index = 0
-
-[node name="BoxContainer" type="BoxContainer" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/Products"]
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="ProductList" type="ItemList" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/Products/BoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
 [node name="Stats" type="MarginContainer" parent="UI/MenuPanel/VBoxContainer/Content/Tabs"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 script = ExtResource("6_1rhdn")
-metadata/_tab_index = 1
+metadata/_tab_index = 0
 
 [node name="StatsContainer" type="VBoxContainer" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/Stats"]
 layout_mode = 2
@@ -264,7 +267,7 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
-metadata/_tab_index = 2
+metadata/_tab_index = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/MenuPanel/VBoxContainer/Content/Tabs/Notifications"]
 layout_mode = 2
@@ -300,4 +303,6 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [connection signal="pressed" from="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel/StoreButton" to="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel" method="on_store_button_pressed"]
+[connection signal="pressed" from="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel/ProductsButton" to="UI/SideMenu/MarginContainer/VBoxContainer/MainPanel" method="on_products_button_pressed"]
 [connection signal="pressed" from="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel/BackButton" to="UI/SideMenu/MarginContainer/VBoxContainer/StorePanel" method="on_back_button_pressed"]
+[connection signal="pressed" from="UI/SideMenu/MarginContainer/VBoxContainer/ProductsPanel/BackButton" to="UI/SideMenu/MarginContainer/VBoxContainer/ProductsPanel" method="on_back_button_pressed"]
